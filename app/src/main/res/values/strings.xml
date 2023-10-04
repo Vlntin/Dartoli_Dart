@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">Dartoli</string>
+    <string name="app_name_two">nur die 180 zählt!</string>
 
     <string name="cricket">Cricket</string>
     <string name="standard_game">501</string>
     <string name="amount_person">Personenanzahl</string>
+
+    <string name="main_training">Training</string>
+    <string name="main_training_sub">Spiele alleine gegen den Computer auf verschiedenen Leveln um so deine Fähigkeiten zu verbessern!</string>
+    <string name="main_multiplayer">Multiplayer</string>
+    <string name="main_multiplayer_sub">Spiele gegen Freunde verschiedene Dartklassiker, um herauszufinden, wer der beste an der Scheibe ist!</string>
+    <string name="main_statistics">Statistiken</string>
+    <string name="main_statistics_sub">Betrachte die wichtigsten Statistiken aller Spieler: Siegquote, Doppelquote und vieles mehr!</string>
 </resources>
