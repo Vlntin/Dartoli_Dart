@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="big_title_splash">40sp</dimen>
+    <dimen name="splash_padding">20sp</dimen>
+</resources>

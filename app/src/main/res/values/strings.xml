@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Dartoli</string>
+
+    <string name="cricket">Cricket</string>
+    <string name="standard_game">501</string>
+    <string name="amount_person">Personenanzahl</string>
+</resources>
