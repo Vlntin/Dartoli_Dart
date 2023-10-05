@@ -1,4 +1,4 @@
-package com.example.dartoli
+package com.example.dartoli.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
