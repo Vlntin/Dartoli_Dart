@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="30sp">
+        android:paddingTop="20sp">
 
         <TextView
             android:layout_width="160dp"
@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="30sp">
+        android:paddingTop="20sp">
 
         <TextView
             android:layout_width="160dp"
@@ -84,7 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="30sp">
+        android:paddingTop="20sp">
 
         <TextView
             android:layout_width="160dp"
@@ -113,7 +113,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="30sp">
+        android:paddingTop="20sp">
 
         <TextView
             android:layout_width="160dp"
@@ -141,14 +141,14 @@
 
             <ScrollView
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="100dp"
                 android:layout_marginTop="30sp"
                 android:paddingBottom="10sp"
-                android:layout_marginBottom="30sp"
                 android:paddingTop="10sp"
                 android:scrollbars="vertical"
                 android:background="@drawable/btn_normal"
                 android:visibility="gone"
+                tools:visibility="invisible"
                 android:id="@+id/w">
 
                 <LinearLayout
@@ -161,8 +161,28 @@
 
             </ScrollView>
         </LinearLayout>
-    </LinearLayout>
 
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingLeft="@dimen/normal_padding"
+        android:paddingTop="30sp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="Spiel starten"
+            android:textSize="@dimen/game_settings_text_size"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:background="@drawable/btn_normal"
+            android:id="@+id/start_game_button"
+            android:layout_gravity="center"/>
+    </LinearLayout>
 
 </LinearLayout>
 
