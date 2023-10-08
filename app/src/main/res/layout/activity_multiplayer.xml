@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/start_green"
     android:orientation="vertical"
-    android:padding="@dimen/normal_padding">
+    android:paddingRight="@dimen/normal_padding">
 
     <TextView
         android:layout_width="match_parent"
@@ -20,20 +20,153 @@
         android:paddingTop="@dimen/padding_headline_top"
         android:padding="@dimen/padding_headline_bottom"/>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="30sp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rec_view"
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Spiel:"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="@dimen/game_settings_text_size"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:paddingTop="@dimen/padding_headline_top"
+            android:padding="@dimen/padding_headline_bottom"/>
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            app:layoutManager="LinearLayoutManager" />
+            android:layout_height="35dp"
+            android:text="default Text"
+            android:textSize="@dimen/game_settings_text_size"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:background="@drawable/btn_normal"
+            android:id="@+id/game_selection_button"
+            android:layout_gravity="center"/>
 
-    </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="30sp">
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Winning Legs:"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="@dimen/game_settings_text_size"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:paddingTop="@dimen/padding_headline_top"
+            android:padding="@dimen/padding_headline_bottom"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_winning_legs"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/game_settings_text_size"
+            android:inputType="number"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="30sp">
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Winning Sets:"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="@dimen/game_settings_text_size"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:paddingTop="@dimen/padding_headline_top"
+            android:padding="@dimen/padding_headline_bottom"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_winning_sets"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textSize="@dimen/game_settings_text_size"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="30sp">
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Spieler:"
+            android:gravity="center"
+            android:textSize="@dimen/game_settings_text_size"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:paddingTop="@dimen/padding_headline_top"
+            android:padding="@dimen/padding_headline_bottom"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="20sp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:src="@drawable/add_icon"
+                android:background="@drawable/btn_normal"
+                android:id="@+id/btn_add_existing_player"/>
+
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="30sp"
+                android:paddingBottom="10sp"
+                android:layout_marginBottom="30sp"
+                android:paddingTop="10sp"
+                android:scrollbars="vertical"
+                android:background="@drawable/btn_normal"
+                android:visibility="gone"
+                android:id="@+id/w">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/player_names_layout">
+
+                </LinearLayout>
+
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+
 
 </LinearLayout>
+
+
+
+
 

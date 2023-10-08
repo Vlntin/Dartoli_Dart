@@ -29,7 +29,7 @@ class ItemAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         with(holder){
             with(dataset[position]){
-                binding.itemTitle.text = this.titel
+                binding.radioButton.text = this.titel
             }
         }
     }

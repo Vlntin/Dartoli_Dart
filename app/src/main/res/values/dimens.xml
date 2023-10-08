@@ -22,6 +22,8 @@
     <dimen name="padding_headline_top">20sp</dimen>
     <dimen name="padding_headline_bottom">20sp</dimen>
 
+    <dimen name="game_settings_text_size">18sp</dimen>
+
 
 
 </resources>

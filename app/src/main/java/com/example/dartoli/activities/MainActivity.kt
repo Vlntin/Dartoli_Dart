@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        binding.btnTraining.setOnClickListener {
+        binding.btnMultiplayer.setOnClickListener {
             startActivity(Intent(this@MainActivity, MultiplayerActivity::class.java))
             finish()
         }
