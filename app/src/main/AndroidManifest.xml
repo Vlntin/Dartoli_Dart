@@ -31,7 +31,8 @@
         <activity
             android:name=".activities.MultiplayerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Dartoli" />
+            android:theme="@style/Theme.Dartoli"
+            android:parentActivityName=".activities.MainActivity"/>
     </application>
 
 </manifest>

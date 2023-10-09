@@ -12,9 +12,12 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isEmpty
+import androidx.core.view.isNotEmpty
 import com.example.dartoli.R
 import com.example.dartoli.data.Datasource
 import com.example.dartoli.databinding.ActivityMultiplayerBinding
+import com.example.dartoli.model.Player
 
 
 class MultiplayerActivity : AppCompatActivity() {
@@ -24,6 +27,10 @@ class MultiplayerActivity : AppCompatActivity() {
     private lateinit var player_adding_button: ImageView
     private lateinit var popupMenu_games: PopupMenu
     private lateinit var popupMenu_players: PopupMenu
+    private var selected_players = arrayListOf<Player>()
+    private lateinit var start_game_button: TextView
+    val games_dataset = Datasource().loadGames()
+    val players_dataset = Datasource().loadPlayers()
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +38,6 @@ class MultiplayerActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        // Initialize data.
-        val games_dataset = Datasource().loadGames()
-        val players_dataset = Datasource().loadPlayers()
         game_selection_button = binding.gameSelectionButton
         game_selection_button.setText(games_dataset[0].titel)
         popupMenu_games = PopupMenu(this, game_selection_button)
@@ -47,15 +51,24 @@ class MultiplayerActivity : AppCompatActivity() {
             popupMenu_games.setOnMenuItemClickListener { menuItem ->
                 // Toast message on menu item clicked
                 game_selection_button.setText(menuItem.title)
+                for(element in games_dataset){
+                    if (element.titel.equals(menuItem.title)) {
+                        element.selected = true
+                    } else {
+                        element.selected = false
+                    }
+                }
                 true
+            }
+            if (popupMenu_games.getMenu().isNotEmpty()){
+                popupMenu_games.getMenu().clear()
+            }
+            for (i in games_dataset.indices) {
+                if (!games_dataset[i].selected)
+                    popupMenu_games.getMenu().add(games_dataset[i].titel)
             }
             popupMenu_games.show()
         }
-
-        for (i in games_dataset.indices) {
-            popupMenu_games.getMenu().add(games_dataset[i].titel)
-        }
-
 
         player_adding_button.setOnClickListener {
             popupMenu_players.menuInflater.inflate(R.menu.popup_menu, popupMenu_players.menu)
@@ -71,13 +84,30 @@ class MultiplayerActivity : AppCompatActivity() {
                 tv.setLayoutParams(layoutParams)
                 player_list_view.addView(tv)
                 player_list_scroll_view.setVisibility(View.VISIBLE)
+                for (i in players_dataset.indices) {
+                    if (players_dataset[i].playerName.equals(menuItem.title)){
+                        players_dataset[i].selected = true
+                    }
+                }
                 true
             }
-            popupMenu_players.show()
+            popupMenu_players.getMenu().clear()
+            for (i in players_dataset.indices) {
+                if (players_dataset[i].selected == false){
+                        popupMenu_players.getMenu().add(players_dataset[i].playerName)
+                }
+            }
+            if (popupMenu_players.getMenu().isNotEmpty()){
+                popupMenu_players.show()
+            }
         }
 
-        for (i in players_dataset.indices) {
-            popupMenu_players.getMenu().add(players_dataset[i].playerName)
+        start_game_button = binding.startGameButton
+        start_game_button.setOnClickListener{
+            for (element in selected_players){
+                print(element.playerName)
+                Toast.makeText(this, element.playerName, Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
