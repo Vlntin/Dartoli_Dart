@@ -36,10 +36,10 @@ class MyDatabaseHandler(context: Context) :
         onCreate(db)
     }
 
-    fun addPlayer(player: Player) {
+    fun addPlayer(playerName: String) {
         val db = this.writableDatabase
         val cv = ContentValues()
-        cv.put(KEY_NAME, player.playerName)
+        cv.put(KEY_NAME, playerName)
         val result = db.insert(TABLE_NAME, null, cv)
         db.close()
     }

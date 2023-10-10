@@ -1,18 +1,20 @@
 package com.example.dartoli.activities
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout.LayoutParams
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isEmpty
 import androidx.core.view.isNotEmpty
 import com.example.dartoli.R
 import com.example.dartoli.data.Datasource
@@ -32,6 +34,10 @@ class MultiplayerActivity : AppCompatActivity() {
     private var players_dataset = arrayListOf<Player>()
     private lateinit var start_game_button: TextView
     val games_dataset = Datasource().loadGames()
+
+    lateinit var btnDialog: Button
+    lateinit var customDialog: Dialog
+
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +52,6 @@ class MultiplayerActivity : AppCompatActivity() {
         popupMenu_players = PopupMenu(this, player_adding_button)
         val player_list_view = binding.playerNamesLayout
         val player_list_scroll_view = binding.w
-
 
 
         game_selection_button.setOnClickListener {
@@ -104,7 +109,11 @@ class MultiplayerActivity : AppCompatActivity() {
                 player_list_scroll_view.setVisibility(View.VISIBLE)
                 for (i in players_dataset.indices) {
                     if (players_dataset[i].playerName.equals(menuItem.title)){
-                        selected_players.add(players_dataset[i])
+                        if (menuItem.itemId.equals(R.id.item_create_player)){
+                            customDialog.show()
+                        } else {
+                            selected_players.add(players_dataset[i])
+                        }
                     }
                 }
                 true
@@ -115,6 +124,26 @@ class MultiplayerActivity : AppCompatActivity() {
         start_game_button.setOnClickListener{
             Toast.makeText(this, selected_players.size.toString(),
                     Toast.LENGTH_LONG).show();
+            customDialog.show()
+        }
+
+
+
+
+        customDialog = Dialog(this);
+        customDialog.setContentView(R.layout.custom_dialog_resource);
+        customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        val btnSubmit = customDialog.findViewById<Button>(R.id.btnSubmit)
+        val btnDismiss = customDialog.findViewById<Button>(R.id.btnDismiss)
+        val newName = customDialog.findViewById<EditText>(R.id.edit_text_player_name)
+        btnSubmit.setOnClickListener(View.OnClickListener() {
+            val myDB = MyDatabaseHandler(this)
+            myDB.addPlayer(newName.text.toString())
+            customDialog.dismiss();
+        })
+        btnDismiss.setOnClickListener(View.OnClickListener() {
+            customDialog.dismiss();
         }
     }
 }
