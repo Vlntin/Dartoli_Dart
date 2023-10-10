@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.LinearLayout.LayoutParams
 import android.widget.PopupMenu
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -33,8 +35,10 @@ class MultiplayerActivity : AppCompatActivity() {
     private var selected_players = arrayListOf<Player>()
     private var players_dataset = arrayListOf<Player>()
     private lateinit var start_game_button: TextView
+    private lateinit var player_creation_button: ImageView
     val games_dataset = Datasource().loadGames()
-
+    private lateinit var player_list_view: LinearLayout
+    private lateinit var player_list_scroll_view: ScrollView
     lateinit var btnDialog: Button
     lateinit var customDialog: Dialog
 
@@ -50,8 +54,10 @@ class MultiplayerActivity : AppCompatActivity() {
         popupMenu_games = PopupMenu(this, game_selection_button)
         player_adding_button = binding.btnAddExistingPlayer
         popupMenu_players = PopupMenu(this, player_adding_button)
-        val player_list_view = binding.playerNamesLayout
-        val player_list_scroll_view = binding.w
+
+        player_list_view = binding.playerNamesLayout
+        player_list_scroll_view = binding.w
+
 
 
         game_selection_button.setOnClickListener {
@@ -78,6 +84,12 @@ class MultiplayerActivity : AppCompatActivity() {
             popupMenu_games.show()
         }
 
+
+
+
+
+
+
         player_adding_button.setOnClickListener {
             val myDB = MyDatabaseHandler(this)
             players_dataset = myDB.readAllPlayers()
@@ -96,35 +108,25 @@ class MultiplayerActivity : AppCompatActivity() {
 
             popupMenu_players.menuInflater.inflate(R.menu.popup_menu, popupMenu_players.menu)
             popupMenu_players.setOnMenuItemClickListener { menuItem ->
-                // Toast message on menu item clicked
-                val tv = TextView(this)
-                val layoutParams = LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT)
-                layoutParams.gravity = Gravity.CENTER
-                tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20f)
-                tv.gravity = Gravity.CENTER
-                tv.setText(menuItem.title)
-                tv.setTextColor(getResources().getColor(R.color.black))
-                tv.setLayoutParams(layoutParams)
-                player_list_view.addView(tv)
-                player_list_scroll_view.setVisibility(View.VISIBLE)
-                for (i in players_dataset.indices) {
-                    if (players_dataset[i].playerName.equals(menuItem.title)){
-                        if (menuItem.itemId.equals(R.id.item_create_player)){
-                            customDialog.show()
-                        } else {
-                            selected_players.add(players_dataset[i])
-                        }
-                    }
-                }
-                true
+
+                    add_player_to_list(menuItem.title.toString())
+
+
+
             }
+        }
+
+
+
+        player_creation_button = binding.btnAddNewPlayer
+        player_creation_button.setOnClickListener{
+            customDialog.show()
         }
 
         start_game_button = binding.startGameButton
         start_game_button.setOnClickListener{
             Toast.makeText(this, selected_players.size.toString(),
                     Toast.LENGTH_LONG).show();
-            customDialog.show()
         }
 
 
@@ -140,10 +142,31 @@ class MultiplayerActivity : AppCompatActivity() {
         btnSubmit.setOnClickListener(View.OnClickListener() {
             val myDB = MyDatabaseHandler(this)
             myDB.addPlayer(newName.text.toString())
+            players_dataset = myDB.readAllPlayers()
+            add_player_to_list(newName.text.toString())
             customDialog.dismiss();
         })
         btnDismiss.setOnClickListener(View.OnClickListener() {
             customDialog.dismiss();
+        })
+    }
+
+    private fun add_player_to_list(name: String): Boolean{
+        val tv = TextView(this)
+        val layoutParams = LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT)
+        layoutParams.gravity = Gravity.CENTER
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20f)
+        tv.gravity = Gravity.CENTER
+        tv.setText(name)
+        tv.setTextColor(getResources().getColor(R.color.black))
+        tv.setLayoutParams(layoutParams)
+        player_list_view.addView(tv)
+        player_list_scroll_view.setVisibility(View.VISIBLE)
+        for (i in players_dataset.indices) {
+            if (players_dataset[i].playerName.equals(name)){
+                selected_players.add(players_dataset[i])
+            }
         }
+        return true
     }
 }
