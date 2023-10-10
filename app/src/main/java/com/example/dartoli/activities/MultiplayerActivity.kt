@@ -16,6 +16,7 @@ import androidx.core.view.isEmpty
 import androidx.core.view.isNotEmpty
 import com.example.dartoli.R
 import com.example.dartoli.data.Datasource
+import com.example.dartoli.data.MyDatabaseHandler
 import com.example.dartoli.databinding.ActivityMultiplayerBinding
 import com.example.dartoli.model.Player
 
@@ -28,9 +29,9 @@ class MultiplayerActivity : AppCompatActivity() {
     private lateinit var popupMenu_games: PopupMenu
     private lateinit var popupMenu_players: PopupMenu
     private var selected_players = arrayListOf<Player>()
+    private var players_dataset = arrayListOf<Player>()
     private lateinit var start_game_button: TextView
     val games_dataset = Datasource().loadGames()
-    val players_dataset = Datasource().loadPlayers()
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +46,8 @@ class MultiplayerActivity : AppCompatActivity() {
         popupMenu_players = PopupMenu(this, player_adding_button)
         val player_list_view = binding.playerNamesLayout
         val player_list_scroll_view = binding.w
+
+
 
         game_selection_button.setOnClickListener {
             popupMenu_games.menuInflater.inflate(R.menu.popup_menu, popupMenu_games.menu)
@@ -71,6 +74,21 @@ class MultiplayerActivity : AppCompatActivity() {
         }
 
         player_adding_button.setOnClickListener {
+            val myDB = MyDatabaseHandler(this)
+            players_dataset = myDB.readAllPlayers()
+
+            if (popupMenu_players.getMenu().isNotEmpty()){
+                popupMenu_players.getMenu().clear()
+            }
+            for (element in players_dataset){
+                if(!selected_players.contains(element)){
+                    popupMenu_players.getMenu().add(element.playerName)
+                }
+            }
+            if (popupMenu_players.getMenu().isNotEmpty()){
+                popupMenu_players.show()
+            }
+
             popupMenu_players.menuInflater.inflate(R.menu.popup_menu, popupMenu_players.menu)
             popupMenu_players.setOnMenuItemClickListener { menuItem ->
                 // Toast message on menu item clicked
@@ -86,28 +104,17 @@ class MultiplayerActivity : AppCompatActivity() {
                 player_list_scroll_view.setVisibility(View.VISIBLE)
                 for (i in players_dataset.indices) {
                     if (players_dataset[i].playerName.equals(menuItem.title)){
-                        players_dataset[i].selected = true
+                        selected_players.add(players_dataset[i])
                     }
                 }
                 true
-            }
-            popupMenu_players.getMenu().clear()
-            for (i in players_dataset.indices) {
-                if (players_dataset[i].selected == false){
-                        popupMenu_players.getMenu().add(players_dataset[i].playerName)
-                }
-            }
-            if (popupMenu_players.getMenu().isNotEmpty()){
-                popupMenu_players.show()
             }
         }
 
         start_game_button = binding.startGameButton
         start_game_button.setOnClickListener{
-            for (element in selected_players){
-                print(element.playerName)
-                Toast.makeText(this, element.playerName, Toast.LENGTH_LONG).show()
-            }
+            Toast.makeText(this, selected_players.size.toString(),
+                    Toast.LENGTH_LONG).show();
         }
     }
 }

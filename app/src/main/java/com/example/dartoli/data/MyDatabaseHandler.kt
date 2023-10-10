@@ -1,5 +1,6 @@
 package com.example.dartoli.data
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -7,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
 import androidx.annotation.Nullable
+import com.example.dartoli.model.Player
 
 
 class MyDatabaseHandler(context: Context) :
@@ -34,22 +36,33 @@ class MyDatabaseHandler(context: Context) :
         onCreate(db)
     }
 
-    fun addPlayer(name: String?) {
+    fun addPlayer(player: Player) {
         val db = this.writableDatabase
         val cv = ContentValues()
-        cv.put(KEY_NAME, name)
+        cv.put(KEY_NAME, player.playerName)
         val result = db.insert(TABLE_NAME, null, cv)
         db.close()
     }
 
-    fun readAllData(): Cursor? {
+    @SuppressLint("Range")
+    fun readAllPlayers(): ArrayList<Player> {
+        var player_list: ArrayList<Player> = ArrayList()
         val query = "SELECT * FROM $TABLE_NAME"
         val db = this.readableDatabase
         var cursor: Cursor? = null
         if (db != null) {
             cursor = db.rawQuery(query, null)
+            if (cursor.moveToFirst()){
+                do {
+                    val id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
+                    val name = cursor.getString(cursor.getColumnIndex(KEY_NAME))
+                    player_list.add(Player(id, name))
+
+                } while (cursor.moveToNext())
+            }
         }
-        return cursor
+        cursor!!.close()
+        return player_list
     }
 
     fun updateData(row_id: String, name: String?) {
