@@ -1,8 +1,7 @@
 package com.example.dartoli.model
 
 data class Game(
-    val maxPlayerNumber: Int,
-    val titel: String,
+    val id: Int,
+    val name: String,
     val description: String,
-    var selected: Boolean,
 )

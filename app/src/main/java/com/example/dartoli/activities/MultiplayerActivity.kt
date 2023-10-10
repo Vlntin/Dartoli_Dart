@@ -19,9 +19,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isNotEmpty
 import com.example.dartoli.R
-import com.example.dartoli.data.Datasource
-import com.example.dartoli.data.MyDatabaseHandler
+import com.example.dartoli.data.GamesDatabaseHandler
+import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityMultiplayerBinding
+import com.example.dartoli.model.Game
 import com.example.dartoli.model.Player
 
 
@@ -36,11 +37,10 @@ class MultiplayerActivity : AppCompatActivity() {
     private var players_dataset = arrayListOf<Player>()
     private lateinit var start_game_button: TextView
     private lateinit var player_creation_button: ImageView
-    val games_dataset = Datasource().loadGames()
     private lateinit var player_list_view: LinearLayout
     private lateinit var player_list_scroll_view: ScrollView
-    lateinit var btnDialog: Button
     lateinit var customDialog: Dialog
+    private lateinit var chosen_game : Game
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,14 +50,15 @@ class MultiplayerActivity : AppCompatActivity() {
         setContentView(view)
 
         game_selection_button = binding.gameSelectionButton
-        game_selection_button.setText(games_dataset[0].titel)
         popupMenu_games = PopupMenu(this, game_selection_button)
-        player_adding_button = binding.btnAddExistingPlayer
-        popupMenu_players = PopupMenu(this, player_adding_button)
 
-        player_list_view = binding.playerNamesLayout
-        player_list_scroll_view = binding.w
-
+        val gamesDB = GamesDatabaseHandler(this)
+        gamesDB.addGame(Game(1,"Cricket", "jdjssf"))
+        gamesDB.addGame(Game(2,"501", "jdjssf"))
+        gamesDB.addGame(Game(3,"Around the Clock", "jdjssf"))
+        val games_list = gamesDB.readAllGames()
+        game_selection_button.setText(games_list[0].name)
+        chosen_game = games_list[0]
 
 
         game_selection_button.setOnClickListener {
@@ -65,11 +66,9 @@ class MultiplayerActivity : AppCompatActivity() {
             popupMenu_games.setOnMenuItemClickListener { menuItem ->
                 // Toast message on menu item clicked
                 game_selection_button.setText(menuItem.title)
-                for(element in games_dataset){
-                    if (element.titel.equals(menuItem.title)) {
-                        element.selected = true
-                    } else {
-                        element.selected = false
+                for(element in games_list){
+                    if (element.name.equals(menuItem.title.toString())){
+                        chosen_game = element
                     }
                 }
                 true
@@ -77,21 +76,21 @@ class MultiplayerActivity : AppCompatActivity() {
             if (popupMenu_games.getMenu().isNotEmpty()){
                 popupMenu_games.getMenu().clear()
             }
-            for (i in games_dataset.indices) {
-                if (!games_dataset[i].selected)
-                    popupMenu_games.getMenu().add(games_dataset[i].titel)
+            for (i in games_list.indices) {
+                if (!games_list[i].equals(chosen_game))
+                    popupMenu_games.getMenu().add(games_list[i].name)
             }
             popupMenu_games.show()
         }
 
 
 
-
-
-
-
+        player_adding_button = binding.btnAddExistingPlayer
+        popupMenu_players = PopupMenu(this, player_adding_button)
+        player_list_view = binding.playerNamesLayout
+        player_list_scroll_view = binding.w
         player_adding_button.setOnClickListener {
-            val myDB = MyDatabaseHandler(this)
+            val myDB = PlayerDatabaseHandler(this)
             players_dataset = myDB.readAllPlayers()
 
             if (popupMenu_players.getMenu().isNotEmpty()){
@@ -105,31 +104,17 @@ class MultiplayerActivity : AppCompatActivity() {
             if (popupMenu_players.getMenu().isNotEmpty()){
                 popupMenu_players.show()
             }
-
             popupMenu_players.menuInflater.inflate(R.menu.popup_menu, popupMenu_players.menu)
             popupMenu_players.setOnMenuItemClickListener { menuItem ->
-
-                    add_player_to_list(menuItem.title.toString())
-
-
-
+                add_player_to_list(menuItem.title.toString())
             }
         }
-
 
 
         player_creation_button = binding.btnAddNewPlayer
         player_creation_button.setOnClickListener{
             customDialog.show()
         }
-
-        start_game_button = binding.startGameButton
-        start_game_button.setOnClickListener{
-            Toast.makeText(this, selected_players.size.toString(),
-                    Toast.LENGTH_LONG).show();
-        }
-
-
 
 
         customDialog = Dialog(this);
@@ -140,7 +125,7 @@ class MultiplayerActivity : AppCompatActivity() {
         val btnDismiss = customDialog.findViewById<Button>(R.id.btnDismiss)
         val newName = customDialog.findViewById<EditText>(R.id.edit_text_player_name)
         btnSubmit.setOnClickListener(View.OnClickListener() {
-            val myDB = MyDatabaseHandler(this)
+            val myDB = PlayerDatabaseHandler(this)
             myDB.addPlayer(newName.text.toString())
             players_dataset = myDB.readAllPlayers()
             add_player_to_list(newName.text.toString())
@@ -149,6 +134,13 @@ class MultiplayerActivity : AppCompatActivity() {
         btnDismiss.setOnClickListener(View.OnClickListener() {
             customDialog.dismiss();
         })
+
+
+        start_game_button = binding.startGameButton
+        start_game_button.setOnClickListener{
+            Toast.makeText(this, selected_players.size.toString(),
+                Toast.LENGTH_LONG).show();
+        }
     }
 
     private fun add_player_to_list(name: String): Boolean{
