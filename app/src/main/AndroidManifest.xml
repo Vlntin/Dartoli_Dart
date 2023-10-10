@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Dartoli"
         tools:targetApi="31">
         <activity
+            android:name=".activities.CricketActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.SplashActivity"
             android:exported="true"
             android:fitsSystemWindows="true"
@@ -30,9 +33,9 @@
             android:theme="@style/Theme.Dartoli" />
         <activity
             android:name=".activities.MultiplayerActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Dartoli"
-            android:parentActivityName=".activities.MainActivity"/>
+            android:theme="@style/Theme.Dartoli" />
     </application>
 
 </manifest>

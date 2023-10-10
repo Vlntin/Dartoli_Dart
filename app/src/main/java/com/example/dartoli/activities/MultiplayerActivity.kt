@@ -2,12 +2,13 @@ package com.example.dartoli.activities
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -24,7 +25,7 @@ import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityMultiplayerBinding
 import com.example.dartoli.model.Game
 import com.example.dartoli.model.Player
-
+import android.view.View.OnLongClickListener;
 
 class MultiplayerActivity : AppCompatActivity() {
 
@@ -42,7 +43,8 @@ class MultiplayerActivity : AppCompatActivity() {
     lateinit var customDialog: Dialog
     private lateinit var chosen_game : Game
 
-    @SuppressLint("ResourceAsColor")
+
+    @SuppressLint("ResourceAsColor", "ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMultiplayerBinding.inflate(layoutInflater)
@@ -53,9 +55,6 @@ class MultiplayerActivity : AppCompatActivity() {
         popupMenu_games = PopupMenu(this, game_selection_button)
 
         val gamesDB = GamesDatabaseHandler(this)
-        gamesDB.addGame(Game(1,"Cricket", "jdjssf"))
-        gamesDB.addGame(Game(2,"501", "jdjssf"))
-        gamesDB.addGame(Game(3,"Around the Clock", "jdjssf"))
         val games_list = gamesDB.readAllGames()
         game_selection_button.setText(games_list[0].name)
         chosen_game = games_list[0]
@@ -121,8 +120,8 @@ class MultiplayerActivity : AppCompatActivity() {
         customDialog.setContentView(R.layout.custom_dialog_resource);
         customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        val btnSubmit = customDialog.findViewById<Button>(R.id.btnSubmit)
-        val btnDismiss = customDialog.findViewById<Button>(R.id.btnDismiss)
+        val btnSubmit = customDialog.findViewById<ImageView>(R.id.btnSubmit)
+        val btnDismiss = customDialog.findViewById<ImageView>(R.id.btnDismiss)
         val newName = customDialog.findViewById<EditText>(R.id.edit_text_player_name)
         btnSubmit.setOnClickListener(View.OnClickListener() {
             val myDB = PlayerDatabaseHandler(this)
@@ -138,10 +137,12 @@ class MultiplayerActivity : AppCompatActivity() {
 
         start_game_button = binding.startGameButton
         start_game_button.setOnClickListener{
-            Toast.makeText(this, selected_players.size.toString(),
-                Toast.LENGTH_LONG).show();
+            startActivity(Intent(this@MultiplayerActivity, CricketActivity::class.java))
+            finish()
         }
+
     }
+
 
     private fun add_player_to_list(name: String): Boolean{
         val tv = TextView(this)
@@ -150,8 +151,21 @@ class MultiplayerActivity : AppCompatActivity() {
         tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20f)
         tv.gravity = Gravity.CENTER
         tv.setText(name)
+        tv.id = name.hashCode()
         tv.setTextColor(getResources().getColor(R.color.black))
         tv.setLayoutParams(layoutParams)
+        tv.setOnClickListener() {
+            for (element in players_dataset){
+                if (element.playerName == name){
+                    selected_players.remove(element)
+                    player_list_view.removeView(tv)
+                    if(selected_players.size == 0){
+                        player_list_scroll_view.setVisibility(View.GONE)
+                    }
+                }
+            }
+
+        }
         player_list_view.addView(tv)
         player_list_scroll_view.setVisibility(View.VISIBLE)
         for (i in players_dataset.indices) {
