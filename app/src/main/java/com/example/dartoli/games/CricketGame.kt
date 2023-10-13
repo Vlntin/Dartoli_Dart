@@ -1,20 +1,24 @@
 package com.example.dartoli.games
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.example.dartoli.model.Player
+import java.io.Serializable
 
-class CricketGame(legs: Int, sets: Int, players: ArrayList<Player>) {
-    lateinit var fifteens: ArrayList<Int>
-    lateinit var sixteens: ArrayList<Int>
-    lateinit var seventeens: ArrayList<Int>
-    lateinit var eightteens: ArrayList<Int>
-    lateinit var nineteens: ArrayList<Int>
-    lateinit var twenties: ArrayList<Int>
-    lateinit var bulls: ArrayList<Int>
-    lateinit var points: ArrayList<Int>
+class CricketGame(legs: Int, sets: Int, players: ArrayList<Player>): Serializable {
+    var fifteens = arrayListOf<Int>()
+    var sixteens = arrayListOf<Int>()
+    var seventeens = arrayListOf<Int>()
+    var eightteens = arrayListOf<Int>()
+    var nineteens = arrayListOf<Int>()
+    var twenties = arrayListOf<Int>()
+    var bulls = arrayListOf<Int>()
+    var points = arrayListOf<Int>()
     var amountOfPlayers = players.size
     var actualPlayerNumber = 0
     var actualDartsLeft = 3
     var actualRound = 1
+
 
     init {
         for (number in 1..players.size){
@@ -25,9 +29,9 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<Player>) {
             nineteens.add(0)
             twenties.add(0)
             bulls.add(0)
-            points.add(0)
+            points.add(0)}
         }
-    }
+
 
     fun thrown_values(values: ArrayList<Int>){
         for(element in values){

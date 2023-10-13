@@ -26,6 +26,7 @@ import com.example.dartoli.databinding.ActivityMultiplayerBinding
 import com.example.dartoli.model.Game
 import com.example.dartoli.model.Player
 import android.view.View.OnLongClickListener;
+import com.example.dartoli.games.CricketGame
 
 class MultiplayerActivity : AppCompatActivity() {
 
@@ -137,10 +138,21 @@ class MultiplayerActivity : AppCompatActivity() {
 
         start_game_button = binding.startGameButton
         start_game_button.setOnClickListener{
-            startActivity(Intent(this@MultiplayerActivity, CricketActivity::class.java))
-            finish()
-        }
+            if (ckeck_game_conditions()){
 
+                val winning_legs = Integer.parseInt(binding.etWinningLegs.text.toString())
+                val winning_sets = Integer.parseInt(binding.etWinningSets.text.toString())
+                val game = CricketGame(winning_legs, winning_sets, selected_players)
+                Toast.makeText(this, selected_players[0].playerName, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, game.actualRound.toString(), Toast.LENGTH_LONG).show()
+                val intent = Intent(this@MultiplayerActivity, CricketActivity::class.java)
+                intent.putExtra("game_key", game)
+                startActivity(intent)
+                finish()
+            } else {
+                Toast.makeText(this, "Konditionen nicht erfüllt", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
 
@@ -174,5 +186,13 @@ class MultiplayerActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    private fun ckeck_game_conditions(): Boolean {
+        if (binding.etWinningLegs.text.isNotEmpty() && binding.etWinningSets.text.isNotEmpty() && selected_players.size > 1){
+            return true
+        } else {
+            return false
+        }
     }
 }

@@ -76,7 +76,7 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="@dimen/game_settings_text_size"
-            android:inputType="text"/>
+            android:inputType="number"/>
 
     </LinearLayout>
 
