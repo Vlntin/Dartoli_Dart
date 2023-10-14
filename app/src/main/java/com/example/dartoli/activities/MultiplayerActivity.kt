@@ -44,6 +44,10 @@ class MultiplayerActivity : AppCompatActivity() {
     lateinit var customDialog: Dialog
     private lateinit var chosen_game : Game
 
+    val LEGS_KEY = "legs"
+    val SETS_KEY = "sets"
+    val PLAYERS_KEY = "players"
+
 
     @SuppressLint("ResourceAsColor", "ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -142,13 +146,19 @@ class MultiplayerActivity : AppCompatActivity() {
 
                 val winning_legs = Integer.parseInt(binding.etWinningLegs.text.toString())
                 val winning_sets = Integer.parseInt(binding.etWinningSets.text.toString())
-                val game = CricketGame(winning_legs, winning_sets, selected_players)
-                Toast.makeText(this, selected_players[0].playerName, Toast.LENGTH_LONG).show()
-                Toast.makeText(this, game.actualRound.toString(), Toast.LENGTH_LONG).show()
+                //val game = CricketGame(winning_legs, winning_sets, selected_players)
+                //Toast.makeText(this, game.amountOfPlayers.toString(), Toast.LENGTH_LONG).show()
                 val intent = Intent(this@MultiplayerActivity, CricketActivity::class.java)
-                intent.putExtra("game_key", game)
+                //intent.putExtra("cricket_game_key", game)
+                var id_array = IntArray(selected_players.size)
+                for (i in 0..selected_players.size -1){
+                    id_array[i] = selected_players[i].id
+                    Toast.makeText(this, id_array[i].toString(), Toast.LENGTH_LONG).show()
+                }
+                intent.putExtra(LEGS_KEY, winning_legs)
+                intent.putExtra(SETS_KEY, winning_sets)
+                intent.putExtra(PLAYERS_KEY, id_array)
                 startActivity(intent)
-                finish()
             } else {
                 Toast.makeText(this, "Konditionen nicht erfüllt", Toast.LENGTH_LONG).show()
             }

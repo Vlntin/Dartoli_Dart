@@ -18,6 +18,7 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<Player>): Serializabl
     var actualPlayerNumber = 0
     var actualDartsLeft = 3
     var actualRound = 1
+    var game_players = players
 
 
     init {
@@ -33,30 +34,30 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<Player>): Serializabl
         }
 
 
-    fun thrown_values(values: ArrayList<Int>){
-        for(element in values){
-            when(element){
-                15 -> add_throw(fifteens)
-                16 -> add_throw(sixteens)
-                17 -> add_throw(seventeens)
-                18 -> add_throw(eightteens)
-                19 -> add_throw(nineteens)
-                20 -> add_throw(twenties)
-                25 -> add_throw(bulls)
+    fun thrown_values(value: Int, amount: Int){
+            when(value){
+                15 -> add_throw(fifteens, amount)
+                16 -> add_throw(sixteens, amount)
+                17 -> add_throw(seventeens, amount)
+                18 -> add_throw(eightteens, amount)
+                19 -> add_throw(nineteens, amount)
+                20 -> add_throw(twenties, amount)
+                25 -> add_throw(bulls, amount)
                 else -> finish_player_move()
             }
-        }
         finish_player_move()
     }
 
-    fun add_throw(number_list: ArrayList<Int>){
-        if (number_list[actualPlayerNumber] < 3){
-            number_list[actualPlayerNumber]++
-        } else {
-            for (counter in 0..number_list.size - 1) {
-                if (number_list[counter] <3 && counter != actualPlayerNumber) {
-                    add_points(number_list)
-                    break
+    fun add_throw(number_list: ArrayList<Int>, amount: Int){
+        for (i in 1..amount){
+            if (number_list[actualPlayerNumber] < 3){
+                number_list[actualPlayerNumber]++
+            } else {
+                for (counter in 0..number_list.size - 1) {
+                    if (number_list[counter] <3 && counter != actualPlayerNumber) {
+                        add_points(number_list)
+                        break
+                    }
                 }
             }
         }

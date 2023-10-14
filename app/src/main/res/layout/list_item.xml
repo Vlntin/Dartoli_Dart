@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_width="200dp"
+    android:layout_width="150dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_id"
-    android:background="@drawable/blackline_bottom_and_right">
+    android:background="@drawable/blackline_bottom_and_right"
+    android:layout_marginBottom="20dp"
+    android:layout_marginTop="10dp">
+
     <TextView
         android:id="@+id/tv_playername"
         android:layout_width="match_parent"
@@ -13,11 +24,30 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="@dimen/big_title_size"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         app:layout_constraintTop_toTopOf="@+id/layout_id"/>
     <View
         android:id="@+id/name_points_seperator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/tv_playername"
+        app:layout_constraintBottom_toTopOf="@id/points_layout"/>
+    <TextView
+        android:id="@+id/points_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintTop_toBottomOf="@id/name_points_seperator"
+        app:layout_constraintBottom_toTopOf="@id/points_points_seperator"/>
+    <View
+        android:id="@+id/points_points_seperator"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/black"
@@ -27,7 +57,7 @@
         android:id="@+id/fifteen_points_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/name_points_seperator">
+        app:layout_constraintTop_toBottomOf="@id/points_points_seperator">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,7 +95,8 @@
         android:id="@+id/sixteen_points_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/sixteen_fifteen_line">
+        app:layout_constraintTop_toBottomOf="@id/sixteen_fifteen_line"
+        android:background="@color/red">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,7 +134,8 @@
         android:id="@+id/seventeen_points_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/seventeen_sixteen_line">
+        app:layout_constraintTop_toBottomOf="@id/seventeen_sixteen_line"
+        android:background="@color/green">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -284,3 +316,4 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
