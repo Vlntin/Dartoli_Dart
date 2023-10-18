@@ -101,9 +101,9 @@
                 android:layout_height="2dp"
                 android:background="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/tv_playername"
-                app:layout_constraintBottom_toTopOf="@id/fifteen_points_layout"/>
+                app:layout_constraintBottom_toTopOf="@id/table_fifteen_points_layout"/>
             <LinearLayout
-                android:id="@+id/fifteen_points_layout"
+                android:id="@+id/table_fifteen_points_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/cricket_table_element_height"
                 app:layout_constraintTop_toBottomOf="@id/points_points_seperator">
@@ -117,7 +117,7 @@
                     android:layout_gravity="center"
                     android:gravity="center">
                     <TextView
-                        android:id="@+id/iv_15_1"
+                        android:id="@+id/table_15_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="15"
@@ -131,10 +131,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/fifteen_points_layout"
-                app:layout_constraintBottom_toTopOf="@id/sixteen_points_layout"/>
+                app:layout_constraintTop_toBottomOf="@id/table_fifteen_points_layout"
+                app:layout_constraintBottom_toTopOf="@id/table_sixteen_points_layout"/>
             <LinearLayout
-                android:id="@+id/sixteen_points_layout"
+                android:id="@+id/table_sixteen_points_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/cricket_table_element_height"
                 app:layout_constraintTop_toBottomOf="@id/sixteen_fifteen_line">
@@ -148,7 +148,7 @@
                     android:layout_gravity="center"
                     android:gravity="center">
                     <TextView
-                        android:id="@+id/iv_16_1"
+                        android:id="@+id/table_16_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="16"
@@ -161,24 +161,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/sixteen_points_layout"
-                app:layout_constraintBottom_toTopOf="@id/seventeen_points_layout"/>
+                app:layout_constraintTop_toBottomOf="@id/table_sixteen_points_layout"
+                app:layout_constraintBottom_toTopOf="@id/table_seventeen_points_layout"/>
             <LinearLayout
-                android:id="@+id/seventeen_points_layout"
+                android:id="@+id/table_seventeen_points_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/cricket_table_element_height"
                 app:layout_constraintTop_toBottomOf="@id/seventeen_sixteen_line">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/twenty_points_layout"
+                    app:layout_constraintTop_toBottomOf="@id/table_twenty_points_layout"
                     android:orientation="horizontal"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_gravity="center"
                     android:gravity="center">
                     <TextView
-                        android:id="@+id/iv_17_1"
+                        android:id="@+id/table_17_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="17"
@@ -191,10 +191,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/seventeen_points_layout"
-                app:layout_constraintBottom_toTopOf="@id/eightteen_points_layout"/>
+                app:layout_constraintTop_toBottomOf="@id/table_seventeen_points_layout"
+                app:layout_constraintBottom_toTopOf="@id/table_eightteen_points_layout"/>
             <LinearLayout
-                android:id="@+id/eightteen_points_layout"
+                android:id="@+id/table_eightteen_points_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/cricket_table_element_height"
                 app:layout_constraintTop_toBottomOf="@id/eightteen_seventeen_line">
@@ -208,7 +208,7 @@
                     android:layout_gravity="center"
                     android:gravity="center">
                     <TextView
-                        android:id="@+id/iv_18_1"
+                        android:id="@+id/table_18_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="18"
@@ -221,10 +221,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/eightteen_points_layout"
-                app:layout_constraintBottom_toTopOf="@id/nineteen_points_layout"/>
+                app:layout_constraintTop_toBottomOf="@id/table_eightteen_points_layout"
+                app:layout_constraintBottom_toTopOf="@id/table_nineteen_points_layout"/>
             <LinearLayout
-                android:id="@+id/nineteen_points_layout"
+                android:id="@+id/table_nineteen_points_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/cricket_table_element_height"
                 app:layout_constraintTop_toBottomOf="@id/nineteen_eightteen_line">
@@ -238,7 +238,7 @@
                     android:layout_gravity="center"
                     android:gravity="center">
                     <TextView
-                        android:id="@+id/iv_19_1"
+                        android:id="@+id/table_19_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="19"
@@ -251,10 +251,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/nineteen_points_layout"
-                app:layout_constraintBottom_toTopOf="@id/twenty_points_layout"/>
+                app:layout_constraintTop_toBottomOf="@id/table_nineteen_points_layout"
+                app:layout_constraintBottom_toTopOf="@id/table_twenty_points_layout"/>
             <LinearLayout
-                android:id="@+id/twenty_points_layout"
+                android:id="@+id/table_twenty_points_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/cricket_table_element_height"
                 app:layout_constraintTop_toBottomOf="@id/twenty_nineteen_line">
@@ -268,7 +268,7 @@
                     android:layout_gravity="center"
                     android:gravity="center">
                     <TextView
-                        android:id="@+id/iv_20_1"
+                        android:id="@+id/table_20_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="20"
@@ -281,24 +281,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/twenty_points_layout"
-                app:layout_constraintBottom_toTopOf="@id/bull_points_layout"/>
+                app:layout_constraintTop_toBottomOf="@id/table_twenty_points_layout"
+                app:layout_constraintBottom_toTopOf="@id/table_bull_points_layout"/>
             <LinearLayout
-                android:id="@+id/bull_points_layout"
+                android:id="@+id/table_bull_points_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/cricket_table_element_height"
                 app:layout_constraintTop_toBottomOf="@id/bull_twenty_line">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/twenty_points_layout"
+                    app:layout_constraintTop_toBottomOf="@id/table_twenty_points_layout"
                     android:orientation="horizontal"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_gravity="center"
                     android:gravity="center">
                     <TextView
-                        android:id="@+id/iv_bull_1"
+                        android:id="@+id/table_bull_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Bull"
@@ -405,6 +405,7 @@
                 android:gravity="center"
                 android:background="@drawable/table_lines"/>
             <TextView
+                android:id="@+id/miss_btn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="1"

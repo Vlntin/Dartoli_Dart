@@ -1,14 +1,23 @@
 package com.example.dartoli.games
 
+import android.app.Dialog
 import android.os.Parcel
 import android.os.Parcelable
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
+import com.example.dartoli.R
 import com.example.dartoli.activities.CricketActivity
+import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.model.CricketPlayer
 import com.example.dartoli.model.Player
 import java.io.Serializable
 
 class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Serializable {
+    val needed_legs = legs
+    val needed_sets = sets
     var actualPlayerNumber = 0
     var actualDartsLeft = 3
     var actualRound = 1
@@ -160,8 +169,81 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
             }
         }
         finish_player_move()
+        if (check_leg_finished()){
+            if (check_set_finished()){
+                check_game_finished()
+            }
+        }
+
+    }
+    fun check_game_finished(){
+        print("s")
     }
 
+    fun check_set_finished(): Boolean {
+        for (player in game_players){
+            if (player.won_legs == needed_legs){
+                player.won_sets++
+                for (player in game_players){
+                    player.won_legs = 0
+                }
+                return true
+            }
+        }
+        return false
+    }
+
+    fun check_leg_finished(): Boolean {
+        var max_points = 0
+        var player_index = 0
+        for (i in 0..game_players.size -1){
+            if (game_players[i].points > max_points) {
+                max_points = game_players[i].points
+                player_index = i
+            }
+        }
+        var best_player = game_players[player_index]
+        if (best_player.fifteens == 3 &&
+            best_player.sixteens == 3 &&
+            best_player.seventeens == 3 &&
+            best_player.eightteens == 3 &&
+            best_player.nineteens == 3 &&
+            best_player.twenties == 3 &&
+            best_player.bulls == 3){
+            game_players[player_index].won_legs++
+            reset_for_new_leg()
+            return true
+        } else {
+            return false
+        }
+    }
+
+    fun reset_for_new_leg(){
+        actualDartsLeft = 3
+        actualRound = 0
+        actualPlayerNumber = 0
+        for (player in game_players){
+            reset_player(player)
+        }
+    }
+
+    fun reset_player(player: CricketPlayer){
+        player.fifteens = 0
+        player.sixteens = 0
+        player.seventeens = 0
+        player.eightteens = 0
+        player.nineteens = 0
+        player.twenties = 0
+        player.bulls = 0
+        player.fifteensClosed = false
+        player.sixteensClosed = false
+        player.seventeensClosed = false
+        player.eightteensClosed = false
+        player.nineteensClosed = false
+        player.twentiesClosed = false
+        player.bullsClosed = false
+        player.points = 0
+    }
     fun finish_player_move(){
         if (actualDartsLeft == 1){
             change_actual_player()

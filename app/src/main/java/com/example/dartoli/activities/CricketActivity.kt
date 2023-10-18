@@ -1,21 +1,29 @@
 package com.example.dartoli.activities
 
+
+import android.app.Dialog
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dartoli.R
 import com.example.dartoli.adapter.PlayerStatusAdapter
+import com.example.dartoli.data.GamesDatabaseHandler
 import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityCricketBinding
 import com.example.dartoli.games.CricketGame
 import com.example.dartoli.model.CricketPlayer
-import com.example.dartoli.model.Game
-import com.example.dartoli.model.Player
+
 
 class CricketActivity : AppCompatActivity() {
 
@@ -49,7 +57,7 @@ class CricketActivity : AppCompatActivity() {
         for (counter in 0..player_id_array!!.size - 1){
             for (player in players_dataset){
                 if(player.id == player_id_array[counter]){
-                    playingPlayers.add(CricketPlayer(player.playerName, 0, 0,0,0,0,0,0,0, false, false, false, false, false, false, false))
+                    playingPlayers.add(CricketPlayer(player.playerName, 0, 0,0,0,0,0,0,0, false, false, false, false, false, false, false, 0, 0))
                 }
             }
         }
@@ -112,13 +120,36 @@ class CricketActivity : AppCompatActivity() {
             updateAdapter()
         }
 
+        binding.missBtn.setOnClickListener(){
+            game.thrown_values(0, 0)
+            updateAdapter()
+        }
+
 
         rvPlayerStatus = binding.rvRecycler
-        rvPlayerStatus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        playerAdapter = PlayerStatusAdapter(playingPlayers!!)
-        rvPlayerStatus.adapter = playerAdapter
+        setupPlayerStatusRecyclerView()
 
-
+        val myDB2: GamesDatabaseHandler
+        myDB2 = GamesDatabaseHandler(this)
+        var games = myDB2.readAllGames()
+        var description =""
+        for(game in games){
+            if (game.name.equals("Cricket")) description = game.description
+        }
+        binding.btnRules.setOnClickListener(){
+            val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val popupView: View = inflater.inflate(R.layout.game_rules_custom_dialog, null)
+            val width = LinearLayout.LayoutParams.WRAP_CONTENT
+            val height = LinearLayout.LayoutParams.WRAP_CONTENT
+            val focusable = true
+            popupView.findViewById<TextView>(R.id.tv_game_description).setText(description)
+            val popupWindow = PopupWindow(popupView, width, height, focusable)
+            popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
+            popupView.setOnTouchListener { v, event ->
+                popupWindow.dismiss()
+                true
+            }
+        }
     }
 
     private fun setupPlayerStatusRecyclerView() {

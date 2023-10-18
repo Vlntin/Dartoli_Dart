@@ -17,6 +17,8 @@ data class CricketPlayer(
     var nineteensClosed: Boolean,
     var twentiesClosed: Boolean,
     var bullsClosed: Boolean,
+    var won_legs : Int,
+    var won_sets: Int
 
 
 )
