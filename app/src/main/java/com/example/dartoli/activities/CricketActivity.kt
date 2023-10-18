@@ -1,6 +1,7 @@
 package com.example.dartoli.activities
 
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,8 @@ import com.example.dartoli.adapter.PlayerStatusAdapter
 import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityCricketBinding
 import com.example.dartoli.games.CricketGame
+import com.example.dartoli.model.CricketPlayer
+import com.example.dartoli.model.Game
 import com.example.dartoli.model.Player
 
 class CricketActivity : AppCompatActivity() {
@@ -19,15 +22,17 @@ class CricketActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCricketBinding
     private var amount = 1
 
-    //private lateinit var singleButton: TextView
-    //private lateinit var doubleButton: TextView
-    //private lateinit var tribleButton: TextView
+    private lateinit var singleButton: TextView
+    private lateinit var doubleButton: TextView
+    private lateinit var tribleButton: TextView
 
     private lateinit var playerAdapter: PlayerStatusAdapter
     private lateinit var rvPlayerStatus: RecyclerView
 
 
-    private var playingPlayers = arrayListOf<Player>()
+    private var playingPlayers = arrayListOf<CricketPlayer>()
+
+    private lateinit var game: CricketGame
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,16 +49,17 @@ class CricketActivity : AppCompatActivity() {
         for (counter in 0..player_id_array!!.size - 1){
             for (player in players_dataset){
                 if(player.id == player_id_array[counter]){
-                    playingPlayers.add(player)
+                    playingPlayers.add(CricketPlayer(player.playerName, 0, 0,0,0,0,0,0,0, false, false, false, false, false, false, false))
                 }
             }
         }
-        val game = CricketGame(legs, sets, playingPlayers)
+        game = CricketGame(legs, sets, playingPlayers)
 
-/**
+
         singleButton = binding.singleBtn
         doubleButton = binding.doubleBtn
         tribleButton = binding.tripleBtn
+
 
         singleButton.setOnClickListener(){
             singleButton.setTextColor(ContextCompat.getColor(this, R.color.black))
@@ -76,29 +82,36 @@ class CricketActivity : AppCompatActivity() {
             amount = 3
         }
 
-
         binding.fifteenBtn.setOnClickListener(){
             game.thrown_values(15, amount)
+            updateAdapter()
         }
         binding.sixteenBtn.setOnClickListener(){
             game.thrown_values(16, amount)
+            updateAdapter()
         }
         binding.seventeenBtn.setOnClickListener(){
             game.thrown_values(17, amount)
+            updateAdapter()
         }
         binding.eightteenBtn.setOnClickListener(){
             game.thrown_values(18, amount)
+            updateAdapter()
         }
         binding.nineteenBtn.setOnClickListener(){
             game.thrown_values(19, amount)
+            updateAdapter()
         }
         binding.twentyBtn.setOnClickListener(){
             game.thrown_values(20, amount)
+            updateAdapter()
         }
+
         binding.bullBtn.setOnClickListener(){
             game.thrown_values(25, amount)
-            Toast.makeText(this, "bull", Toast.LENGTH_LONG).show()
-        }*/
+            updateAdapter()
+        }
+
 
         rvPlayerStatus = binding.rvRecycler
         rvPlayerStatus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -108,10 +121,15 @@ class CricketActivity : AppCompatActivity() {
 
     }
 
-
     private fun setupPlayerStatusRecyclerView() {
         rvPlayerStatus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         playerAdapter = PlayerStatusAdapter(playingPlayers!!)
         rvPlayerStatus.adapter = playerAdapter
+    }
+
+    private fun updateAdapter() {
+        for (i in 0..playingPlayers.size-1){
+            playerAdapter.notifyItemChanged(i)
+        }
     }
 }

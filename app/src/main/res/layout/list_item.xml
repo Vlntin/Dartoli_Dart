@@ -4,22 +4,20 @@
     android:id="@+id/card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="10dp"
-    app:cardElevation="5dp"
-    app:cardUseCompatPadding="true">
+    android:backgroundTint="@color/cricket_background_color"
+    app:strokeColor="@color/black"
+    app:strokeWidth="2dp">
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_width="150dp"
+    android:layout_width="140dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_id"
-    android:background="@drawable/blackline_bottom_and_right"
-    android:layout_marginBottom="20dp"
-    android:layout_marginTop="10dp">
+    android:id="@+id/layout_id">
 
     <TextView
         android:id="@+id/tv_playername"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:text="Franko"
         android:gravity="center"
         android:textColor="@color/black"
@@ -37,13 +35,11 @@
     <TextView
         android:id="@+id/points_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/cricket_table_element_height"
         android:text="0"
         android:textSize="20sp"
         android:gravity="center"
         android:textColor="@color/black"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         app:layout_constraintTop_toBottomOf="@id/name_points_seperator"
         app:layout_constraintBottom_toTopOf="@id/points_points_seperator"/>
     <View
@@ -56,7 +52,7 @@
     <LinearLayout
         android:id="@+id/fifteen_points_layout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/cricket_table_element_height"
         app:layout_constraintTop_toBottomOf="@id/points_points_seperator">
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,16 +64,19 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
             <ImageView
+                android:id="@+id/iv_15_1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_15_2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_15_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
@@ -94,9 +93,8 @@
     <LinearLayout
         android:id="@+id/sixteen_points_layout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/sixteen_fifteen_line"
-        android:background="@color/red">
+        android:layout_height="@dimen/cricket_table_element_height"
+        app:layout_constraintTop_toBottomOf="@id/sixteen_fifteen_line">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -107,16 +105,19 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
             <ImageView
+                android:id="@+id/iv_16_1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_16_2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_16_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
@@ -133,9 +134,8 @@
     <LinearLayout
         android:id="@+id/seventeen_points_layout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/seventeen_sixteen_line"
-        android:background="@color/green">
+        android:layout_height="@dimen/cricket_table_element_height"
+        app:layout_constraintTop_toBottomOf="@id/seventeen_sixteen_line">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -146,16 +146,19 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
             <ImageView
+                android:id="@+id/iv_17_1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_17_2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_17_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
@@ -172,7 +175,7 @@
     <LinearLayout
         android:id="@+id/eightteen_points_layout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/cricket_table_element_height"
         app:layout_constraintTop_toBottomOf="@id/eightteen_seventeen_line">
         <LinearLayout
             android:layout_width="match_parent"
@@ -184,16 +187,19 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
             <ImageView
+                android:id="@+id/iv_18_1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_18_2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_18_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
@@ -210,7 +216,7 @@
     <LinearLayout
         android:id="@+id/nineteen_points_layout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/cricket_table_element_height"
         app:layout_constraintTop_toBottomOf="@id/nineteen_eightteen_line">
         <LinearLayout
             android:layout_width="match_parent"
@@ -222,16 +228,19 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
             <ImageView
+                android:id="@+id/iv_19_1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_19_2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_19_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
@@ -248,7 +257,7 @@
     <LinearLayout
         android:id="@+id/twenty_points_layout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/cricket_table_element_height"
         app:layout_constraintTop_toBottomOf="@id/twenty_nineteen_line">
         <LinearLayout
             android:layout_width="match_parent"
@@ -260,16 +269,19 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
             <ImageView
+                android:id="@+id/iv_20_1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_20_2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_20_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
@@ -286,7 +298,7 @@
     <LinearLayout
         android:id="@+id/bull_points_layout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/cricket_table_element_height"
         app:layout_constraintTop_toBottomOf="@id/bull_twenty_line">
         <LinearLayout
             android:layout_width="match_parent"
@@ -298,16 +310,19 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
             <ImageView
+                android:id="@+id/iv_bull_1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_bull_2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_bull_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/outlined_circle"
