@@ -92,38 +92,56 @@ class CricketActivity : AppCompatActivity() {
 
         binding.fifteenBtn.setOnClickListener(){
             game.thrown_values(15, amount)
+            binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
         }
         binding.sixteenBtn.setOnClickListener(){
             game.thrown_values(16, amount)
+            binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
         }
         binding.seventeenBtn.setOnClickListener(){
             game.thrown_values(17, amount)
+            binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
         }
         binding.eightteenBtn.setOnClickListener(){
             game.thrown_values(18, amount)
+            binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
         }
         binding.nineteenBtn.setOnClickListener(){
             game.thrown_values(19, amount)
+            binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
         }
         binding.twentyBtn.setOnClickListener(){
             game.thrown_values(20, amount)
+            binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
         }
 
         binding.bullBtn.setOnClickListener(){
             game.thrown_values(25, amount)
+            binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
         }
 
         binding.missBtn.setOnClickListener(){
             game.thrown_values(0, 0)
+            binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
         }
+
+        binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
 
 
         rvPlayerStatus = binding.rvRecycler
@@ -163,4 +181,5 @@ class CricketActivity : AppCompatActivity() {
             playerAdapter.notifyItemChanged(i)
         }
     }
+
 }

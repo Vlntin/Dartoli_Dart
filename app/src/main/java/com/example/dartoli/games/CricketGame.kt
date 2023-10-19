@@ -174,7 +174,6 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
                 check_game_finished()
             }
         }
-
     }
     fun check_game_finished(){
         print("s")
@@ -220,7 +219,7 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
 
     fun reset_for_new_leg(){
         actualDartsLeft = 3
-        actualRound = 0
+        actualRound = 1
         actualPlayerNumber = 0
         for (player in game_players){
             reset_player(player)
