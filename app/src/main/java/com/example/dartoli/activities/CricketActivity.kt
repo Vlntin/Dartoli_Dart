@@ -2,6 +2,7 @@ package com.example.dartoli.activities
 
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -12,11 +13,13 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dartoli.R
+import com.example.dartoli.adapter.GameResultPlayerStatusAdapter
 import com.example.dartoli.adapter.PlayerStatusAdapter
 import com.example.dartoli.data.GamesDatabaseHandler
 import com.example.dartoli.data.PlayerDatabaseHandler
@@ -57,7 +60,7 @@ class CricketActivity : AppCompatActivity() {
         for (counter in 0..player_id_array!!.size - 1){
             for (player in players_dataset){
                 if(player.id == player_id_array[counter]){
-                    playingPlayers.add(CricketPlayer(player.playerName, 0, 0,0,0,0,0,0,0, false, false, false, false, false, false, false, 0, legs, 0, sets))
+                    playingPlayers.add(CricketPlayer(player.playerName, 0, 0,0,0,0,0,0,0, false, false, false, false, false, false, false, 0, legs, 0, sets, 0))
                 }
             }
         }
@@ -91,44 +94,44 @@ class CricketActivity : AppCompatActivity() {
         }
 
         binding.fifteenBtn.setOnClickListener(){
-            game.thrown_values(15, amount)
+            if (game.thrown_values(15, amount)) finishGame()
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
             binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
         }
         binding.sixteenBtn.setOnClickListener(){
-            game.thrown_values(16, amount)
+            if (game.thrown_values(16, amount)) finishGame()
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
             binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
         }
         binding.seventeenBtn.setOnClickListener(){
-            game.thrown_values(17, amount)
+            if (game.thrown_values(17, amount)) finishGame()
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
             binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
         }
         binding.eightteenBtn.setOnClickListener(){
-            game.thrown_values(18, amount)
+            if (game.thrown_values(18, amount)) finishGame()
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
             binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
         }
         binding.nineteenBtn.setOnClickListener(){
-            game.thrown_values(19, amount)
+            if (game.thrown_values(19, amount)) finishGame()
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
             binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
         }
         binding.twentyBtn.setOnClickListener(){
-            game.thrown_values(20, amount)
+            if (game.thrown_values(20, amount)) finishGame()
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
             binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
         }
 
         binding.bullBtn.setOnClickListener(){
-            game.thrown_values(25, amount)
+            if (game.thrown_values(25, amount)) finishGame()
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
             binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
             updateAdapter()
@@ -168,6 +171,50 @@ class CricketActivity : AppCompatActivity() {
                 true
             }
         }
+    }
+
+    private fun finishGame(){
+        var customDialog = Dialog(this);
+        customDialog.setContentView(R.layout.game_finished_dialog);
+        var playerAdapter: GameResultPlayerStatusAdapter
+        var rvPlayerStatus: RecyclerView
+        rvPlayerStatus = customDialog.findViewById<RecyclerView>(R.id.rv_result_recycler)
+        rvPlayerStatus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        var sortedPlayers = setRankForPlayers(playingPlayers)
+        playerAdapter = GameResultPlayerStatusAdapter(sortedPlayers)
+        rvPlayerStatus.adapter = playerAdapter
+
+
+        customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        customDialog.show()
+
+        val btnClose = customDialog.findViewById<TextView>(R.id.btn_close)
+        val btnStatistics = customDialog.findViewById<TextView>(R.id.btn_statistics)
+
+        btnClose.setOnClickListener(){
+            startActivity(Intent(this@CricketActivity, MainActivity::class.java))
+            finish()
+        }
+    }
+
+    private fun setRankForPlayers(players: ArrayList<CricketPlayer>): ArrayList<CricketPlayer>{
+        var sortedList = arrayListOf<CricketPlayer>()
+        for (player in players){
+            if (player.won_sets == player.needed_sets){
+                player.place = 1
+                sortedList.add(player)
+            }
+        }
+        for (i in game.needed_sets -1 downTo 0){
+            var place = sortedList.size + 1
+            for (player in players){
+                if (player.won_sets == i){
+                    player.place = place
+                    sortedList.add(player)
+                }
+            }
+        }
+        return sortedList
     }
 
     private fun setupPlayerStatusRecyclerView() {

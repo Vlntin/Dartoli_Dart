@@ -20,5 +20,6 @@ data class CricketPlayer(
     var won_legs : Int,
     var needed_legs : Int,
     var won_sets: Int,
-    var needed_sets: Int
+    var needed_sets: Int,
+    var place: Int,
 )

@@ -143,17 +143,12 @@ class MultiplayerActivity : AppCompatActivity() {
         start_game_button = binding.startGameButton
         start_game_button.setOnClickListener{
             if (ckeck_game_conditions()){
-
                 val winning_legs = Integer.parseInt(binding.etWinningLegs.text.toString())
                 val winning_sets = Integer.parseInt(binding.etWinningSets.text.toString())
-                //val game = CricketGame(winning_legs, winning_sets, selected_players)
-                //Toast.makeText(this, game.amountOfPlayers.toString(), Toast.LENGTH_LONG).show()
                 val intent = Intent(this@MultiplayerActivity, CricketActivity::class.java)
-                //intent.putExtra("cricket_game_key", game)
                 var id_array = IntArray(selected_players.size)
                 for (i in 0..selected_players.size -1){
                     id_array[i] = selected_players[i].id
-                    Toast.makeText(this, id_array[i].toString(), Toast.LENGTH_LONG).show()
                 }
                 intent.putExtra(LEGS_KEY, winning_legs)
                 intent.putExtra(SETS_KEY, winning_sets)
@@ -186,7 +181,6 @@ class MultiplayerActivity : AppCompatActivity() {
                     }
                 }
             }
-
         }
         player_list_view.addView(tv)
         player_list_scroll_view.setVisibility(View.VISIBLE)

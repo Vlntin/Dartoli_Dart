@@ -10,37 +10,6 @@ import com.example.dartoli.R
 import com.example.dartoli.databinding.ListItemBinding
 import com.example.dartoli.model.CricketPlayer
 import com.example.dartoli.model.Player
-/**
-class PlayerStatusAdapter(var items: ArrayList<Player>, val context: Context):
-    RecyclerView.Adapter<PlayerStatusAdapter.ViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerStatusAdapter.ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(context).inflate(
-                R.layout.list_item,
-                parent,
-                false
-            )
-        )
-    }
-
-    override fun onBindViewHolder(holder: PlayerStatusAdapter.ViewHolder, position: Int) {
-        val model: Player = items[position]
-
-        holder
-        //holder.tvItem.text = model.getId().toString()
-    }
-
-    override fun getItemCount(): Int {
-        return items.size
-    }
-
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        //val tvItem = view.tvItem!!
-        val tvName = view.
-    }
-
-}*/
 
 class PlayerStatusAdapter(var datalist:ArrayList<CricketPlayer>):RecyclerView.Adapter<PlayerStatusAdapter.PlayerStatusHolder>() {
 

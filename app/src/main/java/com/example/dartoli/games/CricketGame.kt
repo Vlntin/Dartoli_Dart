@@ -24,7 +24,7 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
     var game_players = players
 
 
-    fun thrown_values(value: Int, amount: Int){
+    fun thrown_values(value: Int, amount: Int): Boolean{
         for (i in 1..amount){
             if (value == 15) {
                 if (game_players[actualPlayerNumber].fifteens == 3 && !game_players[actualPlayerNumber].fifteensClosed) {
@@ -171,12 +171,16 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
         finish_player_move()
         if (check_leg_finished()){
             if (check_set_finished()){
-                check_game_finished()
+                if (check_game_finished()) return true
             }
         }
+        return false
     }
-    fun check_game_finished(){
-        print("s")
+    fun check_game_finished(): Boolean{
+        for (player in game_players){
+            if (player.won_sets == player.needed_sets) return true
+        }
+        return false
     }
 
     fun check_set_finished(): Boolean {
@@ -193,28 +197,28 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
     }
 
     fun check_leg_finished(): Boolean {
-        var max_points = 0
-        var player_index = 0
+        var result = false
         for (i in 0..game_players.size -1){
-            if (game_players[i].points > max_points) {
-                max_points = game_players[i].points
-                player_index = i
+            var best_player = game_players[i]
+            if (best_player.fifteens == 3 &&
+                best_player.sixteens == 3 &&
+                best_player.seventeens == 3 &&
+                best_player.eightteens == 3 &&
+                best_player.nineteens == 3 &&
+                best_player.twenties == 3 &&
+                best_player.bulls == 3){
+                var best = true
+                for (player in game_players){
+                    if (!player.equals(best_player) && player.points > best_player.points) best = false
+                }
+                if (best){
+                    best_player.won_legs++
+                    reset_for_new_leg()
+                    result = true
+                }
             }
         }
-        var best_player = game_players[player_index]
-        if (best_player.fifteens == 3 &&
-            best_player.sixteens == 3 &&
-            best_player.seventeens == 3 &&
-            best_player.eightteens == 3 &&
-            best_player.nineteens == 3 &&
-            best_player.twenties == 3 &&
-            best_player.bulls == 3){
-            game_players[player_index].won_legs++
-            reset_for_new_leg()
-            return true
-        } else {
-            return false
-        }
+        return result
     }
 
     fun reset_for_new_leg(){
