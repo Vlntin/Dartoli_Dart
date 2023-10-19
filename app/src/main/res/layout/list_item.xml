@@ -14,23 +14,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_id">
 
-    <TextView
-        android:id="@+id/tv_playername"
+    <LinearLayout
+        android:id="@+id/layout_playername"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Franko"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="@dimen/big_title_size"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        app:layout_constraintTop_toTopOf="@+id/layout_id"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_playername"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Franko"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="@+id/layout_id"/>
+        <View
+            android:id="@+id/playername_leg_info_seperator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_legs"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="0/3"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/tv_sets"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="0/2"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+    </LinearLayout>
     <View
         android:id="@+id/name_points_seperator"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/tv_playername"
+        app:layout_constraintTop_toBottomOf="@id/layout_playername"
         app:layout_constraintBottom_toTopOf="@id/points_layout"/>
     <TextView
         android:id="@+id/points_layout"

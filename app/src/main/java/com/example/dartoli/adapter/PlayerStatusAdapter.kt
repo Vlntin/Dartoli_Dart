@@ -144,6 +144,9 @@ class PlayerStatusAdapter(var datalist:ArrayList<CricketPlayer>):RecyclerView.Ad
             if(player.nineteensClosed) binding.nineteenPointsLayout.setBackgroundResource(R.color.red)
             if(player.twentiesClosed) binding.twentyPointsLayout.setBackgroundResource(R.color.red)
             if(player.bullsClosed) binding.bullPointsLayout.setBackgroundResource(R.color.red)
+
+            binding.tvLegs.setText(player.won_legs.toString() + "/" + player.needed_legs)
+            binding.tvSets.setText(player.won_sets.toString() + "/" + player.needed_sets)
         }
     }
 
