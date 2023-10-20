@@ -145,15 +145,26 @@ class MultiplayerActivity : AppCompatActivity() {
             if (ckeck_game_conditions()){
                 val winning_legs = Integer.parseInt(binding.etWinningLegs.text.toString())
                 val winning_sets = Integer.parseInt(binding.etWinningSets.text.toString())
-                val intent = Intent(this@MultiplayerActivity, CricketActivity::class.java)
                 var id_array = IntArray(selected_players.size)
                 for (i in 0..selected_players.size -1){
                     id_array[i] = selected_players[i].id
                 }
-                intent.putExtra(LEGS_KEY, winning_legs)
-                intent.putExtra(SETS_KEY, winning_sets)
-                intent.putExtra(PLAYERS_KEY, id_array)
-                startActivity(intent)
+                if (game_selection_button.text.equals("Cricket")){
+                    val intent = Intent(this@MultiplayerActivity, CricketActivity::class.java)
+                    intent.putExtra(LEGS_KEY, winning_legs)
+                    intent.putExtra(SETS_KEY, winning_sets)
+                    intent.putExtra(PLAYERS_KEY, id_array)
+                    startActivity(intent)
+                    finish()
+                } else if (game_selection_button.text.equals("501")){
+                    val intent = Intent(this@MultiplayerActivity, CountingGameActivity::class.java)
+                    intent.putExtra(LEGS_KEY, winning_legs)
+                    intent.putExtra(SETS_KEY, winning_sets)
+                    intent.putExtra(PLAYERS_KEY, id_array)
+                    startActivity(intent)
+                    finish()
+                }
+
             } else {
                 Toast.makeText(this, "Konditionen nicht erfüllt", Toast.LENGTH_LONG).show()
             }
