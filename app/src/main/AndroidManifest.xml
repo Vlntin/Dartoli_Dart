@@ -13,10 +13,10 @@
         android:theme="@style/Theme.Dartoli"
         tools:targetApi="31">
         <activity
-            android:name=".activities.CountingGameActivity"
+            android:name=".Counting.CountingGameActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.CricketActivity"
+            android:name=".Cricket.CricketActivity"
             android:exported="false" />
         <activity
             android:name=".activities.SplashActivity"

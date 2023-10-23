@@ -1,18 +1,5 @@
-package com.example.dartoli.games
+package com.example.dartoli.Cricket
 
-import android.app.Dialog
-import android.os.Parcel
-import android.os.Parcelable
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
-import com.example.dartoli.R
-import com.example.dartoli.activities.CricketActivity
-import com.example.dartoli.data.PlayerDatabaseHandler
-import com.example.dartoli.model.CricketPlayer
-import com.example.dartoli.model.Player
 import java.io.Serializable
 
 class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Serializable {

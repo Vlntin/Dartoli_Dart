@@ -1,4 +1,4 @@
-package com.example.dartoli.model
+package com.example.dartoli.Cricket
 
 data class CricketPlayer(
     var playerName: String,

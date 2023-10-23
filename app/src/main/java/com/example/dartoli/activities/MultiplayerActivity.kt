@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -19,14 +18,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isNotEmpty
+import com.example.dartoli.Counting.CountingGameActivity
 import com.example.dartoli.R
 import com.example.dartoli.data.GamesDatabaseHandler
 import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityMultiplayerBinding
 import com.example.dartoli.model.Game
 import com.example.dartoli.model.Player
-import android.view.View.OnLongClickListener;
-import com.example.dartoli.games.CricketGame
+import com.example.dartoli.Cricket.CricketActivity
 
 class MultiplayerActivity : AppCompatActivity() {
 

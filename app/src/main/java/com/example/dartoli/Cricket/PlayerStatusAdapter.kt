@@ -1,15 +1,10 @@
-package com.example.dartoli.adapter
+package com.example.dartoli.Cricket
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dartoli.R
 import com.example.dartoli.databinding.ListItemBinding
-import com.example.dartoli.model.CricketPlayer
-import com.example.dartoli.model.Player
 
 class PlayerStatusAdapter(var datalist:ArrayList<CricketPlayer>):RecyclerView.Adapter<PlayerStatusAdapter.PlayerStatusHolder>() {
 

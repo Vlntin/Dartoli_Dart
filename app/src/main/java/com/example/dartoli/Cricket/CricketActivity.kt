@@ -1,4 +1,4 @@
-package com.example.dartoli.activities
+package com.example.dartoli.Cricket
 
 
 import android.app.Dialog
@@ -8,24 +8,18 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dartoli.R
-import com.example.dartoli.adapter.GameResultPlayerStatusAdapter
-import com.example.dartoli.adapter.PlayerStatusAdapter
+import com.example.dartoli.activities.MainActivity
 import com.example.dartoli.data.GamesDatabaseHandler
 import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityCricketBinding
-import com.example.dartoli.games.CricketGame
-import com.example.dartoli.model.CricketPlayer
 
 
 class CricketActivity : AppCompatActivity() {
