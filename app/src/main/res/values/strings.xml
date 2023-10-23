@@ -13,4 +13,6 @@
     <string name="main_statistics">Statistiken</string>
     <string name="main_statistics_sub">Betrachte die wichtigsten Statistiken aller Spieler: Siegquote, Doppelquote und vieles mehr!</string>
 
+    <string name="game_finished_title">Spiel beendet</string>
+
 </resources>
