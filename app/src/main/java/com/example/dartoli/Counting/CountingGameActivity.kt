@@ -16,10 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityCountingGameBinding
-import com.example.dartoli.Cricket.CricketGame
-import com.example.dartoli.Cricket.CricketPlayer
-import com.example.dartoli.Cricket.GameResultPlayerStatusAdapter
-import com.example.dartoli.Cricket.PlayerStatusAdapter
 import com.example.dartoli.R
 import com.example.dartoli.activities.MainActivity
 import com.example.dartoli.data.GamesDatabaseHandler
@@ -51,7 +47,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         for (counter in 0..player_id_array!!.size - 1){
             for (player in players_dataset){
                 if(player.id == player_id_array[counter]){
-                    playingPlayers.add(CountingPlayer(player.playerName, 501, 0,0.0f,0,legs,0,sets,0, 0, arrayListOf<Int>()))
+                    playingPlayers.add(CountingPlayer(player.playerName, 501, 0,0.0f,0,legs,0,sets,0, 0, arrayListOf<Int>(), 0, 0))
                 }
             }
         }
@@ -157,37 +153,84 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
             R.id.eightteen_btn -> game.thrown_values(18, amount)
             R.id.nineteen_btn -> game.thrown_values(19, amount)
             R.id.twenty_btn -> game.thrown_values(20, amount)
-            R.id.bull_btn -> game.thrown_values(25, amount)
+            R.id.bull_btn -> if (amount < 3){
+                game.thrown_values(25, amount)
+            } else {
+                return
+            }
             R.id.miss_btn -> game.thrown_values(0, amount)
         }
-        if (game.ckeck_potential_double_hit()){
+        var potential_double_hits = game.check_potential_double_hit()
+        if (potential_double_hits > 0){
             var customDialog = Dialog(this);
             customDialog.setContentView(R.layout.throws_on_double_dialog);
             customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             customDialog.show()
 
+            val btnZero = customDialog.findViewById<TextView>(R.id.btn_zero_hit)
             val btnOne = customDialog.findViewById<TextView>(R.id.btn_one_hit)
             val btnTwo = customDialog.findViewById<TextView>(R.id.btn_two_hit)
             val btnThree = customDialog.findViewById<TextView>(R.id.btn_three_hit)
 
+            btnZero.setOnClickListener(){
+                game.throws_on_double(0)
+                customDialog.dismiss()
+                game.finish_player_move()
+                if (game.check_game_state()) finishGame()
+
+                binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
+                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+                updateAdapter()
+            }
             btnOne.setOnClickListener(){
                 game.throws_on_double(1)
                 customDialog.dismiss()
+                game.finish_player_move()
+                if (game.check_game_state()) finishGame()
+
+                binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
+                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+                updateAdapter()
             }
             btnTwo.setOnClickListener(){
                 game.throws_on_double(2)
                 customDialog.dismiss()
+                game.finish_player_move()
+                if (game.check_game_state()) finishGame()
+
+                binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
+                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+                updateAdapter()
             }
             btnThree.setOnClickListener(){
                 game.throws_on_double(3)
                 customDialog.dismiss()
+                game.finish_player_move()
+                if (game.check_game_state()) finishGame()
+
+                binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
+                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+                updateAdapter()
+            }
+            if (game.has_player_finished()){
+                    btnZero.visibility = View.GONE
+                }
+            if(potential_double_hits < 3){
+                btnThree.visibility = View.GONE
+            }
+            if(potential_double_hits < 2){
+                btnTwo.visibility = View.GONE
             }
             }
+        else {
+            game.finish_player_move()
+            if (game.check_game_state()) finishGame()
 
+            binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+            updateAdapter()
+        }
 
-        binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-        binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
-        updateAdapter()
     }
 
     private fun setupPlayerStatusRecyclerView() {
@@ -200,5 +243,50 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         for (i in 0..playingPlayers.size-1){
             playerAdapter.notifyItemChanged(i)
         }
+    }
+
+    private fun finishGame(){
+        var customDialog = Dialog(this);
+        customDialog.setContentView(R.layout.game_finished_dialog);
+        var playerAdapter: GameResultCountingPlayerStatusAdapter
+        var rvPlayerStatus: RecyclerView
+        rvPlayerStatus = customDialog.findViewById<RecyclerView>(R.id.rv_result_recycler)
+        rvPlayerStatus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        var sortedPlayers = setRankForPlayers(playingPlayers)
+        playerAdapter = GameResultCountingPlayerStatusAdapter(sortedPlayers)
+        rvPlayerStatus.adapter = playerAdapter
+
+
+        customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        customDialog.show()
+
+        val btnClose = customDialog.findViewById<TextView>(R.id.btn_close)
+        val btnStatistics = customDialog.findViewById<TextView>(R.id.btn_statistics)
+
+        btnClose.setOnClickListener(){
+            startActivity(Intent(this@CountingGameActivity, MainActivity::class.java))
+            finish()
+        }
+    }
+
+    //TODO: needs to get modified
+    private fun setRankForPlayers(players: ArrayList<CountingPlayer>): ArrayList<CountingPlayer>{
+        var sortedList = arrayListOf<CountingPlayer>()
+        for (player in players){
+            if (player.won_sets == player.needed_sets){
+                player.rank = 1
+                sortedList.add(player)
+            }
+        }
+        for (i in game.needed_sets -1 downTo 0){
+            var place = sortedList.size + 1
+            for (player in players){
+                if (player.won_sets == i){
+                    player.rank = place
+                    sortedList.add(player)
+                }
+            }
+        }
+        return sortedList
     }
 }
