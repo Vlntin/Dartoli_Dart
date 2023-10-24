@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dartoli.R
 import com.example.dartoli.databinding.CountingPlayerItemBinding
+import java.lang.Math.round
+import kotlin.math.roundToLong
 
 class CountingPlayerStatusAdapter(var datalist:ArrayList<CountingPlayer>):RecyclerView.Adapter<CountingPlayerStatusAdapter.PlayerStatusHolder>() {
 
@@ -14,7 +16,8 @@ class CountingPlayerStatusAdapter(var datalist:ArrayList<CountingPlayer>):Recycl
         fun bind(get: CountingPlayer) {
             binding.tvPlayername.text = get.playerName
             binding.tvPoints.text = get.points.toString()
-            binding.tvAverage.text = get.average.toString()
+            binding.tvAverage.text = String.format("%.2f", get.average)
+            binding.tvDoupleQuote.text = ("0" + "/" + get.throws_on_doubles)
 
             binding.tvLegs.setText(get.won_legs.toString() + "/" + get.needed_legs)
             binding.tvSets.setText(get.won_sets.toString() + "/" + get.needed_sets)

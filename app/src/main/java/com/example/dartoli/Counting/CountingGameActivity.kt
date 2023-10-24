@@ -1,10 +1,13 @@
 package com.example.dartoli.Counting
 
+import android.app.Dialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
@@ -15,8 +18,10 @@ import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityCountingGameBinding
 import com.example.dartoli.Cricket.CricketGame
 import com.example.dartoli.Cricket.CricketPlayer
+import com.example.dartoli.Cricket.GameResultPlayerStatusAdapter
 import com.example.dartoli.Cricket.PlayerStatusAdapter
 import com.example.dartoli.R
+import com.example.dartoli.activities.MainActivity
 import com.example.dartoli.data.GamesDatabaseHandler
 
 class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
@@ -46,7 +51,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         for (counter in 0..player_id_array!!.size - 1){
             for (player in players_dataset){
                 if(player.id == player_id_array[counter]){
-                    playingPlayers.add(CountingPlayer(player.playerName, 501, 0,0.0f,0,legs,0,sets,0))
+                    playingPlayers.add(CountingPlayer(player.playerName, 501, 0,0.0f,0,legs,0,sets,0, 0, arrayListOf<Int>()))
                 }
             }
         }
@@ -120,6 +125,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
             val height = LinearLayout.LayoutParams.WRAP_CONTENT
             val focusable = true
             popupView.findViewById<TextView>(R.id.tv_game_description).setText(description)
+            popupView.findViewById<TextView>(R.id.tv_game_title).setText("501")
             val popupWindow = PopupWindow(popupView, width, height, focusable)
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
             popupView.setOnTouchListener { v, event ->
@@ -154,6 +160,33 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
             R.id.bull_btn -> game.thrown_values(25, amount)
             R.id.miss_btn -> game.thrown_values(0, amount)
         }
+        if (game.ckeck_potential_double_hit()){
+            var customDialog = Dialog(this);
+            customDialog.setContentView(R.layout.throws_on_double_dialog);
+            customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            customDialog.show()
+
+            val btnOne = customDialog.findViewById<TextView>(R.id.btn_one_hit)
+            val btnTwo = customDialog.findViewById<TextView>(R.id.btn_two_hit)
+            val btnThree = customDialog.findViewById<TextView>(R.id.btn_three_hit)
+
+            btnOne.setOnClickListener(){
+                game.throws_on_double(1)
+                customDialog.dismiss()
+            }
+            btnTwo.setOnClickListener(){
+                game.throws_on_double(2)
+                customDialog.dismiss()
+            }
+            btnThree.setOnClickListener(){
+                game.throws_on_double(3)
+                customDialog.dismiss()
+            }
+            }
+
+
+        binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
+        binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
         updateAdapter()
     }
 

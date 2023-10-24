@@ -9,4 +9,6 @@ data class CountingPlayer(
     var needed_legs : Int,
     var won_sets: Int,
     var needed_sets: Int,
-    var rank: Int,)
+    var throws_on_doubles: Int,
+    var rank: Int,
+    var throws_points: ArrayList<Int>)
