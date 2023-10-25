@@ -3,7 +3,9 @@ package com.example.dartoli.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.dartoli.data.GamesDatabaseHandler
 import com.example.dartoli.databinding.ActivityMainBinding
+import com.example.dartoli.model.Game
 
 class MainActivity : AppCompatActivity() {
 

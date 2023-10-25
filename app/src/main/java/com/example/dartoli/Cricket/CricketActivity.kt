@@ -3,6 +3,8 @@ package com.example.dartoli.Cricket
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -180,6 +182,7 @@ class CricketActivity : AppCompatActivity() {
 
 
         customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        customDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         customDialog.show()
 
         val btnClose = customDialog.findViewById<TextView>(R.id.btn_close)

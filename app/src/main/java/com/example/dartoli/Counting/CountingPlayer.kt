@@ -16,4 +16,5 @@ data class CountingPlayer(
     var hit_doubles: Int,
     var game_average: Double,
     var all_averages: ArrayList<Double>,
-    var all_thrown_darts: ArrayList<Int>)
+    var all_thrown_darts: ArrayList<Int>,
+    var won_overall_legs: Int)

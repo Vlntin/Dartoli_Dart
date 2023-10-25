@@ -2,6 +2,8 @@ package com.example.dartoli.Counting
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
@@ -47,7 +49,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         for (counter in 0..player_id_array!!.size - 1){
             for (player in players_dataset){
                 if(player.id == player_id_array[counter]){
-                    playingPlayers.add(CountingPlayer(player.playerName, 501, 0,0.0,0,legs,0,sets,0, 0, arrayListOf<Int>(), 0, 0, 0.0, arrayListOf<Double>(), arrayListOf<Int>()))
+                    playingPlayers.add(CountingPlayer(player.playerName, 501, 0,0.0,0,legs,0,sets,0, 0, arrayListOf<Int>(), 0, 0, 0.0, arrayListOf<Double>(), arrayListOf<Int>(), 0))
                 }
             }
         }
@@ -107,10 +109,10 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         rvPlayerStatus = binding.rvRecycler
         setupPlayerStatusRecyclerView()
 
-        val myDB2: GamesDatabaseHandler
-        myDB2 = GamesDatabaseHandler(this)
+        val myDB2 = GamesDatabaseHandler(this)
         var games = myDB2.readAllGames()
-        var description =""
+        var description : String
+        description = ""
         for(game in games){
             if (game.name.equals("501")) description = game.description
         }
@@ -165,6 +167,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
             var customDialog = Dialog(this);
             customDialog.setContentView(R.layout.throws_on_double_dialog);
             customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            customDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             customDialog.show()
 
             val btnZero = customDialog.findViewById<TextView>(R.id.btn_zero_hit)
@@ -252,6 +255,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
 
 
         customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        customDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         customDialog.show()
 
         val btnClose = customDialog.findViewById<TextView>(R.id.btn_close)
@@ -276,8 +280,8 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
             if (copied_players.size > 1){
                 for (i in 1..copied_players.size -1){
                     if (copied_players[i].won_sets > best_player.won_sets ||
-                        (copied_players[i].won_sets == best_player.won_sets && copied_players[i].won_legs > best_player.won_legs) ||
-                        (copied_players[i].won_sets == best_player.won_sets && copied_players[i].won_legs == best_player.won_legs && copied_players[i].game_average > best_player.game_average)) {
+                        (copied_players[i].won_sets == best_player.won_sets && copied_players[i].won_overall_legs > best_player.won_overall_legs) ||
+                        (copied_players[i].won_sets == best_player.won_sets && copied_players[i].won_overall_legs == best_player.won_overall_legs && copied_players[i].game_average > best_player.game_average)) {
                         best_player = copied_players[i]
                     }
                 }

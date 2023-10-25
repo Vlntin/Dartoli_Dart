@@ -67,6 +67,7 @@ class CountingGame(legs: Int, sets: Int, players: ArrayList<CountingPlayer>): Se
                 for (player in game_players){
                         if (player.points == 0){
                                 player.won_legs++
+                                player.won_overall_legs++
                                 player.hit_doubles++
                                 reset_for_new_leg()
                                 return true
