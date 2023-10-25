@@ -16,7 +16,8 @@ class CountingPlayerStatusAdapter(var datalist:ArrayList<CountingPlayer>):Recycl
         fun bind(get: CountingPlayer) {
             binding.tvPlayername.text = get.playerName
             binding.tvPoints.text = get.points.toString()
-            binding.tvAverage.text = String.format("%.2f", get.average)
+            binding.tvLegAverage.text = String.format("%.2f", get.leg_average)
+            binding.tvGameAverage.text = String.format("%.2f", get.game_average)
             binding.tvDoupleQuote.text = (get.hit_doubles.toString() + "/" + get.throws_on_doubles)
 
             binding.tvLegs.setText(get.won_legs.toString() + "/" + get.needed_legs)

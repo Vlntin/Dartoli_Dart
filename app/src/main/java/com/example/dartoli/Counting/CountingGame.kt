@@ -1,6 +1,7 @@
 package com.example.dartoli.Counting
 
 
+import android.util.Log
 import com.example.dartoli.Cricket.CricketPlayer
 import com.example.dartoli.GameModel
 import java.io.Serializable
@@ -18,21 +19,18 @@ class CountingGame(legs: Int, sets: Int, players: ArrayList<CountingPlayer>): Se
                 var actual_player = game_players[actualPlayerNumber]
                 set_double_tries(actual_player)
                 if (score_allowed(score, amount)){
-                        actual_player.thrown_darts++
+                        actual_player.leg_thrown_darts++
                         actual_player.points = actual_player.points - score
-                        actual_player.average = (actual_player.average * (actual_player.thrown_darts - 1) + score) / actual_player.thrown_darts
                         actual_player.throws_points.add(score)
                 } else {
                         actual_player.throws_points.add(0)
-                        actual_player.thrown_darts++
-                        actual_player.average = actual_player.average * (actual_player.thrown_darts - 1) / actual_player.thrown_darts
+                        actual_player.leg_thrown_darts++
                         while (actualDartsLeft > 1){
                                 actual_player.throws_points.add(0)
-                                actual_player.thrown_darts++
+                                actual_player.leg_thrown_darts++
                                 actualDartsLeft--
                         }
                         actual_player.points = actual_player.points + actual_player.throws_points[actual_player.throws_points.size -1] + actual_player.throws_points[actual_player.throws_points.size -2] + actual_player.throws_points[actual_player.throws_points.size -3]
-                        actual_player.average = ((501 - actual_player.points) / actual_player.thrown_darts).toFloat()
                 }
         }
 
@@ -88,9 +86,32 @@ class CountingGame(legs: Int, sets: Int, players: ArrayList<CountingPlayer>): Se
 
         fun reset_player(player: CountingPlayer){
                 player.points = 501
+                player.all_averages.add(player.leg_average)
+                player.all_thrown_darts.add(player.leg_thrown_darts)
+                player.leg_average = 0.0
+                player.leg_thrown_darts = 0
+                player.double_throws_in_round = 0
         }
         fun finish_player_move(){
                 if (actualDartsLeft == 1){
+                        var actual_player = game_players[actualPlayerNumber]
+                        actual_player.leg_average =(((501 - actual_player.points) / actual_player.leg_thrown_darts) * 3).toDouble()
+                        if (actual_player.all_averages.size == 0){
+                                actual_player.game_average = actual_player.leg_average
+                        } else{
+                                var summed_throws : Double
+                                summed_throws = 0.0
+                                var past_average : Double
+                                past_average = 0.0
+                                for (throws in actual_player.all_thrown_darts){
+                                        summed_throws = summed_throws + throws
+                                }
+                                for (i in 0..actual_player.all_thrown_darts.size - 1){
+                                        past_average = past_average + actual_player.all_averages[i] * (actual_player.all_thrown_darts[i] / summed_throws)
+                                }
+                                actual_player.game_average = (past_average * (summed_throws / ( summed_throws + actual_player.leg_thrown_darts))) + (actual_player.leg_average * (actual_player.leg_thrown_darts.toDouble() / ( summed_throws + actual_player.leg_thrown_darts)))
+                        }
+
                         change_actual_player()
                 } else {
                         actualDartsLeft--

@@ -47,7 +47,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         for (counter in 0..player_id_array!!.size - 1){
             for (player in players_dataset){
                 if(player.id == player_id_array[counter]){
-                    playingPlayers.add(CountingPlayer(player.playerName, 501, 0,0.0f,0,legs,0,sets,0, 0, arrayListOf<Int>(), 0, 0))
+                    playingPlayers.add(CountingPlayer(player.playerName, 501, 0,0.0,0,legs,0,sets,0, 0, arrayListOf<Int>(), 0, 0, 0.0, arrayListOf<Double>(), arrayListOf<Int>()))
                 }
             }
         }
