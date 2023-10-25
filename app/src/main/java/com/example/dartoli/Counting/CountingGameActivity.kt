@@ -212,15 +212,9 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
                 binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
                 updateAdapter()
             }
-            if (game.has_player_finished()){
-                    btnZero.visibility = View.GONE
-                }
-            if(potential_double_hits < 3){
-                btnThree.visibility = View.GONE
-            }
-            if(potential_double_hits < 2){
-                btnTwo.visibility = View.GONE
-            }
+            if (game.has_player_finished()) btnZero.visibility = View.GONE
+            if (potential_double_hits < 3) btnThree.visibility = View.GONE
+            if (potential_double_hits < 2) btnTwo.visibility = View.GONE
             }
         else {
             game.finish_player_move()
@@ -272,20 +266,27 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
     //TODO: needs to get modified
     private fun setRankForPlayers(players: ArrayList<CountingPlayer>): ArrayList<CountingPlayer>{
         var sortedList = arrayListOf<CountingPlayer>()
+        var copied_players = arrayListOf<CountingPlayer>()
+        var rank = 1
         for (player in players){
-            if (player.won_sets == player.needed_sets){
-                player.rank = 1
-                sortedList.add(player)
-            }
+            copied_players.add(player)
         }
-        for (i in game.needed_sets -1 downTo 0){
-            var place = sortedList.size + 1
-            for (player in players){
-                if (player.won_sets == i){
-                    player.rank = place
-                    sortedList.add(player)
+        while (copied_players.isNotEmpty()){
+            var best_player = copied_players[0]
+            if (copied_players.size > 1){
+                for (i in 1..copied_players.size -1){
+                    if (copied_players[i].won_sets > best_player.won_sets ||
+                        (copied_players[i].won_sets == best_player.won_sets && copied_players[i].won_legs > best_player.won_legs) ||
+                        (copied_players[i].won_sets == best_player.won_sets && copied_players[i].won_legs == best_player.won_legs && copied_players[i].game_average > best_player.game_average)) {
+                        best_player = copied_players[i]
+                    }
                 }
+
             }
+            best_player.rank = rank
+            rank++
+            sortedList.add(best_player)
+            copied_players.remove(best_player)
         }
         return sortedList
     }
