@@ -103,7 +103,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         binding.bullBtn.setOnClickListener(this)
         binding.missBtn.setOnClickListener(this)
 
-        binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+        binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
 
 
         rvPlayerStatus = binding.rvRecycler
@@ -182,7 +182,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
                 if (game.check_game_state()) finishGame()
 
                 binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
                 updateAdapter()
             }
             btnOne.setOnClickListener(){
@@ -192,7 +192,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
                 if (game.check_game_state()) finishGame()
 
                 binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
                 updateAdapter()
             }
             btnTwo.setOnClickListener(){
@@ -202,7 +202,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
                 if (game.check_game_state()) finishGame()
 
                 binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
                 updateAdapter()
             }
             btnThree.setOnClickListener(){
@@ -212,7 +212,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
                 if (game.check_game_state()) finishGame()
 
                 binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
                 updateAdapter()
             }
             if (game.has_player_finished()) btnZero.visibility = View.GONE
@@ -224,7 +224,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
             if (game.check_game_state()) finishGame()
 
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
             updateAdapter()
         }
 
@@ -267,7 +267,6 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    //TODO: needs to get modified
     private fun setRankForPlayers(players: ArrayList<CountingPlayer>): ArrayList<CountingPlayer>{
         var sortedList = arrayListOf<CountingPlayer>()
         var copied_players = arrayListOf<CountingPlayer>()

@@ -92,55 +92,55 @@ class CricketActivity : AppCompatActivity() {
         binding.fifteenBtn.setOnClickListener(){
             if (game.thrown_values(15, amount)) finishGame()
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
             updateAdapter()
         }
         binding.sixteenBtn.setOnClickListener(){
             if (game.thrown_values(16, amount)) finishGame()
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
             updateAdapter()
         }
         binding.seventeenBtn.setOnClickListener(){
             if (game.thrown_values(17, amount)) finishGame()
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
             updateAdapter()
         }
         binding.eightteenBtn.setOnClickListener(){
             if (game.thrown_values(18, amount)) finishGame()
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
             updateAdapter()
         }
         binding.nineteenBtn.setOnClickListener(){
             if (game.thrown_values(19, amount)) finishGame()
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
             updateAdapter()
         }
         binding.twentyBtn.setOnClickListener(){
             if (game.thrown_values(20, amount)) finishGame()
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
             updateAdapter()
         }
 
         binding.bullBtn.setOnClickListener(){
             if (game.thrown_values(25, amount)) finishGame()
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
             updateAdapter()
         }
 
         binding.missBtn.setOnClickListener(){
             game.thrown_values(0, 0)
             binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
             updateAdapter()
         }
 
-        binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName)
+        binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
 
 
         rvPlayerStatus = binding.rvRecycler

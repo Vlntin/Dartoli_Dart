@@ -13,6 +13,8 @@ class CountingGame(legs: Int, sets: Int, players: ArrayList<CountingPlayer>): Se
         var actualDartsLeft = 3
         var actualRound = 1
         var game_players = players
+        var set_start_player = 0
+        var leg_start_player = 0
 
         fun thrown_values(value: Int, amount: Int){
                 var score = value * amount
@@ -53,6 +55,13 @@ class CountingGame(legs: Int, sets: Int, players: ArrayList<CountingPlayer>): Se
         fun check_set_finished(): Boolean {
                 for (player in game_players){
                         if (player.won_legs == needed_legs){
+                                if (set_start_player < game_players.size - 1){
+                                        set_start_player++
+                                } else {
+                                        set_start_player = 0
+                                }
+                                actualPlayerNumber = set_start_player
+                                leg_start_player = set_start_player
                                 player.won_sets++
                                 for (player in game_players){
                                         player.won_legs = 0
@@ -77,9 +86,16 @@ class CountingGame(legs: Int, sets: Int, players: ArrayList<CountingPlayer>): Se
         }
 
         fun reset_for_new_leg(){
+                if (leg_start_player < game_players.size - 1){
+                        leg_start_player++
+
+                } else {
+                      leg_start_player = 0
+                }
+                actualPlayerNumber = leg_start_player
                 actualDartsLeft = 3
                 actualRound = 1
-                actualPlayerNumber = 0
+
                 for (player in game_players){
                         reset_player(player)
                 }
