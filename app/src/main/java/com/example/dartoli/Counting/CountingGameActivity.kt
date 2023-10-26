@@ -21,6 +21,7 @@ import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityCountingGameBinding
 import com.example.dartoli.R
 import com.example.dartoli.activities.MainActivity
+import com.example.dartoli.activities.MultiplayerActivity
 import com.example.dartoli.data.GamesDatabaseHandler
 
 class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
@@ -135,6 +136,10 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
                 true
             }
         }
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this@CountingGameActivity, MultiplayerActivity::class.java))
     }
 
     override fun onClick(view: View?) {

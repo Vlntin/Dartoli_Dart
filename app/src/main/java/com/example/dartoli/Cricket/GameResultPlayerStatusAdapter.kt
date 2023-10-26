@@ -5,7 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dartoli.databinding.GameFinishedItemBinding
 
-class GameResultPlayerStatusAdapter(var datalist:ArrayList<CricketPlayer>): RecyclerView.Adapter<GameResultPlayerStatusAdapter.GameResultPlayerStatusHolder>() {
+class
+GameResultPlayerStatusAdapter(var datalist:ArrayList<CricketPlayer>): RecyclerView.Adapter<GameResultPlayerStatusAdapter.GameResultPlayerStatusHolder>() {
 
     class GameResultPlayerStatusHolder(val binding: GameFinishedItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(get: CricketPlayer) {

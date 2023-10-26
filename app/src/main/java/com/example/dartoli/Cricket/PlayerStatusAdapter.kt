@@ -6,23 +6,34 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dartoli.R
 import com.example.dartoli.databinding.ListItemBinding
 
-class PlayerStatusAdapter(var datalist:ArrayList<CricketPlayer>):RecyclerView.Adapter<PlayerStatusAdapter.PlayerStatusHolder>() {
+class PlayerStatusAdapter(var datalist:ArrayList<CricketPlayer>, var color: Int):RecyclerView.Adapter<PlayerStatusAdapter.PlayerStatusHolder>() {
 
+    var grey = color
     class PlayerStatusHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(get: CricketPlayer) {
+        fun bind(get: CricketPlayer, even: Boolean, grey: Int) {
+            if (!even) binding.card.setBackgroundColor(grey)
             binding.tvPlayername.text = get.playerName
             binding.pointsLayout.text = get.points.toString()
-            set_pictures(get)
+            set_pictures(get, even)
         }
-        fun set_pictures(player: CricketPlayer){
-
-            if(!player.fifteensClosed) binding.fifteenPointsLayout.setBackgroundResource(R.color.cricket_background_color)
-            if(!player.sixteensClosed) binding.sixteenPointsLayout.setBackgroundResource(R.color.cricket_background_color)
-            if(!player.seventeensClosed) binding.seventeenPointsLayout.setBackgroundResource(R.color.cricket_background_color)
-            if(!player.eightteensClosed) binding.eightteenPointsLayout.setBackgroundResource(R.color.cricket_background_color)
-            if(!player.nineteensClosed) binding.nineteenPointsLayout.setBackgroundResource(R.color.cricket_background_color)
-            if(!player.twentiesClosed) binding.twentyPointsLayout.setBackgroundResource(R.color.cricket_background_color)
-            if(!player.bullsClosed) binding.bullPointsLayout.setBackgroundResource(R.color.cricket_background_color)
+        fun set_pictures(player: CricketPlayer, even: Boolean){
+            if(even){
+                if(!player.fifteensClosed) binding.fifteenPointsLayout.setBackgroundResource(R.color.white)
+                if(!player.sixteensClosed) binding.sixteenPointsLayout.setBackgroundResource(R.color.white)
+                if(!player.seventeensClosed) binding.seventeenPointsLayout.setBackgroundResource(R.color.white)
+                if(!player.eightteensClosed) binding.eightteenPointsLayout.setBackgroundResource(R.color.white)
+                if(!player.nineteensClosed) binding.nineteenPointsLayout.setBackgroundResource(R.color.white)
+                if(!player.twentiesClosed) binding.twentyPointsLayout.setBackgroundResource(R.color.white)
+                if(!player.bullsClosed) binding.bullPointsLayout.setBackgroundResource(R.color.white)
+            } else {
+                if(!player.fifteensClosed) binding.fifteenPointsLayout.setBackgroundResource(R.color.cricket_background_color)
+                if(!player.sixteensClosed) binding.sixteenPointsLayout.setBackgroundResource(R.color.cricket_background_color)
+                if(!player.seventeensClosed) binding.seventeenPointsLayout.setBackgroundResource(R.color.cricket_background_color)
+                if(!player.eightteensClosed) binding.eightteenPointsLayout.setBackgroundResource(R.color.cricket_background_color)
+                if(!player.nineteensClosed) binding.nineteenPointsLayout.setBackgroundResource(R.color.cricket_background_color)
+                if(!player.twentiesClosed) binding.twentyPointsLayout.setBackgroundResource(R.color.cricket_background_color)
+                if(!player.bullsClosed) binding.bullPointsLayout.setBackgroundResource(R.color.cricket_background_color)
+            }
 
             if (player.fifteens == 0) {
                 binding.iv151.setImageResource(R.drawable.outlined_circle)
@@ -121,7 +132,11 @@ class PlayerStatusAdapter(var datalist:ArrayList<CricketPlayer>):RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: PlayerStatusHolder, position: Int) {
-        holder.bind(datalist[position])
+        if (position % 2 == 0){
+            holder.bind(datalist[position], true, grey)
+        } else {
+            holder.bind(datalist[position], false, grey)
+        }
     }
 
     override fun getItemCount(): Int {

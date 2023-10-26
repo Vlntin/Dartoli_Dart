@@ -179,6 +179,9 @@ class MultiplayerActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        startActivity(Intent(this@MultiplayerActivity, MainActivity::class.java))
+    }
 
     private fun add_player_to_list(name: String): Boolean{
         val tv = TextView(this)

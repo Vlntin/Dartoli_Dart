@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cricket_background_color"
+    android:background="@color/start_green"
     tools:context=".Cricket.CricketActivity">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,8 +13,8 @@
         android:id="@+id/cricket_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cricket_background_color"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="center"
+            android:id="@+id/crriket_title">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,38 +80,80 @@
 
     </LinearLayout>
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/cricket_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:id="@+id/table2"
+        app:layout_constraintTop_toBottomOf="@+id/cricket_title">
+    <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/table2"
         android:id="@+id/ll_recycleview_and_table"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center"
+        android:layout_gravity="center_vertical"
         android:gravity="center"
-        android:paddingBottom="15dp">
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"
+        android:foreground="@drawable/btn_normal_transparent"
+        android:background="@drawable/btn_normal">
         <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_height="wrap_content"
             android:layout_width="70dp"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/layout_id"
-            android:layout_marginTop="17dp">
+            android:background="@color/cricket_background_color">
 
-            <TextView
-                android:id="@+id/tv_playername"
+            <LinearLayout
+                android:id="@+id/layout_playername"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text=""
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/big_title_size"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                app:layout_constraintTop_toTopOf="@+id/layout_id"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_playername"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text=""
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toTopOf="@+id/layout_id"/>
+                <View
+                    android:id="@+id/playername_leg_info_seperator"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp">
+                    <TextView
+                        android:id="@+id/tv_legs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="left"
+                        android:text="Legs"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:id="@+id/tv_sets"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="right"
+                        android:text="Sets"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </LinearLayout>
             <View
                 android:id="@+id/name_points_seperator"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:background="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/tv_playername"
+                app:layout_constraintTop_toBottomOf="@id/layout_playername"
                 app:layout_constraintBottom_toTopOf="@id/points_layout"/>
             <TextView
                 android:id="@+id/points_layout"
@@ -125,9 +168,9 @@
             <View
                 android:id="@+id/points_points_seperator"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:background="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/tv_playername"
+                app:layout_constraintTop_toBottomOf="@id/points_layout"
                 app:layout_constraintBottom_toTopOf="@id/table_fifteen_points_layout"/>
             <LinearLayout
                 android:id="@+id/table_fifteen_points_layout"
@@ -156,7 +199,7 @@
             <View
                 android:id="@+id/sixteen_fifteen_line"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:background="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/table_fifteen_points_layout"
                 app:layout_constraintBottom_toTopOf="@id/table_sixteen_points_layout"/>
@@ -186,7 +229,7 @@
             <View
                 android:id="@+id/seventeen_sixteen_line"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:background="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/table_sixteen_points_layout"
                 app:layout_constraintBottom_toTopOf="@id/table_seventeen_points_layout"/>
@@ -216,7 +259,7 @@
             <View
                 android:id="@+id/eightteen_seventeen_line"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:background="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/table_seventeen_points_layout"
                 app:layout_constraintBottom_toTopOf="@id/table_eightteen_points_layout"/>
@@ -246,7 +289,7 @@
             <View
                 android:id="@+id/nineteen_eightteen_line"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:background="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/table_eightteen_points_layout"
                 app:layout_constraintBottom_toTopOf="@id/table_nineteen_points_layout"/>
@@ -276,7 +319,7 @@
             <View
                 android:id="@+id/twenty_nineteen_line"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:background="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/table_nineteen_points_layout"
                 app:layout_constraintBottom_toTopOf="@id/table_twenty_points_layout"/>
@@ -306,7 +349,7 @@
             <View
                 android:id="@+id/bull_twenty_line"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:background="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/table_twenty_points_layout"
                 app:layout_constraintBottom_toTopOf="@id/table_bull_points_layout"/>
@@ -340,13 +383,12 @@
         app:layout_constraintTop_toBottomOf="@+id/cricket_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         tools:listitem="@layout/list_item"
         app:layout_constraintBottom_toTopOf="@id/table_layout"
-        android:backgroundTint="@color/cricket_background_color"
-        android:paddingBottom="10dp"
-        android:layout_marginTop="15dp"/>
+        android:backgroundTint="@color/cricket_background_color"/>
+    </LinearLayout>
     </LinearLayout>
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/table_layout"
@@ -354,7 +396,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:gravity="bottom"
-        app:layout_constraintTop_toBottomOf="@+id/ll_recycleview_and_table">
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/table2">
         <TableRow
             android:layout_gravity="center"
             android:layout_height="500dp"

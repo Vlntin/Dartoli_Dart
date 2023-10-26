@@ -1,11 +1,14 @@
 package com.example.dartoli.Counting
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dartoli.R
+import com.example.dartoli.activities.MainActivity
+import com.example.dartoli.activities.MultiplayerActivity
 import com.example.dartoli.databinding.ActivityCountingGameStatisticsBinding
 
 private lateinit var binding: ActivityCountingGameStatisticsBinding
@@ -40,5 +43,9 @@ class CountingGameStatisticsActivity : AppCompatActivity() {
         for (i in 0..playingPlayers.size-1){
             playerAdapter.notifyItemChanged(i)
         }
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this@CountingGameStatisticsActivity, MainActivity::class.java))
     }
 }

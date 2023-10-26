@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dartoli.R
 import com.example.dartoli.activities.MainActivity
+import com.example.dartoli.activities.MultiplayerActivity
 import com.example.dartoli.data.GamesDatabaseHandler
 import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityCricketBinding
@@ -194,6 +196,10 @@ class CricketActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        startActivity(Intent(this@CricketActivity, MultiplayerActivity::class.java))
+    }
+
     private fun setRankForPlayers(players: ArrayList<CricketPlayer>): ArrayList<CricketPlayer>{
         var sortedList = arrayListOf<CricketPlayer>()
         for (player in players){
@@ -216,7 +222,7 @@ class CricketActivity : AppCompatActivity() {
 
     private fun setupPlayerStatusRecyclerView() {
         rvPlayerStatus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        playerAdapter = PlayerStatusAdapter(playingPlayers!!)
+        playerAdapter = PlayerStatusAdapter(playingPlayers!!, ContextCompat.getColor(this, R.color.cricket_background_color))
         rvPlayerStatus.adapter = playerAdapter
     }
 

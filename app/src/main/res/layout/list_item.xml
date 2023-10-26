@@ -3,14 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:backgroundTint="@color/cricket_background_color"
-    app:strokeColor="@color/black"
-    app:strokeWidth="2dp">
+    android:layout_height="wrap_content">
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_width="140dp"
+    android:layout_width="120dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_id">
 
@@ -31,26 +28,28 @@
         <View
             android:id="@+id/playername_leg_info_seperator"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:background="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
             <TextView
                 android:id="@+id/tv_legs"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="0/3"
                 android:textColor="@color/black"/>
             <TextView
                 android:id="@+id/tv_sets"
-                android:layout_width="70dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center"
+                android:gravity="right"
                 android:text="0/2"
                 android:textColor="@color/black"/>
         </LinearLayout>
@@ -58,7 +57,7 @@
     <View
         android:id="@+id/name_points_seperator"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/black"
         app:layout_constraintTop_toBottomOf="@id/layout_playername"
         app:layout_constraintBottom_toTopOf="@id/points_layout"/>
@@ -75,9 +74,9 @@
     <View
         android:id="@+id/points_points_seperator"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/tv_playername"
+        app:layout_constraintTop_toBottomOf="@id/points_layout"
         app:layout_constraintBottom_toTopOf="@id/fifteen_points_layout"/>
     <LinearLayout
         android:id="@+id/fifteen_points_layout"
@@ -116,7 +115,7 @@
     <View
         android:id="@+id/sixteen_fifteen_line"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/black"
         app:layout_constraintTop_toBottomOf="@id/fifteen_points_layout"
         app:layout_constraintBottom_toTopOf="@id/sixteen_points_layout"/>
@@ -157,7 +156,7 @@
     <View
         android:id="@+id/seventeen_sixteen_line"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/black"
         app:layout_constraintTop_toBottomOf="@id/sixteen_points_layout"
         app:layout_constraintBottom_toTopOf="@id/seventeen_points_layout"/>
@@ -198,7 +197,7 @@
     <View
         android:id="@+id/eightteen_seventeen_line"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/black"
         app:layout_constraintTop_toBottomOf="@id/seventeen_points_layout"
         app:layout_constraintBottom_toTopOf="@id/eightteen_points_layout"/>
@@ -239,7 +238,7 @@
     <View
         android:id="@+id/nineteen_eightteen_line"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/black"
         app:layout_constraintTop_toBottomOf="@id/eightteen_points_layout"
         app:layout_constraintBottom_toTopOf="@id/nineteen_points_layout"/>
@@ -280,7 +279,7 @@
     <View
         android:id="@+id/twenty_nineteen_line"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/black"
         app:layout_constraintTop_toBottomOf="@id/nineteen_points_layout"
         app:layout_constraintBottom_toTopOf="@id/twenty_points_layout"/>
@@ -321,7 +320,7 @@
     <View
         android:id="@+id/bull_twenty_line"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/black"
         app:layout_constraintTop_toBottomOf="@id/twenty_points_layout"
         app:layout_constraintBottom_toTopOf="@id/bull_points_layout"/>
