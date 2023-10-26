@@ -46,6 +46,7 @@ class MultiplayerActivity : AppCompatActivity() {
     val LEGS_KEY = "legs"
     val SETS_KEY = "sets"
     val PLAYERS_KEY = "players"
+    val POINTS_KEY = "points"
 
 
     @SuppressLint("ResourceAsColor", "ResourceType")
@@ -160,10 +161,18 @@ class MultiplayerActivity : AppCompatActivity() {
                     intent.putExtra(LEGS_KEY, winning_legs)
                     intent.putExtra(SETS_KEY, winning_sets)
                     intent.putExtra(PLAYERS_KEY, id_array)
+                    intent.putExtra(POINTS_KEY, 501)
+                    startActivity(intent)
+                    finish()
+                } else if (game_selection_button.text.equals("301")) {
+                    val intent = Intent(this@MultiplayerActivity, CountingGameActivity::class.java)
+                    intent.putExtra(LEGS_KEY, winning_legs)
+                    intent.putExtra(SETS_KEY, winning_sets)
+                    intent.putExtra(PLAYERS_KEY, id_array)
+                    intent.putExtra(POINTS_KEY, 301)
                     startActivity(intent)
                     finish()
                 }
-
             } else {
                 Toast.makeText(this, "Konditionen nicht erfüllt", Toast.LENGTH_LONG).show()
             }

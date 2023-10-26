@@ -20,5 +20,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this@MainActivity, MultiplayerActivity::class.java))
             finish()
         }
+
     }
 }

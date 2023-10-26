@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dartoli.Cricket.CricketActivity
 import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityCountingGameBinding
 import com.example.dartoli.R
@@ -44,16 +45,18 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         var player_id_array = intent.extras?.getIntArray("players")
         var legs = intent.getIntExtra("legs", 0)
         var sets = intent.getIntExtra("sets", 0)
+        var points = intent.getIntExtra("points", 0)
         val myDB = PlayerDatabaseHandler(this)
         val players_dataset = myDB.readAllPlayers()
         for (counter in 0..player_id_array!!.size - 1){
             for (player in players_dataset){
                 if(player.id == player_id_array[counter]){
-                    playingPlayers.add(CountingPlayer(player.playerName, 501, 0,0.0,0,legs,0,sets,0, 0, arrayListOf<Int>(), 0, 0, 0.0, arrayListOf<Double>(), arrayListOf<Int>(), 0))
+                    playingPlayers.add(CountingPlayer(player.playerName, points, 0,0.0,0,legs,0,sets,0, 0, arrayListOf<Int>(), 0, 0, 0.0, arrayListOf<Double>(), arrayListOf<Int>(), 0, arrayListOf<Int>(), arrayListOf<Int>(), arrayListOf<Int>()))
                 }
             }
         }
-        game = CountingGame(legs, sets, playingPlayers)
+        game = CountingGame(legs, sets, playingPlayers, points)
+        binding.tvGameTitle.text = points.toString()
 
         singleButton = binding.singleBtn
         doubleButton = binding.doubleBtn
@@ -91,6 +94,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         binding.eightBtn.setOnClickListener(this)
         binding.nineBtn.setOnClickListener(this)
         binding.tenBtn.setOnClickListener(this)
+        binding.elevenBtn.setOnClickListener(this)
         binding.twelveBtn.setOnClickListener(this)
         binding.thirteenBtn.setOnClickListener(this)
         binding.fourteenBtn.setOnClickListener(this)
@@ -114,7 +118,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         var description : String
         description = ""
         for(game in games){
-            if (game.name.equals("501")) description = game.description
+            if (game.name.equals(points.toString())) description = game.description
         }
         binding.btnRules.setOnClickListener(){
             val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -123,7 +127,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
             val height = LinearLayout.LayoutParams.WRAP_CONTENT
             val focusable = true
             popupView.findViewById<TextView>(R.id.tv_game_description).setText(description)
-            popupView.findViewById<TextView>(R.id.tv_game_title).setText("501")
+            popupView.findViewById<TextView>(R.id.tv_game_title).setText(points.toString())
             val popupWindow = PopupWindow(popupView, width, height, focusable)
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
             popupView.setOnTouchListener { v, event ->
@@ -263,6 +267,13 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
 
         btnClose.setOnClickListener(){
             startActivity(Intent(this@CountingGameActivity, MainActivity::class.java))
+            finish()
+        }
+
+        btnStatistics.setOnClickListener(){
+            val intent = Intent(this@CountingGameActivity, CountingGameStatisticsActivity::class.java)
+            intent.putExtra("a", game)
+            startActivity(intent)
             finish()
         }
     }

@@ -1,4 +1,6 @@
 package com.example.dartoli
 
-open class GameModel {
+import java.io.Serializable
+
+open class GameModel: Serializable {
 }
