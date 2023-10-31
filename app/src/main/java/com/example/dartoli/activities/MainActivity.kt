@@ -3,9 +3,8 @@ package com.example.dartoli.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.dartoli.data.GamesDatabaseHandler
+import com.example.dartoli.activities.StatisticsActivity
 import com.example.dartoli.databinding.ActivityMainBinding
-import com.example.dartoli.model.Game
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +17,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnMultiplayer.setOnClickListener {
             startActivity(Intent(this@MainActivity, MultiplayerActivity::class.java))
+            finish()
+        }
+
+        binding.btnStatistics.setOnClickListener {
+            startActivity(Intent(this@MainActivity, StatisticsActivity::class.java))
             finish()
         }
 

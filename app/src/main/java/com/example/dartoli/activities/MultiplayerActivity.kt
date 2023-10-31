@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -177,6 +178,7 @@ class MultiplayerActivity : AppCompatActivity() {
                 Toast.makeText(this, "Konditionen nicht erfüllt", Toast.LENGTH_LONG).show()
             }
         }
+
     }
 
     override fun onBackPressed() {

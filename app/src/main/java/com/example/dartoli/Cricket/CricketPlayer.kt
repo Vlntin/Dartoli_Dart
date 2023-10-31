@@ -22,4 +22,5 @@ data class CricketPlayer(
     var won_sets: Int,
     var needed_sets: Int,
     var place: Int,
+    var overall_won_legs: Int
 )

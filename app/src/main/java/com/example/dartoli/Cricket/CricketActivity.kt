@@ -22,8 +22,10 @@ import com.example.dartoli.R
 import com.example.dartoli.activities.MainActivity
 import com.example.dartoli.activities.MultiplayerActivity
 import com.example.dartoli.data.GamesDatabaseHandler
+import com.example.dartoli.data.MatchesDatabaseHandler
 import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityCricketBinding
+import com.example.dartoli.model.Match
 
 
 class CricketActivity : AppCompatActivity() {
@@ -42,6 +44,7 @@ class CricketActivity : AppCompatActivity() {
     private var playingPlayers = arrayListOf<CricketPlayer>()
 
     private lateinit var game: CricketGame
+    private var game_id: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,11 +61,17 @@ class CricketActivity : AppCompatActivity() {
         for (counter in 0..player_id_array!!.size - 1){
             for (player in players_dataset){
                 if(player.id == player_id_array[counter]){
-                    playingPlayers.add(CricketPlayer(player.playerName, 0, 0,0,0,0,0,0,0, false, false, false, false, false, false, false, 0, legs, 0, sets, 0))
+                    playingPlayers.add(CricketPlayer(player.playerName, 0, 0,0,0,0,0,0,0, false, false, false, false, false, false, false, 0, legs, 0, sets, 0, 0))
                 }
             }
         }
         game = CricketGame(legs, sets, playingPlayers)
+
+        val db = GamesDatabaseHandler(this)
+        val games_list = db.readAllGames()
+        for (game in games_list){
+            if (game.name == "Cricket") game_id = game.id
+        }
 
 
         singleButton = binding.singleBtn
@@ -182,6 +191,27 @@ class CricketActivity : AppCompatActivity() {
         playerAdapter = GameResultPlayerStatusAdapter(sortedPlayers)
         rvPlayerStatus.adapter = playerAdapter
 
+
+        var sorted_player_ids = ArrayList<Int>()
+        var won_legs_list = ArrayList<Int>()
+        var won_sets_list = ArrayList<Int>()
+        val players_db = PlayerDatabaseHandler(this)
+        val data_player_list = players_db.readAllPlayers()
+
+        for (player in sortedPlayers){
+            for (data_player in data_player_list){
+                if (data_player.playerName.equals(player.playerName)){
+                    sorted_player_ids.add(data_player.id)
+                    won_legs_list.add(player.overall_won_legs)
+                    won_sets_list.add((player.won_sets))
+                }
+            }
+        }
+
+
+        val match = Match(1, game_id!!, "a", sorted_player_ids, won_legs_list, won_sets_list)
+        val matches_db = MatchesDatabaseHandler(this)
+        matches_db.addMatch(match)
 
         customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         customDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

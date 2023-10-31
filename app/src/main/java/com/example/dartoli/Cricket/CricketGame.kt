@@ -209,6 +209,7 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
                 }
                 if (best){
                     best_player.won_legs++
+                    best_player.overall_won_legs++
                     reset_for_new_leg()
                     result = true
                 }
