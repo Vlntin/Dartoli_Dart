@@ -249,7 +249,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setupPlayerStatusRecyclerView() {
         rvPlayerStatus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        playerAdapter = CountingPlayerStatusAdapter(playingPlayers!!)
+        playerAdapter = CountingPlayerStatusAdapter(playingPlayers!!, ContextCompat.getColor(this, R.color.cricket_background_color))
         rvPlayerStatus.adapter = playerAdapter
     }
 

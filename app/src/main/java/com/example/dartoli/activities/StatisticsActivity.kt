@@ -1,5 +1,6 @@
 package com.example.dartoli.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.PopupMenu
@@ -71,7 +72,7 @@ class StatisticsActivity : AppCompatActivity() {
                     if (element.playerName.equals(menuItem.title.toString())){
                         player1 = element
                         refresh_statistics(player1, player2, matches_list)
-                        updateAdapter()
+                        setupPlayerStatusRecyclerView()
                     }
                 }
                 true
@@ -96,7 +97,7 @@ class StatisticsActivity : AppCompatActivity() {
                     if (element.playerName.equals(menuItem.title.toString())){
                         player2 = element
                         refresh_statistics(player1, player2, matches_list)
-                        updateAdapter()
+                        setupPlayerStatusRecyclerView()
                     }
                 }
                 true
@@ -120,6 +121,73 @@ class StatisticsActivity : AppCompatActivity() {
         var player1_name = player1.playerName
         var player2_name = player2.playerName
         if(all_game_statistics.size > 0) all_game_statistics.clear()
+
+        var player1_wins = 0
+        var player1_sets = 0
+        var player1_legs = 0
+        var player1_highest_win: Int? = null
+        var player1_longest_win_street = 0
+        var player1_actual_street = 0
+        var player2_wins = 0
+        var player2_sets = 0
+        var player2_legs = 0
+        var player2_highest_win: Int? = null
+        var player2_longest_win_street = 0
+        var player2_actual_street = 0
+
+        for (match in matches) {
+            if (match.player_ids.size == 2) {
+                if (match.player_ids[0] == player1.id && match.player_ids[1] == player2.id) {
+                    player1_wins++
+                    player1_legs = player1_legs + match.won_legs[0]
+                    player1_sets = player1_sets + match.won_sets[0]
+                    player2_legs = player2_legs + match.won_legs[1]
+                    player2_sets = player2_sets + match.won_sets[1]
+                    if (player1_actual_street < 1) {
+                        player1_actual_street = 1
+                    } else {
+                        player1_actual_street++
+                    }
+                    player2_actual_street = 0 - player1_actual_street
+                    if (player1_actual_street > player1_longest_win_street) player1_longest_win_street =
+                        player1_actual_street
+                }
+                if (match.player_ids[1] == player1.id && match.player_ids[0] == player2.id) {
+                    player2_wins++
+                    player2_legs = player2_legs + match.won_legs[0]
+                    player2_sets = player2_sets + match.won_sets[0]
+                    player1_legs = player1_legs + match.won_legs[1]
+                    player1_sets = player1_sets + match.won_sets[1]
+                    if (player2_actual_street < 1) {
+                        player2_actual_street = 1
+                    } else {
+                        player2_actual_street++
+                    }
+                    player1_actual_street = 0 - player2_actual_street
+                    if (player2_actual_street > player2_longest_win_street) player2_longest_win_street =
+                        player2_actual_street
+                }
+            }
+        }
+        all_game_statistics.add(
+            GameStatisticItem(
+                "Gesamt",
+                player1_name,
+                player2_name,
+                player1_wins,
+                player1_sets,
+                player1_legs,
+                player1_highest_win.toString(),
+                player1_longest_win_street,
+                player1_actual_street,
+                player2_wins,
+                player2_sets,
+                player2_legs,
+                player2_highest_win.toString(),
+                player2_longest_win_street,
+                player2_actual_street
+            )
+        )
         for (game in games_list) {
             var player1_wins = 0
             var player1_sets = 0
@@ -195,9 +263,7 @@ class StatisticsActivity : AppCompatActivity() {
         rvGameStatistic.adapter = gameStatisticsAdapter
     }
 
-    private fun updateAdapter() {
-        for (i in 0..all_game_statistics.size-1){
-            gameStatisticsAdapter.notifyItemChanged(i)
-        }
+    override fun onBackPressed() {
+        startActivity(Intent(this@StatisticsActivity, MainActivity::class.java))
     }
 }

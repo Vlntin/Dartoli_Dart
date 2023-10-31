@@ -219,6 +219,7 @@ class CricketActivity : AppCompatActivity() {
 
         val btnClose = customDialog.findViewById<TextView>(R.id.btn_close)
         val btnStatistics = customDialog.findViewById<TextView>(R.id.btn_statistics)
+        btnStatistics.visibility = View.GONE
 
         btnClose.setOnClickListener(){
             startActivity(Intent(this@CricketActivity, MainActivity::class.java))

@@ -10,10 +10,12 @@ import com.example.dartoli.databinding.CountingPlayerItemBinding
 import java.lang.Math.round
 import kotlin.math.roundToLong
 
-class CountingPlayerStatusAdapter(var datalist:ArrayList<CountingPlayer>):RecyclerView.Adapter<CountingPlayerStatusAdapter.PlayerStatusHolder>() {
+class CountingPlayerStatusAdapter(var datalist:ArrayList<CountingPlayer>, var color: Int):RecyclerView.Adapter<CountingPlayerStatusAdapter.PlayerStatusHolder>() {
 
+    var grey = color
     class PlayerStatusHolder(val binding: CountingPlayerItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(get: CountingPlayer) {
+        fun bind(get: CountingPlayer, even: Boolean, grey: Int) {
+            if (!even) binding.card.setBackgroundColor(grey)
             binding.tvPlayername.text = get.playerName
             binding.tvPoints.text = get.points.toString()
             binding.tvLegAverage.text = String.format("%.2f", get.leg_average)
@@ -32,7 +34,11 @@ class CountingPlayerStatusAdapter(var datalist:ArrayList<CountingPlayer>):Recycl
     }
 
     override fun onBindViewHolder(holder: PlayerStatusHolder, position: Int) {
-        holder.bind(datalist[position])
+        if (position % 2 == 0){
+            holder.bind(datalist[position], true, grey)
+        } else {
+            holder.bind(datalist[position], false, grey)
+        }
     }
 
     override fun getItemCount(): Int {

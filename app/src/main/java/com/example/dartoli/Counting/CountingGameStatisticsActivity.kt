@@ -31,18 +31,16 @@ class CountingGameStatisticsActivity : AppCompatActivity() {
         rvPlayerStatistics = binding.rvRecycler
         setupPlayerStatusRecyclerView()
 
+        binding.btnBackToMain.setOnClickListener {
+            startActivity(Intent(this@CountingGameStatisticsActivity, MainActivity::class.java))
+        }
+
     }
 
     private fun setupPlayerStatusRecyclerView() {
         rvPlayerStatistics.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         playerAdapter = CountingPlayerStatisticsAdapter(playingPlayers!!, ContextCompat.getColor(this, R.color.cricket_background_color))
         rvPlayerStatistics.adapter = playerAdapter
-    }
-
-    private fun updateAdapter() {
-        for (i in 0..playingPlayers.size-1){
-            playerAdapter.notifyItemChanged(i)
-        }
     }
 
     override fun onBackPressed() {
