@@ -69,7 +69,6 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="@+id/layout_id"
                 android:layout_weight="0.8"/>
             <View

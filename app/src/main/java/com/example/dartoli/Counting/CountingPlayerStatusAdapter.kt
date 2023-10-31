@@ -1,5 +1,6 @@
 package com.example.dartoli.Counting
 
+import android.graphics.Typeface
 import com.example.dartoli.Cricket.CricketPlayer
 
 import android.view.LayoutInflater
@@ -10,12 +11,17 @@ import com.example.dartoli.databinding.CountingPlayerItemBinding
 import java.lang.Math.round
 import kotlin.math.roundToLong
 
-class CountingPlayerStatusAdapter(var datalist:ArrayList<CountingPlayer>, var color: Int):RecyclerView.Adapter<CountingPlayerStatusAdapter.PlayerStatusHolder>() {
+class CountingPlayerStatusAdapter(var datalist:ArrayList<CountingPlayer>, var color: Int, var actualPlayerNumber: Int):RecyclerView.Adapter<CountingPlayerStatusAdapter.PlayerStatusHolder>() {
 
+    var actual_player_number = actualPlayerNumber
     var grey = color
     class PlayerStatusHolder(val binding: CountingPlayerItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(get: CountingPlayer, even: Boolean, grey: Int) {
+        fun bind(get: CountingPlayer, even: Boolean, grey: Int, actual_player: Boolean) {
             if (!even) binding.card.setBackgroundColor(grey)
+            if (actual_player) {
+                binding.tvPlayername.setTypeface(null, Typeface.BOLD)
+                binding.tvPoints.setTypeface(null, Typeface.BOLD)
+            }
             binding.tvPlayername.text = get.playerName
             binding.tvPoints.text = get.points.toString()
             binding.tvLegAverage.text = String.format("%.2f", get.leg_average)
@@ -34,10 +40,16 @@ class CountingPlayerStatusAdapter(var datalist:ArrayList<CountingPlayer>, var co
     }
 
     override fun onBindViewHolder(holder: PlayerStatusHolder, position: Int) {
-        if (position % 2 == 0){
-            holder.bind(datalist[position], true, grey)
+        var actual_player: Boolean
+        if (position == actual_player_number) {
+            actual_player = true
         } else {
-            holder.bind(datalist[position], false, grey)
+            actual_player = false
+        }
+        if (position % 2 == 0){
+            holder.bind(datalist[position], true, grey, actual_player)
+        } else {
+            holder.bind(datalist[position], false, grey, actual_player)
         }
     }
 

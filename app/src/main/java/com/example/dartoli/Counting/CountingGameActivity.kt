@@ -30,65 +30,35 @@ import com.example.dartoli.model.Match
 class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityCountingGameBinding
-    private var playingPlayers = arrayListOf<CountingPlayer>()
-    private lateinit var game: CountingGame
 
-    private lateinit var singleButton: TextView
-    private lateinit var doubleButton: TextView
-    private lateinit var tribleButton: TextView
+    private var playingPlayers = arrayListOf<CountingPlayer>()
+    private var game: CountingGame? = null
     private var amount = 1
+    private var game_id: Int? = null
+    private var description: String? = null
+
 
     private lateinit var playerAdapter: CountingPlayerStatusAdapter
     private lateinit var rvPlayerStatus: RecyclerView
-    private var needed_points: Int? = null
-    private var game_id: Int? = null
+
+    private lateinit var customDialog: Dialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCountingGameBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        var player_id_array = intent.extras?.getIntArray("players")
-        var legs = intent.getIntExtra("legs", 0)
-        var sets = intent.getIntExtra("sets", 0)
-        needed_points = intent.getIntExtra("points", 0)
-        val myDB = PlayerDatabaseHandler(this)
-        val players_dataset = myDB.readAllPlayers()
-        for (counter in 0..player_id_array!!.size - 1){
-            for (player in players_dataset){
-                if(player.id == player_id_array[counter]){
-                    playingPlayers.add(CountingPlayer(player.playerName, needed_points!!, 0,0.0,0,legs,0,sets,0, 0, arrayListOf<Int>(), 0, 0, 0.0, arrayListOf<Double>(), arrayListOf<Int>(), 0, arrayListOf<Int>(), arrayListOf<Int>(), arrayListOf<Int>()))
-                }
-            }
-        }
-        game = CountingGame(legs, sets, playingPlayers, needed_points!!)
-        binding.tvGameTitle.text = needed_points.toString()
+        game = intent.getSerializableExtra("game") as CountingGame?
+        playingPlayers = game!!.game_players
 
-        singleButton = binding.singleBtn
-        doubleButton = binding.doubleBtn
-        tribleButton = binding.tripleBtn
+        binding.tvGameTitle.text = game!!.needed_points.toString()
+        binding.tvActualPlayer.setText("Am Zug: " + game!!.game_players[game!!.actualPlayerNumber].playerName + " (" + game!!.actualDartsLeft.toString() + ")")
 
-
-        singleButton.setOnClickListener(){
-            singleButton.setTextColor(ContextCompat.getColor(this, R.color.black))
-            doubleButton.setTextColor(ContextCompat.getColor(this, R.color.white))
-            tribleButton.setTextColor(ContextCompat.getColor(this, R.color.white))
-            amount = 1
-        }
-
-        doubleButton.setOnClickListener(){
-            doubleButton.setTextColor(ContextCompat.getColor(this, R.color.black))
-            singleButton.setTextColor(ContextCompat.getColor(this, R.color.white))
-            tribleButton.setTextColor(ContextCompat.getColor(this, R.color.white))
-            amount = 2
-        }
-
-        tribleButton.setOnClickListener(){
-            tribleButton.setTextColor(ContextCompat.getColor(this, R.color.black))
-            doubleButton.setTextColor(ContextCompat.getColor(this, R.color.white))
-            singleButton.setTextColor(ContextCompat.getColor(this, R.color.white))
-            amount = 3
-        }
+        binding.singleBtn.setOnClickListener(this)
+        binding.doubleBtn.setOnClickListener(this)
+        binding.tripleBtn.setOnClickListener(this)
+        binding.btnRules.setOnClickListener(this)
 
         binding.oneBtn.setOnClickListener(this)
         binding.twoBtn.setOnClickListener(this)
@@ -113,36 +83,39 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         binding.bullBtn.setOnClickListener(this)
         binding.missBtn.setOnClickListener(this)
 
-        binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
 
 
         rvPlayerStatus = binding.rvRecycler
         setupPlayerStatusRecyclerView()
 
-        val myDB2 = GamesDatabaseHandler(this)
-        var games = myDB2.readAllGames()
-        var description : String
-        description = ""
-        for(game in games){
-            if (game.name.equals(needed_points.toString())){
-                description = game.description
-                game_id = game.id
+        set_game_informations()
+
+    }
+
+    // needed informations for rules and match database
+    fun set_game_informations(){
+        var games = GamesDatabaseHandler(this).readAllGames()
+        for(local_game in games){
+            if (local_game.name.equals(game!!.needed_points.toString())){
+                description = local_game.description
+                game_id = local_game.id
             }
         }
-        binding.btnRules.setOnClickListener(){
-            val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val popupView: View = inflater.inflate(R.layout.game_rules_custom_dialog, null)
-            val width = LinearLayout.LayoutParams.WRAP_CONTENT
-            val height = LinearLayout.LayoutParams.WRAP_CONTENT
-            val focusable = true
-            popupView.findViewById<TextView>(R.id.tv_game_description).setText(description)
-            popupView.findViewById<TextView>(R.id.tv_game_title).setText(needed_points.toString())
-            val popupWindow = PopupWindow(popupView, width, height, focusable)
-            popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
-            popupView.setOnTouchListener { v, event ->
-                popupWindow.dismiss()
-                true
-            }
+    }
+
+    fun set_rules_popup_view(){
+        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val popupView: View = inflater.inflate(R.layout.game_rules_custom_dialog, null)
+        val width = LinearLayout.LayoutParams.WRAP_CONTENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        val focusable = true
+        popupView.findViewById<TextView>(R.id.tv_game_description).setText(description)
+        popupView.findViewById<TextView>(R.id.tv_game_title).setText(game!!.needed_points.toString())
+        val popupWindow = PopupWindow(popupView, width, height, focusable)
+        popupWindow.showAtLocation(View(this), Gravity.CENTER, 0, 0)
+        popupView.setOnTouchListener { v, event ->
+            popupWindow.dismiss()
+            true
         }
     }
 
@@ -152,111 +125,119 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         when (view!!.id){
-            R.id.one_btn -> game.thrown_values(1, amount)
-            R.id.two_btn -> game.thrown_values(2, amount)
-            R.id.three_btn -> game.thrown_values(3, amount)
-            R.id.four_btn -> game.thrown_values(4, amount)
-            R.id.five_btn -> game.thrown_values(5, amount)
-            R.id.six_btn -> game.thrown_values(6, amount)
-            R.id.seven_btn -> game.thrown_values(7, amount)
-            R.id.eight_btn -> game.thrown_values(8, amount)
-            R.id.nine_btn -> game.thrown_values(9, amount)
-            R.id.ten_btn -> game.thrown_values(10, amount)
-            R.id.twelve_btn -> game.thrown_values(12, amount)
-            R.id.eleven_btn -> game.thrown_values(11, amount)
-            R.id.thirteen_btn -> game.thrown_values(13, amount)
-            R.id.fourteen_btn -> game.thrown_values(14, amount)
-            R.id.fiveteen_btn -> game.thrown_values(15, amount)
-            R.id.sixteen_btn -> game.thrown_values(16, amount)
-            R.id.seventeen_btn -> game.thrown_values(17, amount)
-            R.id.eightteen_btn -> game.thrown_values(18, amount)
-            R.id.nineteen_btn -> game.thrown_values(19, amount)
-            R.id.twenty_btn -> game.thrown_values(20, amount)
+            R.id.btn_rules -> set_rules_popup_view()
+            R.id.single_btn -> {
+                binding.singleBtn.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.doubleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
+                binding.tripleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
+                amount = 1
+            }
+            R.id.double_btn -> {
+                binding.doubleBtn.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.singleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
+                binding.tripleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
+                amount = 2
+            }
+            R.id.triple_btn-> {
+                binding.tripleBtn.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.doubleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
+                binding.singleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
+                amount = 3
+            }
+            R.id.one_btn -> game!!.thrown_values(1, amount)
+            R.id.two_btn -> game!!.thrown_values(2, amount)
+            R.id.three_btn -> game!!.thrown_values(3, amount)
+            R.id.four_btn -> game!!.thrown_values(4, amount)
+            R.id.five_btn -> game!!.thrown_values(5, amount)
+            R.id.six_btn -> game!!.thrown_values(6, amount)
+            R.id.seven_btn -> game!!.thrown_values(7, amount)
+            R.id.eight_btn -> game!!.thrown_values(8, amount)
+            R.id.nine_btn -> game!!.thrown_values(9, amount)
+            R.id.ten_btn -> game!!.thrown_values(10, amount)
+            R.id.twelve_btn -> game!!.thrown_values(12, amount)
+            R.id.eleven_btn -> game!!.thrown_values(11, amount)
+            R.id.thirteen_btn -> game!!.thrown_values(13, amount)
+            R.id.fourteen_btn -> game!!.thrown_values(14, amount)
+            R.id.fiveteen_btn -> game!!.thrown_values(15, amount)
+            R.id.sixteen_btn -> game!!.thrown_values(16, amount)
+            R.id.seventeen_btn -> game!!.thrown_values(17, amount)
+            R.id.eightteen_btn -> game!!.thrown_values(18, amount)
+            R.id.nineteen_btn -> game!!.thrown_values(19, amount)
+            R.id.twenty_btn -> game!!.thrown_values(20, amount)
             R.id.bull_btn -> if (amount < 3){
-                game.thrown_values(25, amount)
+                game!!.thrown_values(25, amount)
             } else {
                 return
             }
-            R.id.miss_btn -> game.thrown_values(0, amount)
+            R.id.miss_btn -> game!!.thrown_values(0, amount)
+            R.id.btn_one_hit -> game!!.throws_on_double(1)
+            R.id.btn_zero_hit -> game!!.throws_on_double(0)
+            R.id.btn_two_hit -> game!!.throws_on_double(2)
+            R.id.btn_three_hit -> game!!.throws_on_double(3)
+            R.id.btn_close -> {
+                startActivity(Intent(this@CountingGameActivity, MainActivity::class.java))
+                finish()
+            }
+            R.id.btn_statistics -> {
+                val intent = Intent(this@CountingGameActivity, CountingGameStatisticsActivity::class.java)
+                intent.putExtra("a", game)
+                startActivity(intent)
+                finish()
+            }
+
         }
-        var potential_double_hits = game.check_potential_double_hit()
-        if (potential_double_hits > 0){
-            var customDialog = Dialog(this);
-            customDialog.setContentView(R.layout.throws_on_double_dialog);
-            customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            customDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            customDialog.show()
-
-            val btnZero = customDialog.findViewById<TextView>(R.id.btn_zero_hit)
-            val btnOne = customDialog.findViewById<TextView>(R.id.btn_one_hit)
-            val btnTwo = customDialog.findViewById<TextView>(R.id.btn_two_hit)
-            val btnThree = customDialog.findViewById<TextView>(R.id.btn_three_hit)
-
-            btnZero.setOnClickListener(){
-                game.throws_on_double(0)
+        when (view!!.id){
+            R.id.one_btn, R.id.two_btn, R.id.three_btn, R.id.four_btn, R.id.five_btn, R.id.six_btn, R.id.seven_btn, R.id.eight_btn, R.id.nine_btn, R.id.ten_btn,
+            R.id.eleven_btn, R.id.twelve_btn, R.id.thirteen_btn, R.id.fourteen_btn, R.id.fiveteen_btn, R.id.sixteen_btn, R.id.seventeen_btn, R.id.eightteen_btn, R.id.nineteen_btn,
+            R.id.twenty_btn, R.id.bull_btn, R.id.miss_btn -> {
+                var potential_double_hits = game!!.check_potential_double_hit()
+                if (potential_double_hits > 0){
+                    dialog_for_double_throws_handling(potential_double_hits)
+                }
+                else {
+                    game!!.finish_player_move()
+                    if (game!!.check_game_state()) finishGame()
+                    binding.tvRoundNumber.setText("Runde " + game!!.actualRound.toString())
+                    binding.tvActualPlayer.setText("Am Zug: " + game!!.game_players[game!!.actualPlayerNumber].playerName + " (" + game!!.actualDartsLeft.toString() + ")")
+                    setupPlayerStatusRecyclerView()
+                }
+            }
+            R.id.btn_one_hit, R.id.btn_two_hit, R.id.btn_three_hit, R.id.btn_zero_hit -> {
                 customDialog.dismiss()
-                game.finish_player_move()
-                if (game.check_game_state()) finishGame()
-
-                binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
-                updateAdapter()
+                game!!.finish_player_move()
+                if (game!!.check_game_state()) finishGame()
+                binding.tvRoundNumber.setText("Runde " + game!!.actualRound.toString())
+                binding.tvActualPlayer.setText("Am Zug: " + game!!.game_players[game!!.actualPlayerNumber].playerName + " (" + game!!.actualDartsLeft.toString() + ")")
+                setupPlayerStatusRecyclerView()
             }
-            btnOne.setOnClickListener(){
-                game.throws_on_double(1)
-                customDialog.dismiss()
-                game.finish_player_move()
-                if (game.check_game_state()) finishGame()
-
-                binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
-                updateAdapter()
-            }
-            btnTwo.setOnClickListener(){
-                game.throws_on_double(2)
-                customDialog.dismiss()
-                game.finish_player_move()
-                if (game.check_game_state()) finishGame()
-
-                binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
-                updateAdapter()
-            }
-            btnThree.setOnClickListener(){
-                game.throws_on_double(3)
-                customDialog.dismiss()
-                game.finish_player_move()
-                if (game.check_game_state()) finishGame()
-
-                binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-                binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
-                updateAdapter()
-            }
-            if (game.has_player_finished()) btnZero.visibility = View.GONE
-            if (potential_double_hits < 3) btnThree.visibility = View.GONE
-            if (potential_double_hits < 2) btnTwo.visibility = View.GONE
-            }
-        else {
-            game.finish_player_move()
-            if (game.check_game_state()) finishGame()
-
-            binding.tvRoundNumber.setText("Runde " + game.actualRound.toString())
-            binding.tvActualPlayer.setText("Am Zug: " + game.game_players[game.actualPlayerNumber].playerName + " (" + game.actualDartsLeft.toString() + ")")
-            updateAdapter()
         }
-
     }
 
+    private fun dialog_for_double_throws_handling(potential_double_hits: Int){
+        customDialog = Dialog(this)
+        customDialog.setContentView(R.layout.throws_on_double_dialog);
+        customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        customDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        customDialog.setCanceledOnTouchOutside(false)
+        customDialog.show()
+
+        val btnZero = customDialog.findViewById<TextView>(R.id.btn_zero_hit)
+        val btnOne = customDialog.findViewById<TextView>(R.id.btn_one_hit)
+        val btnTwo = customDialog.findViewById<TextView>(R.id.btn_two_hit)
+        val btnThree = customDialog.findViewById<TextView>(R.id.btn_three_hit)
+
+        btnZero.setOnClickListener(this)
+        btnOne.setOnClickListener(this)
+        btnTwo.setOnClickListener(this)
+        btnThree.setOnClickListener(this)
+        if (game!!.has_player_finished()) btnZero.visibility = View.GONE
+        if (potential_double_hits < 3) btnThree.visibility = View.GONE
+        if (potential_double_hits < 2) btnTwo.visibility = View.GONE
+    }
     private fun setupPlayerStatusRecyclerView() {
         rvPlayerStatus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        playerAdapter = CountingPlayerStatusAdapter(playingPlayers!!, ContextCompat.getColor(this, R.color.cricket_background_color))
+        playerAdapter = CountingPlayerStatusAdapter(playingPlayers!!, ContextCompat.getColor(this, R.color.cricket_background_color), game!!.actualPlayerNumber)
         rvPlayerStatus.adapter = playerAdapter
-    }
-
-    private fun updateAdapter() {
-        for (i in 0..playingPlayers.size-1){
-            playerAdapter.notifyItemChanged(i)
-        }
     }
 
     private fun finishGame(){
@@ -269,13 +250,22 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         var sortedPlayers = setRankForPlayers(playingPlayers)
         playerAdapter = GameResultCountingPlayerStatusAdapter(sortedPlayers)
         rvPlayerStatus.adapter = playerAdapter
+        customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        customDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        customDialog.setCanceledOnTouchOutside(false)
+        customDialog.show()
+        customDialog.findViewById<TextView>(R.id.btn_close).setOnClickListener(this)
+        customDialog.findViewById<TextView>(R.id.btn_statistics).setOnClickListener(this)
 
+        add_match_to_db(sortedPlayers)
+    }
+
+    private fun add_match_to_db(sortedPlayers: ArrayList<CountingPlayer>){
         var sorted_player_ids = ArrayList<Int>()
         var won_legs_list = ArrayList<Int>()
         var won_sets_list = ArrayList<Int>()
         val players_db = PlayerDatabaseHandler(this)
         val data_player_list = players_db.readAllPlayers()
-
         for (player in sortedPlayers){
             for (data_player in data_player_list){
                 if (data_player.playerName.equals(player.playerName)){
@@ -285,40 +275,9 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
-
-
         val match = Match(1, game_id!!, "a", sorted_player_ids, won_legs_list, won_sets_list)
-        Log.v("id", match.game_id.toString())
-        Log.v("id2", match.player_ids.size.toString())
-        Log.v("id3", match.won_legs.size.toString() + match.won_legs[0] + match.won_legs[1])
-        Log.v("id4", match.won_sets.size.toString() + match.won_sets[0] + match.won_sets[1])
         val matches_db = MatchesDatabaseHandler(this)
-        //Log.v("länge", matches_db.readAllMatches().size.toString())
-        //matches_db.deleteAllData()
         matches_db.addMatch(match)
-        Log.v("länge", matches_db.readAllMatches().size.toString())
-
-
-
-
-        customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        customDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        customDialog.show()
-
-        val btnClose = customDialog.findViewById<TextView>(R.id.btn_close)
-        val btnStatistics = customDialog.findViewById<TextView>(R.id.btn_statistics)
-
-        btnClose.setOnClickListener(){
-            startActivity(Intent(this@CountingGameActivity, MainActivity::class.java))
-            finish()
-        }
-
-        btnStatistics.setOnClickListener(){
-            val intent = Intent(this@CountingGameActivity, CountingGameStatisticsActivity::class.java)
-            intent.putExtra("a", game)
-            startActivity(intent)
-            finish()
-        }
     }
 
     private fun setRankForPlayers(players: ArrayList<CountingPlayer>): ArrayList<CountingPlayer>{
@@ -338,7 +297,6 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
                         best_player = copied_players[i]
                     }
                 }
-
             }
             best_player.rank = rank
             rank++
