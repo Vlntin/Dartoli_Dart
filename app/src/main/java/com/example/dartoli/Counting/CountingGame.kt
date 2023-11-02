@@ -2,11 +2,9 @@ package com.example.dartoli.Counting
 
 
 import android.util.Log
-import com.example.dartoli.Cricket.CricketPlayer
-import com.example.dartoli.GameModel
 import java.io.Serializable
 
-class CountingGame(legs: Int, sets: Int, players: ArrayList<CountingPlayer>, needed_points: Int): Serializable, GameModel() {
+class CountingGame(legs: Int, sets: Int, players: ArrayList<CountingPlayer>, needed_points: Int): Serializable {
         val needed_legs = legs
         val needed_sets = sets
         var actualPlayerNumber = 0
@@ -59,6 +57,7 @@ class CountingGame(legs: Int, sets: Int, players: ArrayList<CountingPlayer>, nee
                                 actual_player.all_finishes.add(score + actual_player.throws_points.last() + actual_player.throws_points[actual_player.throws_points.size - 2])
                                 actual_player.all_three_throws_points.add(score + actual_player.throws_points.last() + actual_player.throws_points[actual_player.throws_points.size - 2])
                         }
+                        actual_player.all_hit_doubles.add(score)
                         return true
                 } else {
                         actual_player.all_three_throws_points.add(0)

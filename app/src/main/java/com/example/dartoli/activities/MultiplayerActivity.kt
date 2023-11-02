@@ -69,13 +69,13 @@ class MultiplayerActivity : AppCompatActivity() {
         val gamesDB = GamesDatabaseHandler(this)
         val games_list = gamesDB.readAllGames()
 
-        val last_played_game_id = MatchesDatabaseHandler(this).readAllMatches().last().game_id
+        //val last_played_game_id = MatchesDatabaseHandler(this).readAllMatches().last().game_id
 
         for (game in games_list){
-            if (game.id == last_played_game_id) {
+            //if (game.id == last_played_game_id) {
                 game_selection_button.setText(game.name)
                 chosen_game = game
-            }
+            //}
         }
 
 
@@ -174,7 +174,7 @@ class MultiplayerActivity : AppCompatActivity() {
                     val intent = Intent(this@MultiplayerActivity, CountingGameActivity::class.java)
                     var counting_players = arrayListOf<CountingPlayer>()
                     for (player in selected_players){
-                        counting_players.add(CountingPlayer(player.playerName, 501, 0,0.0,0,winning_legs,0, winning_sets,0, 0, arrayListOf<Int>(), 0, 0, 0.0, arrayListOf<Double>(), arrayListOf<Int>(), 0, arrayListOf<Int>(), arrayListOf<Int>(), arrayListOf<Int>()))
+                        counting_players.add(CountingPlayer(player.id, player.playerName, 501, 0,0.0,0,winning_legs,0, winning_sets,0, 0, arrayListOf<Int>(), 0, 0, 0.0, arrayListOf<Double>(), arrayListOf<Int>(), 0, arrayListOf<Int>(), arrayListOf<Int>(), arrayListOf<Int>(), arrayListOf<Int>()))
                     }
                     var game = CountingGame(winning_legs, winning_sets, counting_players, 501)
                     intent.putExtra(GAME_KEY, game)
@@ -184,7 +184,7 @@ class MultiplayerActivity : AppCompatActivity() {
                     val intent = Intent(this@MultiplayerActivity, CountingGameActivity::class.java)
                     var counting_players = arrayListOf<CountingPlayer>()
                     for (player in selected_players){
-                        counting_players.add(CountingPlayer(player.playerName, 301, 0,0.0,0,winning_legs,0, winning_sets,0, 0, arrayListOf<Int>(), 0, 0, 0.0, arrayListOf<Double>(), arrayListOf<Int>(), 0, arrayListOf<Int>(), arrayListOf<Int>(), arrayListOf<Int>()))
+                        counting_players.add(CountingPlayer(player.id, player.playerName, 301, 0,0.0,0,winning_legs,0, winning_sets,0, 0, arrayListOf<Int>(), 0, 0, 0.0, arrayListOf<Double>(), arrayListOf<Int>(), 0, arrayListOf<Int>(), arrayListOf<Int>(), arrayListOf<Int>(), arrayListOf<Int>()))
                     }
                     var game = CountingGame(winning_legs, winning_sets, counting_players, 301)
                     intent.putExtra(GAME_KEY, game)

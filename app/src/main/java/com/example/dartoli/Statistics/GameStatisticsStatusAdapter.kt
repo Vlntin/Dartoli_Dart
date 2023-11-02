@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dartoli.Cricket.CricketPlayer
 import com.example.dartoli.R
 import com.example.dartoli.databinding.ListItemBinding
-import com.example.dartoli.databinding.StatisticListItemBinding
 import com.example.dartoli.databinding.StatisticsGameItemBinding
 
 class GameStatisticsStatusAdapter(var datalist:ArrayList<GameStatisticItem>, var color: Int): RecyclerView.Adapter<GameStatisticsStatusAdapter.GameStatusHolder>() {

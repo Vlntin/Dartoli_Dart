@@ -18,8 +18,8 @@ class MatchesDatabaseHandler(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_VERSION = 1 // Datenbank Version
-        private const val DATABASE_NAME = "DartoliDatabase13" // Datenbank Name
+        private const val DATABASE_VERSION = 3 // Datenbank Version
+        private const val DATABASE_NAME = "DartoliDatabase33" // Datenbank Name
         private const val TABLE_NAME = "MatchesTable" // Tabellen Name
 
         //All the Columns names
@@ -41,7 +41,6 @@ class MatchesDatabaseHandler(context: Context) :
 
     override fun onUpgrade(db: SQLiteDatabase, i: Int, i1: Int) {
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
-
         onCreate(db)
     }
 
@@ -80,6 +79,7 @@ class MatchesDatabaseHandler(context: Context) :
                     val player_ids_list: ArrayList<Int> = Gson().fromJson(player_ids, collectionType)
                     val won_legs_list: ArrayList<Int> = Gson().fromJson(won_legs, collectionType)
                     val won_sets_list: ArrayList<Int> = Gson().fromJson(won_sets, collectionType)
+
                     matches_list.add(Match(id, game_id, date, player_ids_list, won_legs_list, won_sets_list))
 
                 } while (cursor.moveToNext())
@@ -109,6 +109,7 @@ class MatchesDatabaseHandler(context: Context) :
                     val player_ids_list: ArrayList<Int> = Gson().fromJson(player_ids, collectionType)
                     val won_legs_list: ArrayList<Int> = Gson().fromJson(won_legs, collectionType)
                     val won_sets_list: ArrayList<Int> = Gson().fromJson(won_sets, collectionType)
+
                     for (id in player_ids_list){
                         if (id == player.id) matches_list.add(Match(id, game_id, date, player_ids_list, won_legs_list, won_sets_list))
                     }

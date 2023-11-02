@@ -23,8 +23,10 @@ import com.example.dartoli.databinding.ActivityCountingGameBinding
 import com.example.dartoli.R
 import com.example.dartoli.activities.MainActivity
 import com.example.dartoli.activities.MultiplayerActivity
+import com.example.dartoli.data.CountingPlayerDatabaseHandler
 import com.example.dartoli.data.GamesDatabaseHandler
 import com.example.dartoli.data.MatchesDatabaseHandler
+import com.example.dartoli.model.CountingPlayerResults
 import com.example.dartoli.model.Match
 
 class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
@@ -205,10 +207,13 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btn_one_hit, R.id.btn_two_hit, R.id.btn_three_hit, R.id.btn_zero_hit -> {
                 customDialog.dismiss()
                 game!!.finish_player_move()
-                if (game!!.check_game_state()) finishGame()
-                binding.tvRoundNumber.setText("Runde " + game!!.actualRound.toString())
-                binding.tvActualPlayer.setText("Am Zug: " + game!!.game_players[game!!.actualPlayerNumber].playerName + " (" + game!!.actualDartsLeft.toString() + ")")
-                setupPlayerStatusRecyclerView()
+                if (game!!.check_game_state()) {
+                    finishGame()
+                } else {
+                    binding.tvRoundNumber.setText("Runde " + game!!.actualRound.toString())
+                    binding.tvActualPlayer.setText("Am Zug: " + game!!.game_players[game!!.actualPlayerNumber].playerName + " (" + game!!.actualDartsLeft.toString() + ")")
+                    setupPlayerStatusRecyclerView()
+                }
             }
         }
     }
@@ -248,6 +253,8 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         rvPlayerStatus = customDialog.findViewById<RecyclerView>(R.id.rv_result_recycler)
         rvPlayerStatus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         var sortedPlayers = setRankForPlayers(playingPlayers)
+        add_match_to_db(sortedPlayers)
+        add_player_results_to_db()
         playerAdapter = GameResultCountingPlayerStatusAdapter(sortedPlayers)
         rvPlayerStatus.adapter = playerAdapter
         customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -257,10 +264,11 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         customDialog.findViewById<TextView>(R.id.btn_close).setOnClickListener(this)
         customDialog.findViewById<TextView>(R.id.btn_statistics).setOnClickListener(this)
 
-        add_match_to_db(sortedPlayers)
+
     }
 
     private fun add_match_to_db(sortedPlayers: ArrayList<CountingPlayer>){
+        Log.v("1", "erster")
         var sorted_player_ids = ArrayList<Int>()
         var won_legs_list = ArrayList<Int>()
         var won_sets_list = ArrayList<Int>()
@@ -275,9 +283,23 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
+        Log.v("2", "erster")
         val match = Match(1, game_id!!, "a", sorted_player_ids, won_legs_list, won_sets_list)
+        Log.v("3", "erster")
         val matches_db = MatchesDatabaseHandler(this)
+        Log.v("länge1", matches_db.readAllMatches().size.toString())
         matches_db.addMatch(match)
+        Log.v("länge2", matches_db.readAllMatches().size.toString())
+    }
+
+    private fun add_player_results_to_db(){
+        var db = CountingPlayerDatabaseHandler(this)
+        for (player in playingPlayers){
+             var player_result = CountingPlayerResults(1, player.player_id, "a", player.rank, player.game_average, player.all_thrown_darts.size, player.all_three_throws_points,
+                player.throws_on_doubles, player.hit_doubles, player.all_hit_doubles, player.all_finishes, player.throws_to_win)
+            db.addCountingPlayerResult(player_result)
+        }
+
     }
 
     private fun setRankForPlayers(players: ArrayList<CountingPlayer>): ArrayList<CountingPlayer>{

@@ -3,6 +3,7 @@ package com.example.dartoli.Counting
 import java.io.Serializable
 
 data class CountingPlayer(
+    var player_id: Int,
     var playerName: String,
     var points: Int,
     var leg_thrown_darts: Int,
@@ -22,5 +23,6 @@ data class CountingPlayer(
     var won_overall_legs: Int,
     var all_finishes: ArrayList<Int>,
     var throws_to_win : ArrayList<Int>,
-    var all_three_throws_points: ArrayList<Int>): Serializable
+    var all_three_throws_points: ArrayList<Int>,
+    var all_hit_doubles: ArrayList<Int>): Serializable
 

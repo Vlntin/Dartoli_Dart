@@ -46,6 +46,7 @@ class StatisticsActivity : AppCompatActivity() {
 
         val db = MatchesDatabaseHandler(this)
         val matches_list = db.readAllMatches()
+        Log.v("länge2", matches_list.size.toString())
 
         games_list = GamesDatabaseHandler(this).readAllGames()
 

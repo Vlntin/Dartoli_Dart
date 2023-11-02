@@ -11,4 +11,6 @@
 
     <color name="cricket_selected_btn_color">#FFFF00</color>
 
+    <color name="dark_green">#006400</color>
+
 </resources>
