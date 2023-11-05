@@ -4,11 +4,9 @@
     android:id="@+id/card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_height="wrap_content"
-        android:layout_width="120dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="@dimen/game_statistics_item_width"
         android:id="@+id/layout_id">
         <LinearLayout
             android:id="@+id/layout_playername"
@@ -18,8 +16,7 @@
             <TextView
                 android:id="@+id/tv_game_name"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Darts"
+                android:layout_height="@dimen/game_statistics_gametitle_table_cell_height"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -27,251 +24,232 @@
             <View
                 android:id="@+id/gamename_playername_seperator"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="@dimen/game_statistics_small_lines_seperator_height"
                 android:background="@color/black"/>
             <LinearLayout
                 android:id="@+id/playername_tv"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/game_statistics_table_cell_height_small"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="@+id/gamename_playername_seperator">
                 <TextView
                 android:id="@+id/tv_player1_name"
-                android:layout_width="59dp"
-                android:layout_height="30dp"
-                android:text="Franko1"
+                android:layout_width="@dimen/game_statistics_item_table_cell_width"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="12sp"/>
+                android:textSize="@dimen/game_statistics_item_text_size"/>
                 <View
-                    android:layout_width="2dp"
+                    android:layout_width="@dimen/game_statistics_item_lines_vertical_seperator_width"
                     android:layout_height="match_parent"
                     android:background="@color/black"/>
                 <TextView
                     android:id="@+id/tv_player2_name"
-                    android:layout_width="59dp"
-                    android:layout_height="30dp"
-                    android:text="Franko2"
+                    android:layout_width="@dimen/game_statistics_item_table_cell_width"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:textColor="@color/black"
-                    android:textSize="12sp"/>
+                    android:textSize="@dimen/game_statistics_item_text_size"/>
             </LinearLayout>
         </LinearLayout>
         <View
             android:id="@+id/name_wins_seperator"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/game_statistics_lines_seperator_height"
             android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@id/layout_playername"
             app:layout_constraintBottom_toTopOf="@id/wins_tv"/>
         <LinearLayout
             android:id="@+id/wins_tv"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="@dimen/game_statistics_table_cell_height"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/name_wins_seperator">
             <TextView
                 android:id="@+id/tv_player1_wins"
-                android:layout_width="59dp"
+                android:layout_width="@dimen/game_statistics_item_table_cell_width"
                 android:layout_height="match_parent"
-                android:text="1"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="@dimen/game_statistics_item_text_size" />
             <View
-                android:layout_width="2dp"
+                android:layout_width="@dimen/game_statistics_item_lines_vertical_seperator_width"
                 android:layout_height="match_parent"
                 android:background="@color/black"/>
             <TextView
                 android:id="@+id/tv_player2_wins"
-                android:layout_width="59dp"
+                android:layout_width="@dimen/game_statistics_item_table_cell_width"
                 android:layout_height="match_parent"
-                android:text="2"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="12sp"/>
+                android:textSize="@dimen/game_statistics_item_text_size"/>
         </LinearLayout>
         <View
             android:id="@+id/wins_sets_seperator"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/game_statistics_lines_seperator_height"
             android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@id/wins_tv"
             app:layout_constraintBottom_toTopOf="@id/sets_tv"/>
         <LinearLayout
             android:id="@+id/sets_tv"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="@dimen/game_statistics_table_cell_height"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/wins_sets_seperator">
             <TextView
                 android:id="@+id/tv_player1_sets"
-                android:layout_width="59dp"
+                android:layout_width="@dimen/game_statistics_item_table_cell_width"
                 android:layout_height="match_parent"
-                android:text="10"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="@dimen/game_statistics_item_text_size"
                 />
             <View
-                android:layout_width="2dp"
+                android:layout_width="@dimen/game_statistics_item_lines_vertical_seperator_width"
                 android:layout_height="match_parent"
                 android:background="@color/black"/>
             <TextView
                 android:id="@+id/tv_player2_sets"
-                android:layout_width="59dp"
+                android:layout_width="@dimen/game_statistics_item_table_cell_width"
                 android:layout_height="match_parent"
-                android:text="20"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="12sp"/>
+                android:textSize="@dimen/game_statistics_item_text_size"/>
         </LinearLayout>
         <View
             android:id="@+id/sets_legs_seperator"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/game_statistics_lines_seperator_height"
             android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@id/sets_tv"
             app:layout_constraintBottom_toTopOf="@id/legs_tv"/>
         <LinearLayout
             android:id="@+id/legs_tv"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="@dimen/game_statistics_table_cell_height"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/sets_legs_seperator">
             <TextView
                 android:id="@+id/tv_player1_legs"
-                android:layout_width="59dp"
+                android:layout_width="@dimen/game_statistics_item_table_cell_width"
                 android:layout_height="match_parent"
-                android:text="100"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="12sp"
-                />
+                android:textSize="@dimen/game_statistics_item_text_size" />
             <View
-                android:layout_width="2dp"
+                android:layout_width="@dimen/game_statistics_item_lines_vertical_seperator_width"
                 android:layout_height="match_parent"
                 android:background="@color/black"/>
             <TextView
                 android:id="@+id/tv_player2_legs"
-                android:layout_width="59dp"
+                android:layout_width="@dimen/game_statistics_item_table_cell_width"
                 android:layout_height="match_parent"
-                android:text="200"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="12sp"/>
+                android:textSize="@dimen/game_statistics_item_text_size"/>
         </LinearLayout>
         <View
             android:id="@+id/legs_highestWin_seperator"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/game_statistics_lines_seperator_height"
             android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@id/legs_tv"
             app:layout_constraintBottom_toTopOf="@id/highest_win_tv"/>
         <LinearLayout
             android:id="@+id/highest_win_tv"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="@dimen/game_statistics_table_cell_height"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/legs_highestWin_seperator">
             <TextView
                 android:id="@+id/tv_player1_highest_win"
-                android:layout_width="59dp"
+                android:layout_width="@dimen/game_statistics_item_table_cell_width"
                 android:layout_height="match_parent"
-                android:text="-"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="@dimen/game_statistics_item_text_size"/>
             <View
-                android:layout_width="2dp"
+                android:layout_width="@dimen/game_statistics_item_lines_vertical_seperator_width"
                 android:layout_height="match_parent"
                 android:background="@color/black"/>
             <TextView
                 android:id="@+id/tv_player2_highest_win"
-                android:layout_width="59dp"
+                android:layout_width="@dimen/game_statistics_item_table_cell_width"
                 android:layout_height="match_parent"
-                android:text="-"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="12sp"/>
+                android:textSize="@dimen/game_statistics_item_text_size"/>
         </LinearLayout>
         <View
             android:id="@+id/highestWin_highestStreet_seperator"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/game_statistics_lines_seperator_height"
             android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@id/highest_win_tv"
             app:layout_constraintBottom_toTopOf="@id/highest_street_tv"/>
         <LinearLayout
             android:id="@+id/highest_street_tv"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="@dimen/game_statistics_table_cell_height"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/highestWin_highestStreet_seperator">
             <TextView
                 android:id="@+id/tv_player1_highest_street"
-                android:layout_width="59dp"
+                android:layout_width="@dimen/game_statistics_item_table_cell_width"
                 android:layout_height="match_parent"
-                android:text="8"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="12sp"
-                />
+                android:textSize="@dimen/game_statistics_item_text_size"/>
             <View
-                android:layout_width="2dp"
+                android:layout_width="@dimen/game_statistics_item_lines_vertical_seperator_width"
                 android:layout_height="match_parent"
                 android:background="@color/black"/>
             <TextView
                 android:id="@+id/tv_player2_highest_street"
-                android:layout_width="59dp"
+                android:layout_width="@dimen/game_statistics_item_table_cell_width"
                 android:layout_height="match_parent"
-                android:text="4"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="12sp"/>
+                android:textSize="@dimen/game_statistics_item_text_size"/>
         </LinearLayout>
         <View
             android:id="@+id/highestStreet_actualStreet_seperator"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/game_statistics_lines_seperator_height"
             android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@id/highest_street_tv"
             app:layout_constraintBottom_toTopOf="@id/actual_street_tv"/>
         <LinearLayout
             android:id="@+id/actual_street_tv"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="@dimen/game_statistics_table_cell_height"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/highestStreet_actualStreet_seperator">
             <TextView
                 android:id="@+id/tv_player1_actual_street"
-                android:layout_width="59dp"
+                android:layout_width="@dimen/game_statistics_item_table_cell_width"
                 android:layout_height="match_parent"
-                android:text="3"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="12sp"
-                />
+                android:textSize="@dimen/game_statistics_item_text_size"/>
             <View
-                android:layout_width="2dp"
+                android:layout_width="@dimen/game_statistics_item_lines_vertical_seperator_width"
                 android:layout_height="match_parent"
                 android:background="@color/black"/>
             <TextView
                 android:id="@+id/tv_player2_actual_street"
-                android:layout_width="59dp"
+                android:layout_width="@dimen/game_statistics_item_table_cell_width"
                 android:layout_height="match_parent"
-                android:text="-3"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="12sp"/>
+                android:textSize="@dimen/game_statistics_item_text_size"/>
         </LinearLayout>
         <View
             android:id="@+id/actualStreet_end_seperator"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/game_statistics_lines_seperator_height"
             android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@id/actual_street_tv"/>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

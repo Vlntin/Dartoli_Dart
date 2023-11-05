@@ -27,6 +27,26 @@
     <dimen name="cricket_table_element_height">35dp</dimen>
     <dimen name="counting_game_statistics_table_text_size">15sp</dimen>
 
+    <!-- dimens for player statistics for all stats of counting games -->
     <dimen name="player_statistics_table_cell_height">35dp</dimen>
     <dimen name="player_statistics_table_cell_text_size">12sp</dimen>
+    <dimen name="player_statistics_table_height">500dp</dimen>
+    <dimen name="player_statistics_recycler_width">200dp</dimen>
+    <dimen name="player_statistics_lines_seperator_height">1dp</dimen>
+    <dimen name="player_statistics_seperator_width">2dp</dimen>
+    <dimen name="player_statistics_categories_layout_width">120dp</dimen>
+    <dimen name="player_statistics_item_width">100dp</dimen>
+    <dimen name="player_statistics_overcategory_height">20dp</dimen>
+
+    <!-- dimens for game statistics for direct compare of two players -->
+    <dimen name="game_statistics_lines_seperator_height">1dp</dimen>
+    <dimen name="game_statistics_small_lines_seperator_height">1dp</dimen>
+    <dimen name="game_statistics_item_lines_vertical_seperator_width">2dp</dimen>
+    <dimen name="game_statistics_item_text_size">12sp</dimen>
+    <dimen name="game_statistics_recycler_width">240dp</dimen>
+    <dimen name="game_statistics_table_cell_height">35dp</dimen>
+    <dimen name="game_statistics_gametitle_table_cell_height">50dp</dimen>
+    <dimen name="game_statistics_table_cell_height_small">30dp</dimen>
+    <dimen name="game_statistics_item_table_cell_width">59dp</dimen>
+    <dimen name="game_statistics_item_width">120dp</dimen>
 </resources>

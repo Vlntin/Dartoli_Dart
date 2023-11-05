@@ -16,7 +16,7 @@
             android:name=".activities.CountingPlayerStatisticsActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.StatisticsActivity"
+            android:name=".activities.GameStatisticsActivity"
             android:exported="false" />
         <activity
             android:name=".Counting.CountingGameStatisticsActivity"

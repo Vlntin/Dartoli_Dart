@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/start_green"
-    tools:context=".Cricket.CricketActivity">
-
+    android:background="@color/start_green">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -15,19 +13,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginBottom="10dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Spielerstatistiken"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="@dimen/big_title_size"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:paddingTop="@dimen/padding_headline_top"
-                android:paddingBottom="@dimen/padding_headline_top"
-                android:padding="@dimen/padding_headline_bottom"
-                android:layout_weight="1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/game_statistics_title"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="@dimen/big_title_size"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:paddingTop="@dimen/padding_headline_top"
+            android:paddingBottom="@dimen/padding_headline_top"
+            android:padding="@dimen/padding_headline_bottom"
+            android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ll_player_btns"
@@ -38,11 +36,9 @@
         app:layout_constraintTop_toBottomOf="@id/statistics_title"
         android:padding="10dp"
         android:layout_margin="5dp">
-
         <TextView
             android:id="@+id/tv_player1"
             android:layout_width="match_parent"
-            android:text="Spieler"
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="@dimen/game_settings_text_size"
@@ -51,11 +47,9 @@
             android:background="@drawable/btn_normal"
             android:layout_height="35dp"
             android:layout_marginRight="15dp"/>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:text="default Text"
             android:textSize="@dimen/game_settings_text_size"
             android:textColor="@color/black"
             android:gravity="center"
@@ -64,7 +58,6 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:layout_marginLeft="15dp"/>
-
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -91,7 +84,6 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/layout_id"
                 android:background="@color/cricket_background_color">
-
                 <LinearLayout
                     android:id="@+id/layout_playername"
                     android:layout_width="match_parent"
@@ -100,40 +92,32 @@
                     <TextView
                         android:id="@+id/tv_game_name"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text=""
-                        android:gravity="center"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
+                        android:layout_height="@dimen/game_statistics_gametitle_table_cell_height"
                         app:layout_constraintTop_toTopOf="@+id/layout_id"/>
                     <View
                         android:id="@+id/gamename_playername_seperator"
                         android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
+                        android:layout_height="@dimen/game_statistics_small_lines_seperator_height"
                         android:background="@color/black"/>
                     <TextView
                         android:id="@+id/tv_player_name"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:text=""
-                        android:gravity="center"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
+                        android:layout_height="@dimen/game_statistics_table_cell_height_small"
                         app:layout_constraintTop_toTopOf="@+id/gamename_playername_seperator"/>
                 </LinearLayout>
                 <View
                     android:id="@+id/name_points_seperator"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/game_statistics_lines_seperator_height"
                     android:background="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/layout_playername"
                     app:layout_constraintBottom_toTopOf="@id/wins_tv"/>
                 <TextView
                     android:id="@+id/wins_tv"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/cricket_table_element_height"
+                    android:layout_height="@dimen/game_statistics_table_cell_height"
                     android:text="Siege"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/game_statistics_item_text_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/name_points_seperator"
@@ -141,16 +125,16 @@
                 <View
                     android:id="@+id/wins_sets_seperator"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/game_statistics_lines_seperator_height"
                     android:background="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/wins_tv"
                     app:layout_constraintBottom_toTopOf="@id/sets_tv"/>
                 <TextView
                     android:id="@+id/sets_tv"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/cricket_table_element_height"
+                    android:layout_height="@dimen/game_statistics_table_cell_height"
                     android:text="Gewonnene Sets"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/game_statistics_item_text_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/wins_sets_seperator"
@@ -158,16 +142,16 @@
                 <View
                     android:id="@+id/sets_legs_seperator"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/game_statistics_lines_seperator_height"
                     android:background="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/sets_tv"
                     app:layout_constraintBottom_toTopOf="@id/legs_tv"/>
                 <TextView
                     android:id="@+id/legs_tv"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/cricket_table_element_height"
+                    android:layout_height="@dimen/game_statistics_table_cell_height"
                     android:text="Gewonnene Legs"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/game_statistics_item_text_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/sets_legs_seperator"
@@ -175,16 +159,16 @@
                 <View
                     android:id="@+id/legs_highestWin_seperator"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/game_statistics_lines_seperator_height"
                     android:background="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/legs_tv"
                     app:layout_constraintBottom_toTopOf="@id/highest_win_tv"/>
                 <TextView
                     android:id="@+id/highest_win_tv"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/cricket_table_element_height"
+                    android:layout_height="@dimen/game_statistics_table_cell_height"
                     android:text="Höchster Sieg"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/game_statistics_item_text_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/legs_highestWin_seperator"
@@ -192,16 +176,16 @@
                 <View
                     android:id="@+id/highestWin_highestStreet_seperator"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/game_statistics_lines_seperator_height"
                     android:background="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/highest_win_tv"
                     app:layout_constraintBottom_toTopOf="@id/highest_street_tv"/>
                 <TextView
                     android:id="@+id/highest_street_tv"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/cricket_table_element_height"
+                    android:layout_height="@dimen/game_statistics_table_cell_height"
                     android:text="Höchste Siegesserie"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/game_statistics_item_text_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/highestWin_highestStreet_seperator"
@@ -209,16 +193,16 @@
                 <View
                     android:id="@+id/highestStreet_actualStreet_seperator"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/game_statistics_lines_seperator_height"
                     android:background="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/highest_street_tv"
                     app:layout_constraintBottom_toTopOf="@id/actual_street_tv"/>
                 <TextView
                     android:id="@+id/actual_street_tv"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/cricket_table_element_height"
+                    android:layout_height="@dimen/game_statistics_table_cell_height"
                     android:text="Aktuelle Serie"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/game_statistics_item_text_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/highestStreet_actualStreet_seperator"
@@ -226,13 +210,10 @@
                 <View
                     android:id="@+id/actualStreet_end_seperator"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/game_statistics_lines_seperator_height"
                     android:background="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/actual_street_tv"/>
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
@@ -242,12 +223,48 @@
                 app:layout_constraintTop_toBottomOf="@+id/ll_player_btns"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_width="240dp"
+                android:layout_width="@dimen/game_statistics_recycler_width"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/statistics_game_item"
                 app:layout_constraintBottom_toTopOf="@id/table_layout"
                 android:backgroundTint="@color/cricket_background_color"/>
         </LinearLayout>
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/btns_layout"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/table"
+        android:layout_marginTop="20dp"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/btn_player_statistics"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="Spielerstatistiken"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_normal"
+            android:padding="9dp"
+            android:layout_weight="1"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/btn_back_to_main"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="Hauptmenü"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_normal"
+            android:padding="9dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

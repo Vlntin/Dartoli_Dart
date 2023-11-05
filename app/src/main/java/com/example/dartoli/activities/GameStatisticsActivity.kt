@@ -10,19 +10,18 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isNotEmpty
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dartoli.Cricket.PlayerStatusAdapter
 import com.example.dartoli.R
 import com.example.dartoli.Statistics.GameStatisticItem
 import com.example.dartoli.Statistics.GameStatisticsStatusAdapter
 import com.example.dartoli.data.GamesDatabaseHandler
 import com.example.dartoli.data.MatchesDatabaseHandler
 import com.example.dartoli.data.PlayerDatabaseHandler
-import com.example.dartoli.databinding.ActivityStatisticsBinding
+import com.example.dartoli.databinding.ActivityGameStatisticsBinding
 import com.example.dartoli.model.Game
 import com.example.dartoli.model.Match
 import com.example.dartoli.model.Player
 
-private lateinit var binding: ActivityStatisticsBinding
+private lateinit var binding: ActivityGameStatisticsBinding
 
 private lateinit var player1_selecting_button: TextView
 private lateinit var player2_selecting_button: TextView
@@ -31,59 +30,51 @@ private lateinit var player1: Player
 private lateinit var player2: Player
 
 private lateinit var games_list: ArrayList<Game>
+private lateinit var matches: ArrayList<Match>
 
 private lateinit var gameStatisticsAdapter: GameStatisticsStatusAdapter
 private lateinit var rvGameStatistic: RecyclerView
 
 private var all_game_statistics = arrayListOf<GameStatisticItem>()
 
-class StatisticsActivity : AppCompatActivity() {
+class GameStatisticsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityStatisticsBinding.inflate(layoutInflater)
+        binding = ActivityGameStatisticsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        val db = MatchesDatabaseHandler(this)
-        val matches_list = db.readAllMatches()
-        Log.v("länge2", matches_list.size.toString())
-
+        matches = MatchesDatabaseHandler(this).readAllMatches()
         games_list = GamesDatabaseHandler(this).readAllGames()
+        val player_list = PlayerDatabaseHandler(this).readAllPlayers()
 
         player1_selecting_button = binding.tvPlayer1
         player2_selecting_button = binding.tvPlayer2
         popupMenu_players = PopupMenu(this, player1_selecting_button)
         popupMenu_players = PopupMenu(this, player2_selecting_button)
-
-        val playersDB = PlayerDatabaseHandler(this)
-        val player_list = playersDB.readAllPlayers()
         player1_selecting_button.setText(player_list[0].playerName)
         player1 = player_list[0]
         player2_selecting_button.setText(player_list[1].playerName)
         player2 = player_list[1]
-        refresh_statistics(player1, player2, matches_list)
+        refresh_statistics(player1, player2)
 
         player1_selecting_button.setOnClickListener {
             popupMenu_players = PopupMenu(this, player1_selecting_button)
             popupMenu_players.menuInflater.inflate(R.menu.popup_menu, popupMenu_players.menu)
             popupMenu_players.setOnMenuItemClickListener { menuItem ->
-                // Toast message on menu item clicked
                 player1_selecting_button.setText(menuItem.title)
                 for(element in player_list){
                     if (element.playerName.equals(menuItem.title.toString())){
                         player1 = element
-                        refresh_statistics(player1, player2, matches_list)
+                        refresh_statistics(player1, player2)
                         setupPlayerStatusRecyclerView()
                     }
                 }
                 true
             }
-            if (popupMenu_players.getMenu().isNotEmpty()){
-                popupMenu_players.getMenu().clear()
-            }
+            if (popupMenu_players.getMenu().isNotEmpty()) popupMenu_players.getMenu().clear()
             for (i in player_list.indices) {
-                if (!player_list[i].equals(player1) && !player_list[i].equals(player2))
-                    popupMenu_players.getMenu().add(player_list[i].playerName)
+                if (!player_list[i].equals(player1) && !player_list[i].equals(player2)) popupMenu_players.getMenu().add(player_list[i].playerName)
             }
             popupMenu_players.show()
         }
@@ -92,23 +83,19 @@ class StatisticsActivity : AppCompatActivity() {
             popupMenu_players = PopupMenu(this, player2_selecting_button)
             popupMenu_players.menuInflater.inflate(R.menu.popup_menu, popupMenu_players.menu)
             popupMenu_players.setOnMenuItemClickListener { menuItem ->
-                // Toast message on menu item clicked
                 player2_selecting_button.setText(menuItem.title)
                 for(element in player_list){
                     if (element.playerName.equals(menuItem.title.toString())){
                         player2 = element
-                        refresh_statistics(player1, player2, matches_list)
+                        refresh_statistics(player1, player2)
                         setupPlayerStatusRecyclerView()
                     }
                 }
                 true
             }
-            if (popupMenu_players.getMenu().isNotEmpty()){
-                popupMenu_players.getMenu().clear()
-            }
+            if (popupMenu_players.getMenu().isNotEmpty()) popupMenu_players.getMenu().clear()
             for (i in player_list.indices) {
-                if (!player_list[i].equals(player1) && !player_list[i].equals(player2))
-                    popupMenu_players.getMenu().add(player_list[i].playerName)
+                if (!player_list[i].equals(player1) && !player_list[i].equals(player2)) popupMenu_players.getMenu().add(player_list[i].playerName)
             }
             popupMenu_players.show()
         }
@@ -116,9 +103,17 @@ class StatisticsActivity : AppCompatActivity() {
         rvGameStatistic = binding.rvRecycler
         setupPlayerStatusRecyclerView()
 
+        binding.btnBackToMain.setOnClickListener{
+            startActivity(Intent(this@GameStatisticsActivity, MainActivity::class.java))
+            finish()
+        }
+        binding.btnPlayerStatistics.setOnClickListener{
+            startActivity(Intent(this@GameStatisticsActivity, CountingPlayerStatisticsActivity::class.java))
+            finish()
+        }
     }
 
-    fun refresh_statistics(player1: Player, player2: Player, matches: ArrayList<Match>){
+    fun refresh_statistics(player1: Player, player2: Player){
         var player1_name = player1.playerName
         var player2_name = player2.playerName
         if(all_game_statistics.size > 0) all_game_statistics.clear()
@@ -144,14 +139,9 @@ class StatisticsActivity : AppCompatActivity() {
                     player1_sets = player1_sets + match.won_sets[0]
                     player2_legs = player2_legs + match.won_legs[1]
                     player2_sets = player2_sets + match.won_sets[1]
-                    if (player1_actual_street < 1) {
-                        player1_actual_street = 1
-                    } else {
-                        player1_actual_street++
-                    }
+                    if (player1_actual_street < 1) player1_actual_street = 1 else player1_actual_street++
                     player2_actual_street = 0 - player1_actual_street
-                    if (player1_actual_street > player1_longest_win_street) player1_longest_win_street =
-                        player1_actual_street
+                    if (player1_actual_street > player1_longest_win_street) player1_longest_win_street = player1_actual_street
                 }
                 if (match.player_ids[1] == player1.id && match.player_ids[0] == player2.id) {
                     player2_wins++
@@ -159,14 +149,9 @@ class StatisticsActivity : AppCompatActivity() {
                     player2_sets = player2_sets + match.won_sets[0]
                     player1_legs = player1_legs + match.won_legs[1]
                     player1_sets = player1_sets + match.won_sets[1]
-                    if (player2_actual_street < 1) {
-                        player2_actual_street = 1
-                    } else {
-                        player2_actual_street++
-                    }
+                    if (player2_actual_street < 1) player2_actual_street = 1 else player2_actual_street++
                     player1_actual_street = 0 - player2_actual_street
-                    if (player2_actual_street > player2_longest_win_street) player2_longest_win_street =
-                        player2_actual_street
+                    if (player2_actual_street > player2_longest_win_street) player2_longest_win_street = player2_actual_street
                 }
             }
         }
@@ -211,14 +196,9 @@ class StatisticsActivity : AppCompatActivity() {
                         player1_sets = player1_sets + match.won_sets[0]
                         player2_legs = player2_legs + match.won_legs[1]
                         player2_sets = player2_sets + match.won_sets[1]
-                        if (player1_actual_street < 1) {
-                            player1_actual_street = 1
-                        } else {
-                            player1_actual_street++
-                        }
+                        if (player1_actual_street < 1) player1_actual_street = 1 else player1_actual_street++
                         player2_actual_street = 0 - player1_actual_street
-                        if (player1_actual_street > player1_longest_win_street) player1_longest_win_street =
-                            player1_actual_street
+                        if (player1_actual_street > player1_longest_win_street) player1_longest_win_street = player1_actual_street
                     }
                     if (match.player_ids[1] == player1.id && match.player_ids[0] == player2.id) {
                         player2_wins++
@@ -226,14 +206,9 @@ class StatisticsActivity : AppCompatActivity() {
                         player2_sets = player2_sets + match.won_sets[0]
                         player1_legs = player1_legs + match.won_legs[1]
                         player1_sets = player1_sets + match.won_sets[1]
-                        if (player2_actual_street < 1) {
-                            player2_actual_street = 1
-                        } else {
-                            player2_actual_street++
-                        }
+                        if (player2_actual_street < 1) player2_actual_street = 1 else player2_actual_street++
                         player1_actual_street = 0 - player2_actual_street
-                        if (player2_actual_street > player2_longest_win_street) player2_longest_win_street =
-                            player2_actual_street
+                        if (player2_actual_street > player2_longest_win_street) player2_longest_win_street = player2_actual_street
                     }
                 }
             }
@@ -265,6 +240,6 @@ class StatisticsActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this@StatisticsActivity, MainActivity::class.java))
+        startActivity(Intent(this@GameStatisticsActivity, CountingPlayerStatisticsActivity::class.java))
     }
 }

@@ -15,4 +15,7 @@
 
     <string name="game_finished_title">Spiel beendet</string>
 
+    <string name="counting_player_statistics_title">Spielerstatistiken</string>
+    <string name="game_statistics_title">Direkter Vergleich</string>
+
 </resources>

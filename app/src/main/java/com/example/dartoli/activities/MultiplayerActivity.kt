@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -22,16 +21,16 @@ import androidx.core.view.isNotEmpty
 import com.example.dartoli.Counting.CountingGame
 import com.example.dartoli.Counting.CountingGameActivity
 import com.example.dartoli.Counting.CountingPlayer
+import com.example.dartoli.Cricket.CricketActivity
+import com.example.dartoli.Cricket.CricketGame
+import com.example.dartoli.Cricket.CricketPlayer
 import com.example.dartoli.R
 import com.example.dartoli.data.GamesDatabaseHandler
 import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityMultiplayerBinding
 import com.example.dartoli.model.Game
 import com.example.dartoli.model.Player
-import com.example.dartoli.Cricket.CricketActivity
-import com.example.dartoli.Cricket.CricketGame
-import com.example.dartoli.Cricket.CricketPlayer
-import com.example.dartoli.data.MatchesDatabaseHandler
+
 
 class MultiplayerActivity : AppCompatActivity() {
 
@@ -81,7 +80,7 @@ class MultiplayerActivity : AppCompatActivity() {
 
 
         game_selection_button.setOnClickListener {
-            popupMenu_games.menuInflater.inflate(R.menu.popup_menu, popupMenu_games.menu)
+            popupMenu_games.menuInflater.inflate(com.example.dartoli.R.menu.popup_menu, popupMenu_games.menu)
             popupMenu_games.setOnMenuItemClickListener { menuItem ->
                 // Toast message on menu item clicked
                 game_selection_button.setText(menuItem.title)
@@ -123,7 +122,7 @@ class MultiplayerActivity : AppCompatActivity() {
             if (popupMenu_players.getMenu().isNotEmpty()){
                 popupMenu_players.show()
             }
-            popupMenu_players.menuInflater.inflate(R.menu.popup_menu, popupMenu_players.menu)
+            popupMenu_players.menuInflater.inflate(com.example.dartoli.R.menu.popup_menu, popupMenu_players.menu)
             popupMenu_players.setOnMenuItemClickListener { menuItem ->
                 add_player_to_list(menuItem.title.toString())
             }
@@ -136,13 +135,14 @@ class MultiplayerActivity : AppCompatActivity() {
         }
 
 
-        customDialog = Dialog(this);
-        customDialog.setContentView(R.layout.custom_dialog_resource);
-        customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        customDialog = Dialog(this)
+        customDialog.setContentView(com.example.dartoli.R.layout.custom_dialog_resource)
+        customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
 
-        val btnSubmit = customDialog.findViewById<ImageView>(R.id.btnSubmit)
-        val btnDismiss = customDialog.findViewById<ImageView>(R.id.btnDismiss)
-        val newName = customDialog.findViewById<EditText>(R.id.edit_text_player_name)
+
+        val btnSubmit = customDialog.findViewById<ImageView>(com.example.dartoli.R.id.btnSubmit)
+        val btnDismiss = customDialog.findViewById<ImageView>(com.example.dartoli.R.id.btnDismiss)
+        val newName = customDialog.findViewById<EditText>(com.example.dartoli.R.id.edit_text_player_name)
         btnSubmit.setOnClickListener(View.OnClickListener() {
             val myDB = PlayerDatabaseHandler(this)
             myDB.addPlayer(newName.text.toString())
