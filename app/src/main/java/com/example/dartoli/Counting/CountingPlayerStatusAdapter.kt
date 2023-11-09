@@ -27,7 +27,6 @@ class CountingPlayerStatusAdapter(var datalist:ArrayList<CountingPlayer>, var co
             binding.tvLegAverage.text = String.format("%.2f", get.leg_average)
             binding.tvGameAverage.text = String.format("%.2f", get.game_average)
             binding.tvDoupleQuote.text = (get.hit_doubles.toString() + "/" + get.throws_on_doubles)
-
             binding.tvLegs.setText(get.won_legs.toString() + "/" + get.needed_legs)
             binding.tvSets.setText(get.won_sets.toString() + "/" + get.needed_sets)
         }
@@ -41,11 +40,7 @@ class CountingPlayerStatusAdapter(var datalist:ArrayList<CountingPlayer>, var co
 
     override fun onBindViewHolder(holder: PlayerStatusHolder, position: Int) {
         var actual_player: Boolean
-        if (position == actual_player_number) {
-            actual_player = true
-        } else {
-            actual_player = false
-        }
+        actual_player = (position == actual_player_number)
         if (position % 2 == 0){
             holder.bind(datalist[position], true, grey, actual_player)
         } else {

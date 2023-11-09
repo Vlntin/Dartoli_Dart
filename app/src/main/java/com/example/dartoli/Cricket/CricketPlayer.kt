@@ -1,5 +1,7 @@
 package com.example.dartoli.Cricket
 
+import java.io.Serializable
+
 data class CricketPlayer(
     var playerName: String,
     var points: Int,
@@ -21,6 +23,6 @@ data class CricketPlayer(
     var needed_legs : Int,
     var won_sets: Int,
     var needed_sets: Int,
-    var place: Int,
+    var rank: Int,
     var overall_won_legs: Int
-)
+): Serializable

@@ -12,7 +12,6 @@ import com.example.dartoli.activities.MultiplayerActivity
 import com.example.dartoli.databinding.ActivityCountingGameStatisticsBinding
 
 private lateinit var binding: ActivityCountingGameStatisticsBinding
-
 private lateinit var playerAdapter: CountingPlayerStatisticsAdapter
 private lateinit var rvPlayerStatistics: RecyclerView
 private var playingPlayers = arrayListOf<CountingPlayer>()
@@ -24,17 +23,14 @@ class CountingGameStatisticsActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-
         var game = intent.getSerializableExtra("a") as CountingGame?
         playingPlayers = game!!.game_players
-
         rvPlayerStatistics = binding.rvRecycler
         setupPlayerStatusRecyclerView()
 
         binding.btnBackToMain.setOnClickListener {
             startActivity(Intent(this@CountingGameStatisticsActivity, MainActivity::class.java))
         }
-
     }
 
     private fun setupPlayerStatusRecyclerView() {

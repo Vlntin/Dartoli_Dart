@@ -12,13 +12,10 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
     var set_start_player = 0
     var leg_start_player = 0
 
-
     fun thrown_values(value: Int, amount: Int): Boolean{
         for (i in 1..amount){
             if (value == 15) {
-                if (game_players[actualPlayerNumber].fifteens == 3 && !game_players[actualPlayerNumber].fifteensClosed) {
-                    game_players[actualPlayerNumber].points = game_players[actualPlayerNumber].points + 15
-                }
+                if (game_players[actualPlayerNumber].fifteens == 3 && !game_players[actualPlayerNumber].fifteensClosed) game_players[actualPlayerNumber].points = game_players[actualPlayerNumber].points + 15
                 if (game_players[actualPlayerNumber].fifteens == 2 ) {
                     game_players[actualPlayerNumber].fifteens = 3
                     var closed = true
@@ -31,15 +28,10 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
                         }
                     }
                 }
-                if (game_players[actualPlayerNumber].fifteens < 2 ) {
-                        game_players[actualPlayerNumber].fifteens++
-                }
-
+                if (game_players[actualPlayerNumber].fifteens < 2 ) game_players[actualPlayerNumber].fifteens++
             }
             if (value == 16) {
-                if (game_players[actualPlayerNumber].sixteens == 3 && !game_players[actualPlayerNumber].sixteensClosed) {
-                    game_players[actualPlayerNumber].points = game_players[actualPlayerNumber].points + 16
-                }
+                if (game_players[actualPlayerNumber].sixteens == 3 && !game_players[actualPlayerNumber].sixteensClosed) game_players[actualPlayerNumber].points = game_players[actualPlayerNumber].points + 16
                 if (game_players[actualPlayerNumber].sixteens == 2 ) {
                     game_players[actualPlayerNumber].sixteens = 3
                     var closed = true
@@ -52,14 +44,10 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
                         }
                     }
                 }
-                if (game_players[actualPlayerNumber].sixteens < 2 ) {
-                    game_players[actualPlayerNumber].sixteens++
-                }
+                if (game_players[actualPlayerNumber].sixteens < 2 ) game_players[actualPlayerNumber].sixteens++
             }
             if (value == 17) {
-                if (game_players[actualPlayerNumber].seventeens == 3 && !game_players[actualPlayerNumber].seventeensClosed) {
-                    game_players[actualPlayerNumber].points = game_players[actualPlayerNumber].points + 17
-                }
+                if (game_players[actualPlayerNumber].seventeens == 3 && !game_players[actualPlayerNumber].seventeensClosed) game_players[actualPlayerNumber].points = game_players[actualPlayerNumber].points + 17
                 if (game_players[actualPlayerNumber].seventeens == 2 ) {
                     game_players[actualPlayerNumber].seventeens++
                     var closed = true
@@ -72,14 +60,10 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
                         }
                     }
                 }
-                if (game_players[actualPlayerNumber].seventeens < 2 ) {
-                    game_players[actualPlayerNumber].seventeens++
-                }
+                if (game_players[actualPlayerNumber].seventeens < 2 ) game_players[actualPlayerNumber].seventeens++
             }
             if (value == 18) {
-                if (game_players[actualPlayerNumber].eightteens == 3 && !game_players[actualPlayerNumber].eightteensClosed) {
-                    game_players[actualPlayerNumber].points = game_players[actualPlayerNumber].points + 18
-                }
+                if (game_players[actualPlayerNumber].eightteens == 3 && !game_players[actualPlayerNumber].eightteensClosed) game_players[actualPlayerNumber].points = game_players[actualPlayerNumber].points + 18
                 if (game_players[actualPlayerNumber].eightteens == 2 ) {
                     game_players[actualPlayerNumber].eightteens++
                     var closed = true
@@ -92,14 +76,10 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
                         }
                     }
                 }
-                if (game_players[actualPlayerNumber].eightteens < 2 ) {
-                    game_players[actualPlayerNumber].eightteens++
-                }
+                if (game_players[actualPlayerNumber].eightteens < 2 ) game_players[actualPlayerNumber].eightteens++
             }
             if (value == 19) {
-                if (game_players[actualPlayerNumber].nineteens == 3 && !game_players[actualPlayerNumber].nineteensClosed) {
-                    game_players[actualPlayerNumber].points = game_players[actualPlayerNumber].points + 19
-                }
+                if (game_players[actualPlayerNumber].nineteens == 3 && !game_players[actualPlayerNumber].nineteensClosed) game_players[actualPlayerNumber].points = game_players[actualPlayerNumber].points + 19
                 if (game_players[actualPlayerNumber].nineteens == 2 ) {
                     game_players[actualPlayerNumber].nineteens++
                     var closed = true
@@ -112,14 +92,10 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
                         }
                     }
                 }
-                if (game_players[actualPlayerNumber].nineteens < 2 ) {
-                    game_players[actualPlayerNumber].nineteens++
-                }
+                if (game_players[actualPlayerNumber].nineteens < 2 ) game_players[actualPlayerNumber].nineteens++
             }
             if (value == 20) {
-                if (game_players[actualPlayerNumber].twenties == 3 && !game_players[actualPlayerNumber].twentiesClosed) {
-                    game_players[actualPlayerNumber].points = game_players[actualPlayerNumber].points + 20
-                }
+                if (game_players[actualPlayerNumber].twenties == 3 && !game_players[actualPlayerNumber].twentiesClosed) game_players[actualPlayerNumber].points = game_players[actualPlayerNumber].points + 20
                 if (game_players[actualPlayerNumber].twenties == 2 ) {
                     game_players[actualPlayerNumber].twenties++
                     var closed = true
@@ -132,14 +108,10 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
                         }
                     }
                 }
-                if (game_players[actualPlayerNumber].twenties < 2 ) {
-                    game_players[actualPlayerNumber].twenties++
-                }
+                if (game_players[actualPlayerNumber].twenties < 2 ) game_players[actualPlayerNumber].twenties++
             }
             if (value == 25) {
-                if (game_players[actualPlayerNumber].bulls == 3 && !game_players[actualPlayerNumber].bullsClosed) {
-                    game_players[actualPlayerNumber].points = game_players[actualPlayerNumber].points + 25
-                }
+                if (game_players[actualPlayerNumber].bulls == 3 && !game_players[actualPlayerNumber].bullsClosed) game_players[actualPlayerNumber].points = game_players[actualPlayerNumber].points + 25
                 if (game_players[actualPlayerNumber].bulls == 2 ) {
                     game_players[actualPlayerNumber].bulls++
                     var closed = true
@@ -152,9 +124,7 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
                         }
                     }
                 }
-                if (game_players[actualPlayerNumber].bulls < 2 ) {
-                    game_players[actualPlayerNumber].bulls++
-                }
+                if (game_players[actualPlayerNumber].bulls < 2 ) game_players[actualPlayerNumber].bulls++
             }
         }
         finish_player_move()
@@ -196,13 +166,8 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
         var result = false
         for (i in 0..game_players.size -1){
             var best_player = game_players[i]
-            if (best_player.fifteens == 3 &&
-                best_player.sixteens == 3 &&
-                best_player.seventeens == 3 &&
-                best_player.eightteens == 3 &&
-                best_player.nineteens == 3 &&
-                best_player.twenties == 3 &&
-                best_player.bulls == 3){
+            if (best_player.fifteens == 3 && best_player.sixteens == 3 && best_player.seventeens == 3 && best_player.eightteens == 3 &&
+                best_player.nineteens == 3 && best_player.twenties == 3 && best_player.bulls == 3){
                 var best = true
                 for (player in game_players){
                     if (!player.equals(best_player) && player.points > best_player.points) best = false
@@ -221,7 +186,6 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
     fun reset_for_new_leg(){
         if (leg_start_player < game_players.size - 1){
             leg_start_player++
-
         } else {
             leg_start_player = 0
         }
@@ -267,5 +231,4 @@ class CricketGame(legs: Int, sets: Int, players: ArrayList<CricketPlayer>): Seri
             actualPlayerNumber++
         }
     }
-
 }

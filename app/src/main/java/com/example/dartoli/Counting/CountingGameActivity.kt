@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dartoli.Cricket.CricketActivity
 import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityCountingGameBinding
 import com.example.dartoli.R
@@ -39,10 +37,8 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
     private var game_id: Int? = null
     private var description: String? = null
 
-
     private lateinit var playerAdapter: CountingPlayerStatusAdapter
     private lateinit var rvPlayerStatus: RecyclerView
-
     private lateinit var customDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +49,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
 
         game = intent.getSerializableExtra("game") as CountingGame?
         playingPlayers = game!!.game_players
-
+        set_game_informations()
         binding.tvGameTitle.text = game!!.needed_points.toString()
         binding.tvActualPlayer.setText("Am Zug: " + game!!.game_players[game!!.actualPlayerNumber].playerName + " (" + game!!.actualDartsLeft.toString() + ")")
 
@@ -85,13 +81,8 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         binding.bullBtn.setOnClickListener(this)
         binding.missBtn.setOnClickListener(this)
 
-
-
         rvPlayerStatus = binding.rvRecycler
         setupPlayerStatusRecyclerView()
-
-        set_game_informations()
-
     }
 
     // needed informations for rules and match database
@@ -126,24 +117,25 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
+        when (view!!.id) {
+            R.id.single_btn, R.id.double_btn, R.id.triple_btn -> {
+                binding.singleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
+                binding.doubleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
+                binding.tripleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
+            }
+        }
         when (view!!.id){
             R.id.btn_rules -> set_rules_popup_view()
             R.id.single_btn -> {
                 binding.singleBtn.setTextColor(ContextCompat.getColor(this, R.color.black))
-                binding.doubleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
-                binding.tripleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
                 amount = 1
             }
             R.id.double_btn -> {
                 binding.doubleBtn.setTextColor(ContextCompat.getColor(this, R.color.black))
-                binding.singleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
-                binding.tripleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
                 amount = 2
             }
             R.id.triple_btn-> {
                 binding.tripleBtn.setTextColor(ContextCompat.getColor(this, R.color.black))
-                binding.doubleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
-                binding.singleBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
                 amount = 3
             }
             R.id.one_btn -> game!!.thrown_values(1, amount)
@@ -186,7 +178,6 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
                 finish()
             }
-
         }
         when (view!!.id){
             R.id.one_btn, R.id.two_btn, R.id.three_btn, R.id.four_btn, R.id.five_btn, R.id.six_btn, R.id.seven_btn, R.id.eight_btn, R.id.nine_btn, R.id.ten_btn,
@@ -263,12 +254,9 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
         customDialog.show()
         customDialog.findViewById<TextView>(R.id.btn_close).setOnClickListener(this)
         customDialog.findViewById<TextView>(R.id.btn_statistics).setOnClickListener(this)
-
-
     }
 
     private fun add_match_to_db(sortedPlayers: ArrayList<CountingPlayer>){
-        Log.v("1", "erster")
         var sorted_player_ids = ArrayList<Int>()
         var won_legs_list = ArrayList<Int>()
         var won_sets_list = ArrayList<Int>()
@@ -283,13 +271,7 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
-        Log.v("2", "erster")
-        val match = Match(1, game_id!!, "a", sorted_player_ids, won_legs_list, won_sets_list)
-        Log.v("3", "erster")
-        val matches_db = MatchesDatabaseHandler(this)
-        Log.v("länge1", matches_db.readAllMatches().size.toString())
-        matches_db.addMatch(match)
-        Log.v("länge2", matches_db.readAllMatches().size.toString())
+        MatchesDatabaseHandler(this).addMatch(Match(1, game_id!!, "a", sorted_player_ids, won_legs_list, won_sets_list))
     }
 
     private fun add_player_results_to_db(){
@@ -299,7 +281,6 @@ class CountingGameActivity : AppCompatActivity(), View.OnClickListener {
                 player.throws_on_doubles, player.hit_doubles, player.all_hit_doubles, player.all_finishes, player.throws_to_win)
             db.addCountingPlayerResult(player_result)
         }
-
     }
 
     private fun setRankForPlayers(players: ArrayList<CountingPlayer>): ArrayList<CountingPlayer>{

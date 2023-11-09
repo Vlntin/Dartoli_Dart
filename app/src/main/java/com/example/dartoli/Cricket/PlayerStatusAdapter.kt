@@ -34,7 +34,6 @@ class PlayerStatusAdapter(var datalist:ArrayList<CricketPlayer>, var color: Int)
                 if(!player.twentiesClosed) binding.twentyPointsLayout.setBackgroundResource(R.color.cricket_background_color)
                 if(!player.bullsClosed) binding.bullPointsLayout.setBackgroundResource(R.color.cricket_background_color)
             }
-
             if (player.fifteens == 0) {
                 binding.iv151.setImageResource(R.drawable.outlined_circle)
                 binding.iv152.setImageResource(R.drawable.outlined_circle)

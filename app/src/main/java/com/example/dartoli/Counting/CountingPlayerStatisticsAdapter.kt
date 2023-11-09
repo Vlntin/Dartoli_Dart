@@ -11,7 +11,6 @@ import com.example.dartoli.R
 import com.example.dartoli.databinding.CountingStatisticsItemBinding
 
 class CountingPlayerStatisticsAdapter(var datalist:ArrayList<CountingPlayer>, var color: Int): RecyclerView.Adapter<CountingPlayerStatisticsAdapter.PlayerStatusHolder>() {
-
     var grey = color
     class PlayerStatusHolder(val binding: CountingStatisticsItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(get: CountingPlayer, even: Boolean, grey: Int) {
@@ -21,36 +20,27 @@ class CountingPlayerStatisticsAdapter(var datalist:ArrayList<CountingPlayer>, va
             binding.tvGameAverage.text = String.format("%.2f", get.game_average)
             binding.tvHighestScore.text = get.all_three_throws_points.max().toString()
             binding.tvDoubleQuote.text = get.hit_doubles.toString() + "/" + get.throws_on_doubles.toString()
-
+            binding.tvHighestScore.text = get.all_three_throws_points.max().toString()
+            binding.tvLegBestAverage.text = String.format("%.2f", get.all_averages.max())
+            binding.tvLegBadestAverage.text = String.format("%.2f", get.all_averages.min())
             if (get.all_finishes.size == 0){
                 binding.tvHighestFinish.text = "-"
             } else {
                 binding.tvHighestFinish.text = get.all_finishes.max().toString()
             }
-            binding.tvHighestScore.text = get.all_three_throws_points.max().toString()
-
             if (get.throws_to_win.size == 0){
                 binding.tvLessDarts.text = "-"
             } else {
                 binding.tvLessDarts.text = get.throws_to_win.min().toString()
             }
-            binding.tvLegBestAverage.text = get.all_averages.max().toString()
-            binding.tvLegBadestAverage.text = get.all_averages.min().toString()
 
-
-            Log.e("a", get.all_three_throws_points.size.toString())
             var cop = arrayListOf<Int>()
-            Log.e("a", cop.size.toString())
             val numbersByElement = get.all_three_throws_points.groupingBy { it }.eachCount()
             val most_throw = numbersByElement.maxBy { it.value }?.key
             val most_throw_amount = numbersByElement.get(most_throw)
-            Log.e("b", most_throw.toString())
-
-
             for (item in get.all_three_throws_points){
                 if (item != most_throw) cop.add(item)
             }
-            Log.e("a", cop.size.toString())
             if ( cop.size != 0){
                 val numbersByElement = cop.groupingBy { it }.eachCount()
                 val second_most_throw = numbersByElement.maxBy { it.value }?.key
@@ -60,7 +50,6 @@ class CountingPlayerStatisticsAdapter(var datalist:ArrayList<CountingPlayer>, va
                 for (item in cop){
                     if (item != second_most_throw) cop2.add(item)
                 }
-                Log.e("a", cop2.size.toString())
                 if ( cop2.size != 0) {
                     val numbersByElement = cop2.groupingBy { it }.eachCount()
                     val third_most_throw = numbersByElement.maxBy { it.value }?.key
@@ -90,8 +79,6 @@ class CountingPlayerStatisticsAdapter(var datalist:ArrayList<CountingPlayer>, va
         } else {
             holder.bind(datalist[position], false, grey)
         }
-
-
     }
 
     override fun getItemCount(): Int {
