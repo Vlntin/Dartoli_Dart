@@ -25,7 +25,7 @@
     <dimen name="game_settings_text_size">18sp</dimen>
 
     <dimen name="cricket_table_element_height">35dp</dimen>
-    <dimen name="counting_game_statistics_table_text_size">15sp</dimen>
+    <dimen name="counting_game_statistics_table_text_size">12sp</dimen>
 
     <!-- dimens for player statistics for all stats of counting games -->
     <dimen name="player_statistics_table_cell_height">35dp</dimen>

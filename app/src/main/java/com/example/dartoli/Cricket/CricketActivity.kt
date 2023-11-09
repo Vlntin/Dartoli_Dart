@@ -141,7 +141,11 @@ class CricketActivity : AppCompatActivity(),View.OnClickListener {
                 if (game!!.thrown_values(20, amount)) finishGame()
             }
             binding.bullBtn.id -> {
-                if (game!!.thrown_values(25, amount)) finishGame()
+                if (amount < 3){
+                    if (game!!.thrown_values(25, amount)) finishGame()
+                } else {
+                    return
+                }
             }
             binding.missBtn.id -> {
                 game!!.thrown_values(0, 0)

@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/main_padding_down"
         android:paddingTop="@dimen/main_padding_top">
 
         <LinearLayout
@@ -65,113 +64,132 @@
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="1000sp"
-    android:orientation="vertical"
-        android:paddingTop="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
         android:background="@color/start_green">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btn_training"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_normal"
-            android:padding="@dimen/main_button_padding"
-            android:layout_marginBottom="@dimen/main_buttons_margin_bottom"
-            android:layout_marginTop="30sp">
-
-            <TextView
-                android:id="@+id/tv_training"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:layout_gravity="center_vertical">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_training"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/main_training"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textSize="@dimen/main_button_title_size"/>
+                android:background="@drawable/btn_normal"
+                android:padding="@dimen/main_button_padding"
+                android:layout_gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/tv_training_sub"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/main_training_sub"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:textSize="@dimen/main_button_text_size"
-                app:layout_constraintTop_toBottomOf="@+id/tv_training"/>
+                <TextView
+                    android:id="@+id/tv_training"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_training"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/main_button_title_size"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_training_sub"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_training_sub"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/main_button_text_size"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_training"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btn_multiplayer"
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_normal"
-            android:padding="@dimen/main_button_padding"
-            android:layout_marginBottom="@dimen/main_buttons_margin_bottom">
-
-            <TextView
-                android:id="@+id/tv_multiplayer"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_multiplayer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/main_multiplayer"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textSize="@dimen/main_button_title_size"/>
+                android:background="@drawable/btn_normal"
+                android:padding="@dimen/main_button_padding"
+                android:layout_gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/tv_multiplayer_sub"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/main_multiplayer_sub"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:textSize="@dimen/main_button_text_size"
-                app:layout_constraintTop_toBottomOf="@+id/tv_multiplayer"/>
+                <TextView
+                    android:id="@+id/tv_multiplayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_multiplayer"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/main_button_title_size"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_multiplayer_sub"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_multiplayer_sub"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/main_button_text_size"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_multiplayer"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btn_statistics"
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_normal"
-            android:padding="@dimen/main_button_padding">
-
-            <TextView
-                android:id="@+id/tv_statistics"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_statistics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/main_statistics"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textSize="@dimen/main_button_title_size"/>
+                android:background="@drawable/btn_normal"
+                android:padding="@dimen/main_button_padding"
+                android:layout_gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/tv_statistics_sub"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/main_statistics_sub"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:textSize="@dimen/main_button_text_size"
-                app:layout_constraintTop_toBottomOf="@+id/tv_statistics"/>
+                <TextView
+                    android:id="@+id/tv_statistics"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_statistics"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/main_button_title_size"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_statistics_sub"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_statistics_sub"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/main_button_text_size"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_statistics"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"></LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

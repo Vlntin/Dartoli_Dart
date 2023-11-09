@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/dart_image"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -14,18 +14,23 @@
         tools:targetApi="31">
         <activity
             android:name=".activities.CountingPlayerStatisticsActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.GameStatisticsActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Counting.CountingGameStatisticsActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Counting.CountingGameActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Cricket.CricketActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.SplashActivity"
@@ -35,19 +40,19 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Dartoli" />
+            android:theme="@style/Theme.Dartoli"/>
         <activity
             android:name=".activities.MultiplayerActivity"
             android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Dartoli" />
+            android:theme="@style/Theme.Dartoli"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

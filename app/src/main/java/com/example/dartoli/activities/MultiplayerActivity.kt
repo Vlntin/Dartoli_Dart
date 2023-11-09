@@ -26,11 +26,11 @@ import com.example.dartoli.Cricket.CricketGame
 import com.example.dartoli.Cricket.CricketPlayer
 import com.example.dartoli.R
 import com.example.dartoli.data.GamesDatabaseHandler
+import com.example.dartoli.data.MatchesDatabaseHandler
 import com.example.dartoli.data.PlayerDatabaseHandler
 import com.example.dartoli.databinding.ActivityMultiplayerBinding
 import com.example.dartoli.model.Game
 import com.example.dartoli.model.Player
-
 
 class MultiplayerActivity : AppCompatActivity() {
 
@@ -51,9 +51,7 @@ class MultiplayerActivity : AppCompatActivity() {
     private lateinit var player_list_scroll_view: ScrollView
     lateinit var customDialog: Dialog
 
-
     val GAME_KEY = "game"
-
 
     @SuppressLint("ResourceAsColor", "ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,80 +63,63 @@ class MultiplayerActivity : AppCompatActivity() {
         game_selection_button = binding.gameSelectionButton
         popupMenu_games = PopupMenu(this, game_selection_button)
 
-        val gamesDB = GamesDatabaseHandler(this)
-        val games_list = gamesDB.readAllGames()
+        val games_list = GamesDatabaseHandler(this).readAllGames()
 
-        //val last_played_game_id = MatchesDatabaseHandler(this).readAllMatches().last().game_id
-
-        for (game in games_list){
-            //if (game.id == last_played_game_id) {
-                game_selection_button.setText(game.name)
-                chosen_game = game
-            //}
+        val matches = MatchesDatabaseHandler(this).readAllMatches()
+        if (!matches.isEmpty()) {
+            val last_played_game_id = matches.last().game_id
+            for (game in games_list) {
+                if (game.id == last_played_game_id) {
+                    game_selection_button.setText(game.name)
+                    chosen_game = game
+                }
+            }
+        } else{
+            game_selection_button.setText(games_list[0].name)
+            chosen_game = games_list[0]
         }
-
-
 
         game_selection_button.setOnClickListener {
             popupMenu_games.menuInflater.inflate(com.example.dartoli.R.menu.popup_menu, popupMenu_games.menu)
             popupMenu_games.setOnMenuItemClickListener { menuItem ->
-                // Toast message on menu item clicked
                 game_selection_button.setText(menuItem.title)
                 for(element in games_list){
-                    if (element.name.equals(menuItem.title.toString())){
-                        chosen_game = element
-                    }
+                    if (element.name.equals(menuItem.title.toString())) chosen_game = element
                 }
                 true
             }
-            if (popupMenu_games.getMenu().isNotEmpty()){
-                popupMenu_games.getMenu().clear()
-            }
+            if (popupMenu_games.getMenu().isNotEmpty()) popupMenu_games.getMenu().clear()
             for (i in games_list.indices) {
-                if (!games_list[i].equals(chosen_game))
-                    popupMenu_games.getMenu().add(games_list[i].name)
+                if (!games_list[i].equals(chosen_game)) popupMenu_games.getMenu().add(games_list[i].name)
             }
             popupMenu_games.show()
         }
-
-
 
         player_adding_button = binding.btnAddExistingPlayer
         popupMenu_players = PopupMenu(this, player_adding_button)
         player_list_view = binding.playerNamesLayout
         player_list_scroll_view = binding.w
         player_adding_button.setOnClickListener {
-            val myDB = PlayerDatabaseHandler(this)
-            players_dataset = myDB.readAllPlayers()
+            players_dataset = PlayerDatabaseHandler(this).readAllPlayers()
 
-            if (popupMenu_players.getMenu().isNotEmpty()){
-                popupMenu_players.getMenu().clear()
-            }
+            if (popupMenu_players.getMenu().isNotEmpty()) popupMenu_players.getMenu().clear()
             for (element in players_dataset){
-                if(!selected_players.contains(element)){
-                    popupMenu_players.getMenu().add(element.playerName)
-                }
+                if(!selected_players.contains(element)) popupMenu_players.getMenu().add(element.playerName)
             }
-            if (popupMenu_players.getMenu().isNotEmpty()){
-                popupMenu_players.show()
-            }
+            if (popupMenu_players.getMenu().isNotEmpty()) popupMenu_players.show()
             popupMenu_players.menuInflater.inflate(com.example.dartoli.R.menu.popup_menu, popupMenu_players.menu)
             popupMenu_players.setOnMenuItemClickListener { menuItem ->
                 add_player_to_list(menuItem.title.toString())
             }
         }
-
-
         player_creation_button = binding.btnAddNewPlayer
         player_creation_button.setOnClickListener{
             customDialog.show()
         }
 
-
         customDialog = Dialog(this)
         customDialog.setContentView(com.example.dartoli.R.layout.custom_dialog_resource)
         customDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-
 
         val btnSubmit = customDialog.findViewById<ImageView>(com.example.dartoli.R.id.btnSubmit)
         val btnDismiss = customDialog.findViewById<ImageView>(com.example.dartoli.R.id.btnDismiss)
@@ -195,7 +176,6 @@ class MultiplayerActivity : AppCompatActivity() {
                 Toast.makeText(this, "Ungültige Einstellungen", Toast.LENGTH_LONG).show()
             }
         }
-
     }
 
     private fun add_player_to_list(name: String): Boolean{
@@ -213,28 +193,20 @@ class MultiplayerActivity : AppCompatActivity() {
                 if (element.playerName == name){
                     selected_players.remove(element)
                     player_list_view.removeView(tv)
-                    if(selected_players.size == 0){
-                        player_list_scroll_view.setVisibility(View.GONE)
-                    }
+                    if(selected_players.size == 0) player_list_scroll_view.setVisibility(View.GONE)
                 }
             }
         }
         player_list_view.addView(tv)
         player_list_scroll_view.setVisibility(View.VISIBLE)
         for (i in players_dataset.indices) {
-            if (players_dataset[i].playerName.equals(name)){
-                selected_players.add(players_dataset[i])
-            }
+            if (players_dataset[i].playerName.equals(name)) selected_players.add(players_dataset[i])
         }
         return true
     }
 
     private fun ckeck_game_conditions(): Boolean {
-        if (binding.etWinningLegs.text.isNotEmpty() && binding.etWinningSets.text.isNotEmpty() && selected_players.size > 1){
-            return true
-        } else {
-            return false
-        }
+        return (binding.etWinningLegs.text.isNotEmpty() && binding.etWinningSets.text.isNotEmpty() && selected_players.size > 1)
     }
 
     override fun onBackPressed() {

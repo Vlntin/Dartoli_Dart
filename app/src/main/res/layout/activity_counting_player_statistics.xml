@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/start_green"
     tools:context=".Cricket.CricketActivity"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:orientation="vertical">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/statistics_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:layout_gravity="center"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_weight="1.5">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,19 +35,20 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:layout_gravity="center"
         android:id="@+id/table_layout"
-        app:layout_constraintTop_toBottomOf="@+id/statistics_title">
+        app:layout_constraintTop_toBottomOf="@+id/statistics_title"
+        android:layout_weight="0.5">
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/player_statistics_table_height"
+            android:layout_height="match_parent"
             android:foreground="@drawable/btn_normal_transparent"
             android:background="@drawable/btn_normal">
             <ScrollView
                 android:layout_width="322dp"
-                android:layout_height="@dimen/player_statistics_table_height"
+                android:layout_height="match_parent"
                 android:scrollbars="vertical">
                 <LinearLayout
                     app:layout_constraintTop_toBottomOf="@+id/table_layout"
@@ -444,16 +447,17 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="match_parent"
         android:id="@+id/btns_layout"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/table_layout"
         android:layout_marginTop="20dp"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:layout_weight="1.5">
         <TextView
             android:id="@+id/btn_direct_compare"
             android:layout_width="80dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="Direkter Vergleich"
             android:textColor="@color/black"
             android:textSize="14sp"
@@ -467,7 +471,7 @@
         <TextView
             android:id="@+id/btn_back_to_main"
             android:layout_width="80dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="Hauptmenü"
             android:textColor="@color/black"
             android:textSize="14sp"
@@ -479,4 +483,4 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"/>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

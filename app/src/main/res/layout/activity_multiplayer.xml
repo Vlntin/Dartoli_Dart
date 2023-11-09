@@ -10,7 +10,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:text="@string/main_multiplayer"
         android:layout_gravity="center"
         android:gravity="center"
@@ -18,13 +18,15 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:paddingTop="@dimen/padding_headline_top"
-        android:padding="@dimen/padding_headline_bottom"/>
+        android:padding="@dimen/padding_headline_bottom"
+        android:layout_weight="1.6"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:paddingTop="20sp">
+        android:paddingTop="10sp"
+        android:layout_weight="1.6">
 
         <TextView
             android:layout_width="160dp"
@@ -34,9 +36,7 @@
             android:gravity="center"
             android:textSize="@dimen/game_settings_text_size"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            android:paddingTop="@dimen/padding_headline_top"
-            android:padding="@dimen/padding_headline_bottom"/>
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -53,9 +53,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:paddingTop="20sp">
+        android:paddingTop="10sp"
+        android:layout_weight="1.6">
 
         <TextView
             android:layout_width="160dp"
@@ -65,9 +66,7 @@
             android:gravity="center"
             android:textSize="@dimen/game_settings_text_size"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            android:paddingTop="@dimen/padding_headline_top"
-            android:padding="@dimen/padding_headline_bottom"/>
+            android:textColor="@color/black"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,9 +81,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:paddingTop="20sp">
+        android:paddingTop="10sp"
+        android:layout_weight="1.6">
 
         <TextView
             android:layout_width="160dp"
@@ -94,9 +94,7 @@
             android:gravity="center"
             android:textSize="@dimen/game_settings_text_size"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            android:paddingTop="@dimen/padding_headline_top"
-            android:padding="@dimen/padding_headline_bottom"/>
+            android:textColor="@color/black"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -111,9 +109,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:paddingTop="20sp">
+        android:paddingTop="10sp"
+        android:layout_weight="1.3">
 
         <TextView
             android:layout_width="160dp"
@@ -128,7 +127,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingTop="20sp">
 
@@ -156,34 +155,34 @@
         </LinearLayout>
             <ScrollView
                 android:layout_width="fill_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="30sp"
-                android:paddingBottom="10sp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20sp"
                 android:paddingTop="10sp"
+                android:paddingBottom="10dp"
                 android:scrollbars="vertical"
                 android:background="@drawable/btn_normal"
                 android:visibility="gone"
                 tools:visibility="invisible"
                 android:id="@+id/w">
-
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:id="@+id/player_names_layout">
+
                 </LinearLayout>
-                
             </ScrollView>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
         android:paddingLeft="@dimen/normal_padding"
-        android:paddingTop="30sp">
+        android:paddingTop="0sp"
+        android:layout_weight="1.5">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="45dp"
